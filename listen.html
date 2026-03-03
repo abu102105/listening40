@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>IELTS Section 4 · 40 Tests</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090f;--bg2:#0d1018;--card:#121720;--card2:#181f2e;
+  --border:#1c2638;--border2:#243044;
+  --a:#00c9a7;--a2:#3b82f6;--a3:#8b5cf6;--a4:#f59e0b;
+  --green:#10b981;--red:#ef4444;--yellow:#f59e0b;--orange:#f97316;
+  --text:#e2e8f0;--muted:#64748b;--muted2:#94a3b8;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:14px;--r2:10px;--r3:8px;
+  --sab:env(safe-area-inset-bottom,0px);--sat:env(safe-area-inset-top,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+input,button,select,textarea{font-family:var(--font)}
+
+.view{display:none;min-height:100vh}
+.view.on{display:block}
+#vTest,#vAdmin,#vStuDetail{
+  position:fixed;inset:0;z-index:300;overflow-y:auto;
+  background:var(--bg);display:none;-webkit-overflow-scrolling:touch;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+/* LOGIN */
+#vLogin{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:24px 20px;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 20%,rgba(0,201,167,.07),transparent),
+    radial-gradient(ellipse 60% 40% at 80% 80%,rgba(59,130,246,.06),transparent);
+}
+.login-wrap{width:100%;max-width:420px;animation:fadeUp .4s ease}
+.ll-logo{text-align:center;margin-bottom:28px}
+.ll-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--a),var(--a2));color:#000;font-weight:900;font-size:.88rem;padding:9px 22px;border-radius:50px;margin-bottom:10px;letter-spacing:.3px}
+.ll-title{font-size:1.9rem;font-weight:900;letter-spacing:-1.5px}
+.ll-sub{font-size:.8rem;color:var(--muted2);margin-top:5px}
+.l-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:3px;gap:3px;margin-bottom:14px}
+.ltab{flex:1;padding:10px 4px;border:none;background:transparent;color:var(--muted);font-family:var(--font);font-size:.85rem;font-weight:700;border-radius:var(--r3);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.ltab.on{background:linear-gradient(135deg,var(--a),var(--a2));color:#000}
+.l-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 20px}
+.lf{margin-bottom:13px}
+.lf label{font-size:.76rem;font-weight:700;color:var(--muted2);display:block;margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+.linp{width:100%;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);padding:12px 14px;border-radius:var(--r2);font-size:.95rem;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.linp:focus{border-color:var(--a)}
+.linp.err{border-color:var(--red)!important;animation:shake .35s}
+.lerr{color:var(--red);font-size:.75rem;font-weight:600;margin-top:5px;display:none;padding-left:2px}
+.lerr.on{display:block}
+.lbtn{width:100%;margin-top:14px;padding:13px;border:none;background:linear-gradient(135deg,var(--a),var(--a2));color:#000;font-weight:900;font-size:.95rem;border-radius:var(--r2);cursor:pointer;transition:all .15s;letter-spacing:.2px}
+.lbtn:active{opacity:.85;transform:scale(.97)}
+.lhint{text-align:center;margin-top:12px;font-size:.72rem;color:var(--muted);font-family:var(--mono);line-height:1.6}
+.lhint .h-pw{color:var(--a);font-weight:700}
+.lhint .h-adm{color:var(--a4);font-weight:700}
+
+/* TOP NAV */
+.topnav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,9,15,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;padding-top:calc(10px + var(--sat));
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.nav-l{display:flex;align-items:center;gap:8px}
+.nav-badge{background:linear-gradient(135deg,var(--a),var(--a2));color:#000;font-size:.62rem;font-family:var(--mono);font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:8px}
+.nav-title{font-size:.9rem;font-weight:800;letter-spacing:-.3px}
+.nav-r{display:flex;align-items:center;gap:5px}
+.nav-user{font-size:.7rem;color:var(--a);font-family:var(--mono);font-weight:600;background:rgba(0,201,167,.08);border:1px solid rgba(0,201,167,.2);padding:3px 10px;border-radius:20px;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-pill{background:var(--card);border:1px solid var(--border);padding:4px 10px;border-radius:20px;font-family:var(--mono);font-size:.7rem;color:var(--a);font-weight:600;white-space:nowrap}
+.ibtn{background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:.95rem;cursor:pointer;flex-shrink:0;transition:background .15s;position:relative}
+.ibtn:active{background:var(--border2)}
+.ndot{position:absolute;top:3px;right:3px;width:8px;height:8px;background:var(--red);border-radius:50%;border:1.5px solid var(--bg);animation:pulse 2s infinite;display:none}
+.ndot.on{display:block}
+
+/* APP */
+#vApp{padding-bottom:calc(70px + var(--sab))}
+.hero{padding:14px 16px 0;background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(0,201,167,.06),transparent)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 6px;text-align:center}
+.kpi-n{font-size:1.2rem;font-weight:900;font-family:var(--mono);background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.kpi-l{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
+.prog-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:11px 14px;margin:0 16px 12px}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.prog-lbl{font-size:.74rem;font-weight:700;color:var(--muted2)}
+.prog-pct{font-family:var(--mono);font-size:.74rem;color:var(--a);font-weight:600}
+.prog-bg{background:var(--border);height:6px;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:3px;transition:width .7s ease;width:0%}
+.tab-bar{display:flex;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:3px;margin:0 16px 10px;gap:3px}
+.tab{flex:1;padding:9px 4px;border:none;background:transparent;color:var(--muted);font-family:var(--font);font-size:.78rem;font-weight:700;border-radius:var(--r3);cursor:pointer;transition:all .2s}
+.tab.on{background:linear-gradient(135deg,var(--a),var(--a2));color:#000}
+.frow{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.fbtn{flex-shrink:0;border:1.5px solid var(--border);background:var(--card);color:var(--muted2);padding:5px 11px;border-radius:20px;font-size:.73rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.fbtn.on{background:var(--a);border-color:var(--a);color:#000}
+
+/* Grid */
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 16px 14px}
+@media(min-width:480px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:700px){.tgrid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.tgrid{grid-template-columns:repeat(5,1fr)}}
+.tcard{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 10px;cursor:pointer;transition:transform .12s,border-color .15s;position:relative;overflow:hidden;user-select:none;animation:fadeUp .3s ease both}
+.tcard:active{transform:scale(.94)}
+.tcard.done{border-color:var(--green)}
+.tcard.done::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--green)}
+.tc-aud{position:absolute;top:8px;right:8px;font-size:.75rem;color:var(--a)}
+.tc-num{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px}
+.tc-title{font-size:.74rem;font-weight:800;line-height:1.35;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding-right:18px}
+.tc-tags{display:flex;gap:3px;flex-wrap:wrap}
+.tt{font-size:.56rem;padding:2px 6px;border-radius:6px;font-family:var(--mono);font-weight:600}
+.tt-q{background:rgba(0,201,167,.1);color:var(--a)}
+.tt-t{background:rgba(139,92,246,.1);color:var(--a3)}
+.tc-score{font-size:.66rem;color:var(--green);font-family:var(--mono);font-weight:700;margin-top:5px;display:none}
+.tcard.done .tc-score{display:block}
+
+/* Score sheet */
+.ss{display:none;padding:0 16px 16px}
+.ss.on{display:block}
+.ss-title{font-size:.88rem;font-weight:800;color:var(--muted2);margin-bottom:10px}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(min-width:480px){.sgrid{grid-template-columns:repeat(5,1fr)}}
+@media(min-width:700px){.sgrid{grid-template-columns:repeat(8,1fr)}}
+.si{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r2);padding:9px 4px;text-align:center;cursor:pointer}
+.si.done{border-color:var(--green)}
+.si-n{font-size:.56rem;color:var(--muted);font-family:var(--mono);margin-bottom:2px}
+.si-s{font-size:1rem;font-weight:900;font-family:var(--mono);color:var(--muted)}
+.si.done .si-s{color:var(--green)}
+
+/* Bottom nav */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:90;display:flex;background:rgba(7,9,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:5px 4px;padding-bottom:calc(5px + var(--sab))}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--muted);font-family:var(--font);font-size:.56rem;font-weight:700;cursor:pointer;padding:4px 0;border-radius:8px;transition:color .15s;position:relative}
+.bn .bni{font-size:1.2rem;line-height:1}
+.bn.on{color:var(--a)}
+.bn-dot{position:absolute;top:1px;right:calc(50% - 14px);background:var(--red);color:#fff;font-size:.5rem;font-family:var(--mono);font-weight:700;padding:1px 4px;border-radius:10px;min-width:13px;text-align:center;display:none}
+.bn-dot.on{display:block}
+
+/* TEST VIEW */
+.th{position:sticky;top:0;z-index:10;background:rgba(7,9,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 16px;padding-top:calc(10px + var(--sat))}
+.th-r1{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bk{background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;flex-shrink:0;transition:background .15s}
+.bk:active{background:var(--border2)}
+.th-info{flex:1;min-width:0}
+.th-num{font-family:var(--mono);font-size:.6rem;color:var(--a);letter-spacing:1px;font-weight:600}
+.th-title{font-size:.9rem;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.th-pb-row{display:flex;align-items:center;gap:8px}
+.th-pb{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.th-pf{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:2px;transition:width .3s}
+.th-pt{font-family:var(--mono);font-size:.63rem;color:var(--muted);white-space:nowrap}
+
+/* Audio player */
+.au-sec{margin:12px 16px 0;border-radius:var(--r);border:1px solid rgba(0,201,167,.25);background:linear-gradient(135deg,rgba(0,201,167,.05),rgba(59,130,246,.05));overflow:hidden}
+.au-pl{padding:12px 14px}
+.ap-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.ap-ic{font-size:1.3rem;flex-shrink:0}
+.ap-nm{font-family:var(--mono);font-size:.67rem;color:var(--a);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.ap-state{font-size:.65rem;font-family:var(--mono);font-weight:600;padding:3px 8px;border-radius:8px;flex-shrink:0}
+.ap-state.ok{background:rgba(0,201,167,.12);color:var(--a)}
+.ap-state.err{background:rgba(239,68,68,.1);color:var(--red)}
+.ap-ctrl{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.ap-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82rem;cursor:pointer;flex-shrink:0;transition:all .15s}
+.ap-btn:active{transform:scale(.88)}
+.ap-play{background:linear-gradient(135deg,var(--a),var(--a2));border:none;color:#000;width:42px;height:42px;font-size:1rem}
+.ap-play:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.ap-sw{flex:1;position:relative;height:28px;display:flex;align-items:center}
+.ap-sbg{width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden;position:relative;cursor:pointer}
+.ap-sf{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:2px;width:0%;pointer-events:none;transition:width .1s linear}
+.ap-si{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0}
+.ap-tm{font-family:var(--mono);font-size:.63rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.ap-spds{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.spd-l{font-size:.63rem;color:var(--muted);font-family:var(--mono)}
+.spd{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:6px;font-size:.66rem;font-family:var(--mono);font-weight:600;cursor:pointer;transition:all .15s}
+.spd.on{background:var(--a);border-color:var(--a);color:#000}
+
+/* Questions */
+.qbody{padding:13px 16px;padding-bottom:90px}
+.instr{background:rgba(0,201,167,.05);border:1px solid rgba(0,201,167,.15);border-radius:var(--r2);padding:9px 12px;font-size:.74rem;color:var(--a);font-family:var(--mono);line-height:1.55;margin-bottom:11px}
+.rbanner{padding:12px;border-radius:var(--r2);text-align:center;font-weight:800;font-size:.9rem;margin-bottom:11px;display:none}
+.rbanner.on{display:block;animation:pop .3s ease}
+.rb-g{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.rb-m{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.3)}
+.rb-b{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.qs-hdr{font-size:.63rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:var(--mono);font-weight:600;padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:9px}
+.qi{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r2);padding:11px 12px;margin-bottom:8px;transition:border-color .2s}
+.qi.qc{border-color:var(--green);background:rgba(16,185,129,.035)}
+.qi.qw{border-color:var(--red);background:rgba(239,68,68,.035)}
+.qn{font-family:var(--mono);font-size:.6rem;color:var(--a);font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.qt{font-size:.84rem;line-height:1.65;color:var(--text);margin-bottom:6px}
+.qblank{display:inline-block;border-bottom:2px solid var(--a);min-width:48px;height:15px;vertical-align:bottom;margin:0 2px;background:rgba(0,201,167,.04);border-radius:2px 2px 0 0}
+.fill-inp{width:100%;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--r2);font-size:.86rem;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fill-inp:focus{border-color:var(--a)}
+.fill-inp.fc{border-color:var(--green);color:var(--green)}
+.fill-inp.fw{border-color:var(--red);color:var(--red)}
+.ans-hint{font-size:.68rem;color:var(--muted);margin-top:5px;font-family:var(--mono);display:none}
+.ans-hint.on{display:block}
+.ans-hint span{color:var(--green);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.opt{display:flex;align-items:flex-start;gap:8px;padding:10px 11px;border-radius:var(--r2);border:1.5px solid var(--border);cursor:pointer;font-size:.82rem;line-height:1.45;transition:all .12s;background:var(--bg2);user-select:none}
+.opt:active{transform:scale(.98)}
+.opt.sel{border-color:var(--a2);background:rgba(59,130,246,.07)}
+.opt.oc{border-color:var(--green);background:rgba(16,185,129,.08);color:var(--green)}
+.opt.ow{border-color:var(--red);background:rgba(239,68,68,.08);color:var(--red)}
+.olet{width:21px;height:21px;flex-shrink:0;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-family:var(--mono);font-weight:600}
+.tf{position:sticky;bottom:0;z-index:10;background:rgba(7,9,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 16px;padding-bottom:calc(10px + var(--sab));display:flex;gap:7px;align-items:center}
+.tf-info{flex:1;font-size:.68rem;color:var(--muted);font-family:var(--mono);font-weight:600}
+.btn{padding:11px 16px;border-radius:var(--r2);font-family:var(--font);font-size:.8rem;font-weight:800;cursor:pointer;border:none;transition:all .12s}
+.btn:active{transform:scale(.95);opacity:.85}
+.btn-out{background:var(--card);border:1.5px solid var(--border);color:var(--text)}
+.btn-chk{background:linear-gradient(135deg,var(--a),var(--a2));color:#000;flex-shrink:0}
+
+/* ADMIN */
+.adm-hdr{position:sticky;top:0;z-index:10;background:rgba(7,9,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:11px 16px;padding-top:calc(11px + var(--sat));display:flex;align-items:center;gap:10px}
+.adm-badge{background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;font-size:.6rem;font-family:var(--mono);font-weight:700;padding:3px 8px;border-radius:7px;letter-spacing:1px}
+.adm-title{font-size:.92rem;font-weight:800;flex:1}
+.adm-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:3px;margin:10px 16px;gap:2px}
+.atab{flex:1;padding:9px 3px;border:none;background:transparent;color:var(--muted);font-family:var(--font);font-size:.72rem;font-weight:700;border-radius:var(--r3);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap}
+.atab.on{background:linear-gradient(135deg,var(--orange),var(--a4));color:#000}
+.adm-body{padding:0 16px 40px}
+.nlist{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.nitem{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;display:flex;gap:11px;align-items:flex-start}
+.nitem.unr{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.03)}
+.nitem:active{background:var(--card2)}
+.ni-dot-w{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.ni-dot{width:8px;height:8px;border-radius:50%;background:var(--a4);flex-shrink:0}
+.ni-dot.read{background:var(--border2)}
+.ni-body{flex:1;min-width:0}
+.ni-name{font-size:.82rem;font-weight:800;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ni-sub{font-size:.73rem;color:var(--muted2);margin-bottom:4px}
+.ni-score{font-family:var(--mono);font-size:.78rem;font-weight:700;margin-bottom:3px}
+.ni-score.g{color:var(--green)}.ni-score.m{color:var(--yellow)}.ni-score.b{color:var(--red)}
+.ni-time{font-size:.63rem;color:var(--muted);font-family:var(--mono)}
+.n-empty{text-align:center;padding:36px 16px;color:var(--muted);font-size:.82rem}
+.mark-all-btn{width:100%;padding:10px;border:1.5px solid var(--border);background:var(--card);color:var(--muted2);font-family:var(--font);font-size:.8rem;font-weight:700;border-radius:var(--r2);cursor:pointer;margin-bottom:10px;transition:all .15s}
+.mark-all-btn:active{background:var(--card2)}
+.astats{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:12px}
+.astat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:11px;text-align:center}
+.astat-n{font-size:1.35rem;font-weight:900;font-family:var(--mono);background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.astat-l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.stu-list{display:flex;flex-direction:column;gap:7px}
+.stu-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:13px;cursor:pointer;transition:border-color .15s}
+.stu-card:active{background:var(--card2)}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.sc-name{font-size:.88rem;font-weight:800}
+.sc-date{font-size:.62rem;color:var(--muted);font-family:var(--mono)}
+.sc-bar-r{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.sc-bar-bg{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.sc-bar-f{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--a),var(--a2));transition:width .5s}
+.sc-pct{font-family:var(--mono);font-size:.66rem;color:var(--a);flex-shrink:0}
+.sc-chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-size:.63rem;padding:2px 8px;border-radius:7px;font-family:var(--mono);font-weight:600}
+.chip-d{background:rgba(16,185,129,.1);color:var(--green)}
+.chip-a{background:rgba(0,201,167,.1);color:var(--a)}
+.chip-b{background:rgba(139,92,246,.1);color:var(--a3)}
+.sd-hdr{position:sticky;top:0;z-index:10;background:rgba(7,9,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:11px 16px;padding-top:calc(11px + var(--sat));display:flex;align-items:center;gap:10px}
+.sd-body{padding:16px 16px 40px}
+.sd-sg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(min-width:480px){.sd-sg{grid-template-columns:repeat(5,1fr)}}
+.sd-si{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r2);padding:9px 4px;text-align:center}
+.sd-si.done{border-color:var(--green)}
+.sd-si-n{font-size:.56rem;color:var(--muted);font-family:var(--mono);margin-bottom:2px}
+.sd-si-s{font-size:.95rem;font-weight:900;font-family:var(--mono);color:var(--muted)}
+.sd-si.done .sd-si-s{color:var(--green)}
+.asec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:11px}
+.asec-t{font-size:.74rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.af{margin-bottom:10px}
+.af label{font-size:.73rem;font-weight:700;color:var(--muted2);display:block;margin-bottom:4px}
+.ainp{width:100%;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);padding:10px 13px;border-radius:var(--r2);font-size:.88rem;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.ainp:focus{border-color:var(--a)}
+.abtn{width:100%;padding:11px;border:none;border-radius:var(--r2);font-family:var(--font);font-size:.85rem;font-weight:800;cursor:pointer;transition:all .15s;margin-top:3px}
+.abtn:active{opacity:.8;transform:scale(.97)}
+.abtn-p{background:linear-gradient(135deg,var(--a),var(--a2));color:#000}
+.abtn-r{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff;margin-top:8px}
+.abtn-o{background:var(--card);border:1.5px solid var(--border);color:var(--text);margin-top:6px}
+.toast{position:fixed;bottom:calc(18px + var(--sab));left:50%;transform:translateX(-50%) translateY(12px);background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:9px 18px;border-radius:20px;font-size:.78rem;font-weight:700;z-index:9999;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="vLogin" class="view on">
+  <div class="login-wrap">
+    <div class="ll-logo">
+      <div class="ll-badge">🎧 IELTS S4</div>
+      <div class="ll-title">Section 4 · 40 Tests</div>
+      <div class="ll-sub">Audio · Avtomatik tekshirish · Natijalar</div>
+    </div>
+    <div class="l-tabs">
+      <button class="ltab on" id="ltS" onclick="setLoginTab('s')">👨‍🎓 O'quvchi</button>
+      <button class="ltab" id="ltT" onclick="setLoginTab('t')">👨‍🏫 Ustoz (Admin)</button>
+    </div>
+    <div class="l-card" id="lcS">
+      <div class="lf"><label>Ism</label><input class="linp" id="lName" type="text" placeholder="Masalan: Jamshid" autocapitalize="words"></div>
+      <div class="lf"><label>Familiya</label><input class="linp" id="lSurname" type="text" placeholder="Masalan: Avazov" autocapitalize="words"></div>
+      <div class="lf"><label>Parol</label><input class="linp" id="lPw" type="password" placeholder="••••••••"></div>
+      <div class="lerr" id="lErrS">❌ Ism-familiya va to'g'ri parol kiriting</div>
+      <button class="lbtn" onclick="loginStu()">Kirish →</button>
+      <div class="lhint">O'quvchi paroli: <span class="h-pw">ielts2024</span></div>
+    </div>
+    <div class="l-card" id="lcT" style="display:none">
+      <div class="lf"><label>Admin paroli</label><input class="linp" id="lAdmPw" type="password" placeholder="••••••••"></div>
+      <div class="lerr" id="lErrT">❌ Noto'g'ri admin paroli</div>
+      <button class="lbtn" onclick="loginAdm()">Admin kirish →</button>
+      <div class="lhint">Standart admin parol: <span class="h-adm">admin2024</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="vApp" class="view">
+  <nav class="topnav">
+    <div class="nav-l">
+      <div class="nav-badge">IELTS</div>
+      <span class="nav-title">Section 4</span>
+    </div>
+    <div class="nav-r">
+      <div class="nav-user" id="navUser">—</div>
+      <div class="nav-pill" id="navPill">0/40</div>
+      <button class="ibtn" onclick="openAdmin()">⚙️<span class="ndot" id="ndot"></span></button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-n" id="kD">0</div><div class="kpi-l">Bajarildi</div></div>
+      <div class="kpi"><div class="kpi-n" id="kC">0</div><div class="kpi-l">To'g'ri</div></div>
+      <div class="kpi"><div class="kpi-n" id="kA">—</div><div class="kpi-l">O'rtacha</div></div>
+      <div class="kpi"><div class="kpi-n" id="kB">—</div><div class="kpi-l">Band</div></div>
+    </div>
+  </div>
+  <div class="prog-card">
+    <div class="prog-top"><span class="prog-lbl" id="pLbl">0 / 40</span><span class="prog-pct" id="pPct">0%</span></div>
+    <div class="prog-bg"><div class="prog-fill" id="pFill"></div></div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab on" id="tabTests" onclick="switchTab('tests')">📚 Testlar</button>
+    <button class="tab" id="tabScores" onclick="switchTab('scores')">📊 Natijalar</button>
+  </div>
+  <div class="frow" id="frow">
+    <button class="fbtn on" onclick="setF('all',this)">Hammasi (40)</button>
+    <button class="fbtn" onclick="setF('done',this)">✅ Bajarilgan</button>
+    <button class="fbtn" onclick="setF('todo',this)">⏳ Kutilmoqda</button>
+    <button class="fbtn" onclick="setF('fill',this)">✏️ To'ldirish</button>
+    <button class="fbtn" onclick="setF('mc',this)">🔘 Ko'p tanlov</button>
+  </div>
+  <div class="tgrid" id="tgrid"></div>
+  <div class="ss" id="ss">
+    <p class="ss-title">Barcha test natijalari</p>
+    <div class="sgrid" id="sgrid"></div>
+  </div>
+  <nav class="bnav">
+    <button class="bn on" id="bnTests" onclick="switchTab('tests')"><span class="bni">📚</span>Testlar</button>
+    <button class="bn" id="bnScores" onclick="switchTab('scores')"><span class="bni">📊</span>Natija</button>
+    <button class="bn" id="bnAdm" onclick="openAdmin()"><span class="bni">⚙️</span>Admin<span class="bn-dot" id="bndot"></span></button>
+    <button class="bn" onclick="logout()"><span class="bni">🚪</span>Chiqish</button>
+  </nav>
+</div>
+
+<!-- TEST VIEW -->
+<div id="vTest">
+  <div class="th">
+    <div class="th-r1">
+      <button class="bk" onclick="closeTest()">←</button>
+      <div class="th-info">
+        <div class="th-num" id="tNum">TEST 01</div>
+        <div class="th-title" id="tTitle">—</div>
+      </div>
+    </div>
+    <div class="th-pb-row">
+      <div class="th-pb"><div class="th-pf" id="tPF"></div></div>
+      <span class="th-pt" id="tPT">0/10</span>
+    </div>
+  </div>
+
+  <!-- Audio player — avtomatik yuklanadi -->
+  <div class="au-sec">
+    <div class="au-pl">
+      <div class="ap-top">
+        <span class="ap-ic">🎧</span>
+        <span class="ap-nm" id="apNm">—</span>
+        <span class="ap-state ok" id="apState">yuklanmoqda…</span>
+      </div>
+      <div class="ap-ctrl">
+        <button class="ap-btn" onclick="seekBy(-10)">⏮ -10s</button>
+        <button class="ap-btn ap-play" id="apPlay" onclick="togglePlay()" disabled>▶</button>
+        <button class="ap-btn" onclick="seekBy(10)">+10s ⏭</button>
+        <div class="ap-sw">
+          <div class="ap-sbg">
+            <div class="ap-sf" id="apSF"></div>
+            <input type="range" class="ap-si" id="apSI" min="0" max="100" value="0" step=".1">
+          </div>
+        </div>
+        <span class="ap-tm" id="apTm">0:00</span>
+      </div>
+      <div class="ap-spds">
+        <span class="spd-l">Tezlik:</span>
+        <button class="spd" onclick="setSp(.75,this)">0.75×</button>
+        <button class="spd on" onclick="setSp(1,this)">1×</button>
+        <button class="spd" onclick="setSp(1.25,this)">1.25×</button>
+        <button class="spd" onclick="setSp(1.5,this)">1.5×</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="qbody" id="qbody"></div>
+  <div class="tf">
+    <div class="tf-info" id="tfI">0/10</div>
+    <button class="btn btn-out" onclick="resetTest()">🔄 Qayta</button>
+    <button class="btn btn-chk" id="chkBtn" onclick="checkAnswers()">Tekshirish ✓</button>
+  </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="vAdmin">
+  <div class="adm-hdr">
+    <button class="bk" onclick="closeAdmin()">←</button>
+    <span class="adm-title">Admin Panel</span>
+    <span class="adm-badge">USTOZ</span>
+  </div>
+  <div class="adm-tabs">
+    <button class="atab on" id="atN" onclick="switchAdm('n')">🔔 Bildirishnoma <span id="nCnt"></span></button>
+    <button class="atab" id="atSt" onclick="switchAdm('st')">👥 O'quvchilar</button>
+    <button class="atab" id="atSz" onclick="switchAdm('sz')">⚙️ Sozlamalar</button>
+  </div>
+  <div class="adm-body">
+    <div id="admN">
+      <button class="mark-all-btn" onclick="markAllRead()">✅ Barchasini o'qilgan deb belgilash</button>
+      <div class="nlist" id="nlist"></div>
+    </div>
+    <div id="admSt" style="display:none">
+      <div class="astats">
+        <div class="astat"><div class="astat-n" id="asT">0</div><div class="astat-l">O'quvchilar</div></div>
+        <div class="astat"><div class="astat-n" id="asD">0</div><div class="astat-l">Bajarilgan</div></div>
+        <div class="astat"><div class="astat-n" id="asC">0</div><div class="astat-l">To'g'ri jav.</div></div>
+        <div class="astat"><div class="astat-n" id="asB">—</div><div class="astat-l">O'rt. Band</div></div>
+      </div>
+      <div class="stu-list" id="stuList"></div>
+    </div>
+    <div id="admSz" style="display:none">
+      <div class="asec">
+        <div class="asec-t">🔑 Foydalanuvchi paroli</div>
+        <div class="af"><label>Yangi parol</label><input class="ainp" id="sNP" type="password" placeholder="Yangi parol (min 4 belgi)"></div>
+        <div class="af"><label>Tasdiqlash</label><input class="ainp" id="sCP" type="password" placeholder="Qayta kiriting"></div>
+        <button class="abtn abtn-p" onclick="chgPw()">Parolni saqlash</button>
+      </div>
+      <div class="asec">
+        <div class="asec-t">🛡️ Admin paroli</div>
+        <div class="af"><label>Joriy admin paroli</label><input class="ainp" id="sAC" type="password" placeholder="Joriy parol"></div>
+        <div class="af"><label>Yangi admin paroli</label><input class="ainp" id="sAN" type="password" placeholder="Yangi parol"></div>
+        <button class="abtn abtn-p" onclick="chgAdmPw()">Admin parolini saqlash</button>
+      </div>
+      <div class="asec">
+        <div class="asec-t">⚠️ Xavfli</div>
+        <button class="abtn abtn-r" onclick="resetAll()">🗑️ Barcha natijalarni o'chirish</button>
+        <button class="abtn abtn-o" onclick="logout()">🚪 Tizimdan chiqish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STUDENT DETAIL -->
+<div id="vStuDetail">
+  <div class="sd-hdr">
+    <button class="bk" onclick="closeStuDetail()">←</button>
+    <span class="adm-title" id="sdTitle">—</span>
+  </div>
+  <div class="sd-body" id="sdBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+//  AUDIO — faqat fayl nomi, HTML bilan bir papkada
+//  "Test 1 Section 4.mp3" ... "Test 40 Section 4.mp3"
+// ══════════════════════════════════════════════════
+function audioPath(id){ return 'Test ' + id + ' Section 4.mp3'; }
+
+// ════════════════════ TESTS DATA ════════════════════
+const T=[
+{id:1,ti:"The Urban Landscape",ty:"fill",ins:"Write NO MORE THAN TWO WORDS for each answer.",
+q:[
+{n:31,t:"f",tx:"ways of planning our [B] better",a:"cities|environments"},
+{n:32,t:"f",tx:"they can make cities more or less [B]",a:"windy"},
+{n:33,t:"f",tx:"they can make inland cities more [B]",a:"humid"},
+{n:34,t:"f",tx:"they can make local areas more [B]",a:"shady|shaded"},
+{n:35,t:"f",tx:"less [B] (local impact)",a:"dangerous"},
+{n:36,t:"f",tx:"trees evaporate water through their [B]",a:"leaves"},
+{n:37,t:"f",tx:"tall buildings cause more wind at [B] level",a:"ground"},
+{n:38,t:"f",tx:"trees [B] the wind force",a:"considerably reduce|decrease|filter"},
+{n:39,t:"f",tx:"[B] frequency noise passes through trees",a:"low"},
+{n:40,t:"f",tx:"trees require sunlight, water and [B] to grow",a:"space|room"}
+]},
+{id:2,ti:"Corporate Crime",ty:"mixed",ins:"Choose correct letter A/B/C or write NO MORE THAN THREE WORDS.",
+q:[
+{n:31,t:"m",tx:"Corporate crime is generally committed",ops:["against individuals.","by groups.","for companies."],a:"B"},
+{n:32,t:"m",tx:"Corporate crime does NOT include",ops:["employees stealing from their company.","unintentional crime by employees.","fraud resulting from company policy."],a:"A"},
+{n:33,t:"f",tx:"Ignored by the [B] (e.g. films)",a:"mass media|media"},
+{n:34,t:"f",tx:"Also ignored by [B]",a:"academic circles|academics|researchers"},
+{n:35,t:"f",tx:"often more complex, needing [B]",a:"specialist knowledge"},
+{n:36,t:"f",tx:"victims often [B]",a:"unaware"},
+{n:37,t:"f",tx:"may appear unimportant to [B]",a:"individual customers|individual consumers|individuals"},
+{n:38,t:"f",tx:"can make large [B] for company",a:"illegal profit|illegal profits"},
+{n:39,t:"m",tx:"Oil tanker explosion — TWO answers (1st). Correct: D",ops:["was no-one's fault","was not a corporate crime","was intentional","was caused by indifference","had tragic results","made a large profit"],a:"D"},
+{n:40,t:"m",tx:"Oil tanker explosion (2nd). Correct: E",ops:["was no-one's fault","was not a corporate crime","was intentional","was caused by indifference","had tragic results","made a large profit"],a:"E"}
+]},
+{id:3,ti:"New Union Building",ty:"mixed",ins:"Write NO MORE THAN THREE WORDS AND/OR A NUMBER.",
+q:[
+{n:31,t:"f",tx:"students' suggestions informed design of a [B]",a:"questionnaire"},
+{n:32,t:"f",tx:"there were [B] respondents",a:"approximately 2000|about 2000|2000|approximately 2,000"},
+{n:33,t:"f",tx:"Site one: City centre near Faculty of [B]",a:"Education"},
+{n:34,t:"f",tx:"Site three: out of town near the [B]",a:"halls of residence|living quarters"},
+{n:35,t:"f",tx:"Site one: Problems with [B] (traffic/parking)",a:"traffic|parking"},
+{n:36,t:"f",tx:"Site two: Close to [B]",a:"lecture rooms|lecture halls|lecture theatres"},
+{n:37,t:"f",tx:"Site three: more [B]",a:"facilities"},
+{n:38,t:"m",tx:"Facilities requested TWO (1st). Correct: D",ops:["library","games room","student health centre","mini fitness centre","large swimming pool","travel agency","lecture theatre"],a:"D"},
+{n:39,t:"m",tx:"Argument AGAINST drama theatre",ops:["Expensive and no students would use it.","Poor use of resources — minority would use it.","Could not accommodate large productions."],a:"B"},
+{n:40,t:"m",tx:"Security measures TWO (1st). Correct: A",ops:["closed-circuit TV","show Union Card on entering","show Union Card when asked","spot searches of bags","permanent Security Office"],a:"A"}
+]},
+{id:4,ti:"Sharks in Australia",ty:"mixed",ins:"Write NO MORE THAN THREE WORDS AND/OR A NUMBER.",
+q:[
+{n:31,t:"f",tx:"heaviest: [B] kg",a:"795"},
+{n:32,t:"f",tx:"Swimming aide: fins and [B]",a:"tail"},
+{n:33,t:"f",tx:"Food gathered from the ocean [B]",a:"floor|bed|bottom"},
+{n:34,t:"f",tx:"sharks locate food by using their [B]",a:"sense of smell"},
+{n:35,t:"m",tx:"Shark meshing uses nets laid",ops:["along the coastline.","at an angle to the beach.","from the beach to the sea."],a:"A"},
+{n:36,t:"m",tx:"Other places with shark meshing include",ops:["South Africa.","New Zealand.","Tahiti."],a:"A"},
+{n:37,t:"m",tx:"Average sharks caught in nets each year",ops:["15.","150.","1,500."],a:"B"},
+{n:38,t:"m",tx:"Most sharks are caught in",ops:["spring.","summer.","winter."],a:"B"},
+{n:39,t:"m",tx:"Factors reducing benefits — TWO (1st). Correct: B",ops:["nets wrongly positioned","strong waves and currents","too many fish","sharks eat holes in nets","moving sands","nets too short","holes in nets scare sharks"],a:"B"},
+{n:40,t:"m",tx:"Factors reducing benefits (2nd). Correct: E",ops:["nets wrongly positioned","strong waves and currents","too many fish","sharks eat holes in nets","moving sands","nets too short","holes in nets scare sharks"],a:"E"}
+]},
+{id:5,ti:"Women and Finance",ty:"fill",ins:"Write NO MORE THAN THREE WORDS for each answer.",
+q:[
+{n:31,t:"f",tx:"Men supposed to understand [B] and finance",a:"politics"},
+{n:32,t:"f",tx:"women more prepared to [B]",a:"learn"},
+{n:33,t:"f",tx:"Women save for [B] and a house",a:"children's education|their children's education"},
+{n:34,t:"f",tx:"Men save for [B] and retirement",a:"a car"},
+{n:35,t:"f",tx:"Women left alone may pay for [B] when old",a:"nursing care"},
+{n:36,t:"f",tx:"think about finances when a [B] occurs",a:"crisis"},
+{n:37,t:"f",tx:"start thinking about pensions in their [B]",a:"early twenties"},
+{n:38,t:"f",tx:"develop [B] in dealing with financial affairs",a:"confidence"},
+{n:39,t:"f",tx:"Attend classes in [B]",a:"money management"},
+{n:40,t:"f",tx:"put high proportion in [B]",a:"low-risk investments"}
+]},
+{id:6,ti:"Antarctica",ty:"fill",ins:"Write NO MORE THAN THREE WORDS AND/OR A NUMBER.",
+q:[
+{n:31,t:"f",tx:"more than [B] times as big as the UK",a:"58"},
+{n:32,t:"f",tx:"most of area is classified as [B]",a:"desert"},
+{n:33,t:"f",tx:"[B] is integrated with technical support",a:"science"},
+{n:34,t:"f",tx:"stations contain a kitchen, a [B] and a gym",a:"hospital|small hospital"},
+{n:35,t:"f",tx:"supplies from a [B] at the edge of the ice",a:"ship"},
+{n:36,t:"f",tx:"stations built on [B] with adjustable legs",a:"platforms"},
+{n:37,t:"f",tx:"approximately [B] kilocalories daily",a:"3500|3,500"},
+{n:38,t:"f",tx:"effects on sea levels and [B]",a:"currents|ocean currents"},
+{n:39,t:"f",tx:"measure [B] caused by human activity",a:"pollution|the pollution"},
+{n:40,t:"f",tx:"Many openings for [B] people",a:"young"}
+]},
+{id:7,ti:"Household Waste Recycling",ty:"fill",ins:"Write NO MORE THAN TWO WORDS AND/OR A NUMBER.",
+q:[
+{n:31,t:"f",tx:"CO₂ emissions [B] lower than in 1990",a:"12.5%"},
+{n:32,t:"f",tx:"reduces emissions from landfill and [B]",a:"incineration plants"},
+{n:33,t:"f",tx:"lack of '[B]' sites",a:"drop-off"},
+{n:34,t:"f",tx:"Glass for [B] cannot be recycled with others",a:"cooking"},
+{n:35,t:"f",tx:"In UK, [B] tons of glass recycled each year",a:"500000|500,000"},
+{n:36,t:"f",tx:"CLA Aggregates: material for making [B]",a:"roads"},
+{n:37,t:"f",tx:"Papersave: [B] for use on farms",a:"soil conditioner"},
+{n:38,t:"f",tx:"Pacrite: [B] for collecting waste",a:"containers"},
+{n:39,t:"f",tx:"Waterford (plastic): [B]",a:"pencils"},
+{n:40,t:"f",tx:"Johnson & Jones: [B]",a:"business cards"}
+]},
+{id:8,ti:"Library Resources",ty:"mc",ins:"Choose the correct letter, A, B or C.",
+q:[
+{n:31,t:"m",tx:"During first week students are invited to",ops:["be shown round the library.","listen to descriptions of library resources.","do an intensive computer course."],a:"B"},
+{n:32,t:"m",tx:"Speaker warns students that",ops:["Internet materials can be unreliable.","downloaded info must be acknowledged.","computer access may be limited."],a:"A"},
+{n:33,t:"m",tx:"Library acquiring more CDs because",ops:["they are a cheap source.","they take up very little space.","they are more up to date."],a:"A"},
+{n:34,t:"m",tx:"Students encouraged to use journals online because",ops:["articles don't need returning.","reading online is cheaper.","stock of printed articles to be reduced."],a:"C"},
+{n:35,t:"m",tx:"Why might students continue to use reference books?",ops:["can be taken away from the library","provide info unavailable elsewhere","can be borrowed for extended period"],a:"A"},
+{n:36,t:"m",tx:"Responsibility of Training Supervisor?",ops:["supervise and support library staff","provide orientation to library facilities","identify needs and inform section manager"],a:"B"},
+{n:37,t:"m",tx:"Training in specialised computer programs",ops:["postgraduate's own dept/tutor","library staff","another section of university"],a:"B"},
+{n:38,t:"m",tx:"Advising on bibliography presentation",ops:["postgraduate's own dept/tutor","library staff","another section of university"],a:"A"},
+{n:39,t:"m",tx:"Checking the draft of the dissertation",ops:["postgraduate's own dept/tutor","library staff","another section of university"],a:"B"},
+{n:40,t:"m",tx:"Providing language support",ops:["postgraduate's own dept/tutor","library staff","another section of university"],a:"C"}
+]},
+{id:9,ti:"East End of London",ty:"mixed",ins:"Write NO MORE THAN TWO WORDS for each answer.",
+q:[
+{n:31,t:"f",tx:"1st–4th centuries: Produce used to [B] the people of London",a:"feed"},
+{n:32,t:"f",tx:"5th–10th centuries: goods made of [B] and leather",a:"metal|leather"},
+{n:33,t:"f",tx:"11th century: Lack of [B] encouraged businesses",a:"restrictions"},
+{n:34,t:"f",tx:"16th century: Construction for building of [B]",a:"ships"},
+{n:35,t:"f",tx:"16th century: Workers from other parts of [B]",a:"England"},
+{n:36,t:"f",tx:"17th century: Marshes drained, land [B] on",a:"built"},
+{n:37,t:"f",tx:"19th century: Conditions of great [B]",a:"poverty"},
+{n:38,t:"m",tx:"20th century housing problems THREE (1st). Correct: C",ops:["unsympathetic landlords","unclean water","heating problems","high rents","overcrowding","poor standards of building","houses catching fire"],a:"C"},
+{n:39,t:"m",tx:"20th century housing problems (2nd). Correct: E",ops:["unsympathetic landlords","unclean water","heating problems","high rents","overcrowding","poor standards of building","houses catching fire"],a:"E"},
+{n:40,t:"m",tx:"20th century housing problems (3rd). Correct: F",ops:["unsympathetic landlords","unclean water","heating problems","high rents","overcrowding","poor standards of building","houses catching fire"],a:"F"}
+]},
+{id:10,ti:"History of Moving Pictures",ty:"mixed",ins:"Choose correct letter or write NO MORE THAN THREE WORDS.",
+q:[
+{n:31,t:"m",tx:"Photographs of horse running showed",ops:["all feet off the ground.","at least one foot on ground.","two feet off the ground."],a:"A"},
+{n:32,t:"m",tx:"The Scotsman employed by Edison",ops:["designed system using Edison's technology.","used available technology to make new system.","was already expert in motion pictures."],a:"B"},
+{n:33,t:"m",tx:"Major problem with first system",ops:["only one person could be filmed.","only very short films possible.","the camera was very heavy."],a:"C"},
+{n:34,t:"m",tx:"Rival systems appeared after people had",ops:["been told about American system.","seen the American system.","used the American system."],a:"A"},
+{n:35,t:"m",tx:"In 1895, new system developed by",ops:["a French team working alone.","French and German team together.","German team who invented 'cinema'."],a:"A"},
+{n:36,t:"m",tx:"Longer films not made because of problems with",ops:["subject matters.","the camera.","the film projector."],a:"C"},
+{n:37,t:"m",tx:"The 'Latham Loop' relied on",ops:["removing tension between film reels.","adding three more film reels.","making one reel more effective."],a:"A"},
+{n:38,t:"f",tx:"First motion picture: The [B]",a:"Great Train Robbery"},
+{n:39,t:"f",tx:"[B] used for first time on film in 1926",a:"Sound effects"},
+{n:40,t:"f",tx:"Subtitles added because of its [B]",a:"poor sound quality"}
+]},
+{id:11,ti:"Ireland: Neolithic Period",ty:"mixed",ins:"Choose correct letter or write NO MORE THAN TWO WORDS.",
+q:[
+{n:31,t:"m",tx:"It is not clear",ops:["when farming economy was introduced to Ireland.","why people began to farm in Ireland.","where the early Irish farmers came from."],a:"C"},
+{n:32,t:"m",tx:"About breeding animals in Neolithic Ireland",ops:["Numbers must have been above a certain level.","They were under threat from wild animals.","Some species died out."],a:"A"},
+{n:33,t:"m",tx:"About transportation of animals",ops:["Livestock would have limited sailing distance.","Neolithic boats were too primitive.","Probably only a few breeding animals imported."],a:"A"},
+{n:34,t:"m",tx:"Main evidence for cereal crops",ops:["remains of burnt grain in pots","marks left on pots by grains","patterns painted on surface of pots"],a:"B"},
+{n:35,t:"f",tx:"Ploughs pulled by [B] or by cattle",a:"people"},
+{n:36,t:"f",tx:"Final stages of axe-making: [B] and sand",a:"water|sand"},
+{n:37,t:"f",tx:"Irish axes exported to [B] and England",a:"Scotland"},
+{n:38,t:"f",tx:"The [B] of pots was polished",a:"outside"},
+{n:39,t:"f",tx:"Clay from [B] areas was used",a:"local"},
+{n:40,t:"f",tx:"Decoration around [B] of earliest pots",a:"tops"}
+]},
+{id:12,ti:"Asiatic Lions / Gir Sanctuary",ty:"mixed",ins:"Choose correct letter or write NO MORE THAN TWO WORDS AND/OR A NUMBER.",
+q:[
+{n:31,t:"m",tx:"Asiatic lions developed as separate sub-species",ops:["about 10,000 years ago","about 100,000 years ago","about 1,000,000 years ago"],a:"B"},
+{n:32,t:"m",tx:"Pictures of Asiatic lions on ancient coins from",ops:["Greece.","The Middle East.","India."],a:"A"},
+{n:33,t:"m",tx:"Asiatic lions disappeared from Europe",ops:["2,500 years ago.","2,000 years ago.","1,900 years ago."],a:"B"},
+{n:34,t:"m",tx:"Very few African lions have",ops:["a long mane.","a coat with varied colours.","a fold of skin on their stomach."],a:"C"},
+{n:35,t:"f",tx:"Sanctuary area: approximately [B] sq. kilometres",a:"1450|1,450"},
+{n:36,t:"f",tx:"One threat to lions: [B]",a:"disease"},
+{n:37,t:"f",tx:"Ancestors protected by a [B]",a:"wealthy prince|prince"},
+{n:38,t:"f",tx:"Large part of the lions' [B]: farmers' animals",a:"diet"},
+{n:39,t:"f",tx:"Lions sometimes [B] when water is short",a:"attack humans"},
+{n:40,t:"f",tx:"Fight a lion as test of [B]",a:"leadership"}
+]},
+{id:13,ti:"Seminar on Rock Art",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Fieldwork trip to Namibia in [B]",a:"April"},
+{n:32,t:"f",tx:"Used to help [B] learn about tracking",a:"children"},
+{n:33,t:"f",tx:"Why are tracks usually [B]?",a:"repeated"},
+{n:34,t:"f",tx:"Why are unrealistic animals sometimes half [B]?",a:"human"},
+{n:35,t:"f",tx:"Wise men tried to control wild animals with [B]",a:"magic"},
+{n:36,t:"f",tx:"Look at site from a [B] — reduces visitor pressure",a:"distance"},
+{n:37,t:"f",tx:"Camping may be disrespectful to that [B]",a:"culture"},
+{n:38,t:"f",tx:"Undiscovered material may be damaged by [B]",a:"fires|fire"},
+{n:39,t:"f",tx:"Avoid [B] or tracing rock art",a:"touching"},
+{n:40,t:"f",tx:"Aim: leave the site [B]",a:"intact"}
+]},
+{id:14,ti:"Handedness in Sport",ty:"mixed",ins:"Choose correct letter or write ONE WORD AND/OR A NUMBER.",
+q:[
+{n:31,t:"m",tx:"Anita first felt Matthews article was valuable when she realized",ops:["how it would help her with left-handedness.","the relevance of connections he made with music.","the impressive size of his research project."],a:"C"},
+{n:32,t:"m",tx:"Findings on handedness will be of value in",ops:["helping sportspeople identify weaknesses.","aiding sportspeople plan tactics.","developing suitable training programmes."],a:"B"},
+{n:33,t:"m",tx:"Most sports coaches",ops:["know nothing about influence of handedness.","focus on wrong aspects of performance.","underestimate what science has to offer."],a:"C"},
+{n:34,t:"m",tx:"German study showed greater mixed handedness in musicians who",ops:["started playing instruments in early youth.","play a string instrument such as violin.","practice a great deal."],a:"A"},
+{n:35,t:"m",tx:"Studies on ape behaviour show",ops:["apes using same hand to get food are most successful.","apes have same proportion of left/right-handers as humans.","more apes are left-handed than right-handed."],a:"A"},
+{n:36,t:"f",tx:"Hockey: stick used in [B] directions",a:"2"},
+{n:37,t:"f",tx:"Mixed-handed players found to be much more [B]",a:"confident"},
+{n:38,t:"f",tx:"Tennis: larger relevant field of [B]",a:"vision"},
+{n:39,t:"f",tx:"Cross-lateral players make [B] too late",a:"corrections"},
+{n:40,t:"f",tx:"Gymnastics: gymnasts' [B] is important",a:"balance"}
+]},
+{id:15,ti:"Hotels and the Tourist Industry",ty:"mixed",ins:"Choose correct letter or write ONE WORD ONLY.",
+q:[
+{n:31,t:"m",tx:"How might a guest feel in a luxury hotel?",ops:["impressed with the facilities","depressed by the experience","concerned at the high costs"],a:"B"},
+{n:32,t:"m",tx:"Luxury hotels overlook the need to",ops:["provide for demands of important guests.","create a comfortable environment.","offer an individual and personal welcome."],a:"B"},
+{n:33,t:"m",tx:"The company focused research on",ops:["a wide variety of hotels.","large, luxury hotel chains.","exotic holiday hotels."],a:"A"},
+{n:34,t:"m",tx:"Impact of outside environment on hotel guest",ops:["considerable effect.","very limited effect.","no effect whatsoever."],a:"C"},
+{n:35,t:"f",tx:"cater specifically for [B] travellers",a:"business"},
+{n:36,t:"f",tx:"provide a stylish [B] for guests",a:"kitchen"},
+{n:37,t:"f",tx:"set a trend throughout the [B]",a:"world"},
+{n:38,t:"f",tx:"offering chance to [B] ordinary routine life",a:"escape"},
+{n:39,t:"f",tx:"cared for like a [B]",a:"baby"},
+{n:40,t:"f",tx:"leaving small treats e.g. cosmetics or [B]",a:"chocolate"}
+]},
+{id:16,ti:"Monosodium Glutamate (MSG)",ty:"mixed",ins:"Choose correct letter or write NO MORE THAN TWO WORDS.",
+q:[
+{n:31,t:"m",tx:"Main topic of lecture",ops:["history of MSG.","way MSG works.","where MSG is used."],a:"B"},
+{n:32,t:"m",tx:"In 1808, scientists in Japan",ops:["made MSG.","began using kombu.","identified glutamate."],a:"C"},
+{n:33,t:"m",tx:"Change in manufacture in 1956",ops:["Began to be manufactured on large scale.","Japanese began extracting from natural sources.","Became much more expensive."],a:"A"},
+{n:34,t:"f",tx:"MSG contains [B] (9.6%)",a:"water"},
+{n:35,t:"f",tx:"Glutamate found in proteins such as [B]",a:"meat|cheese"},
+{n:36,t:"f",tx:"and [B]",a:"cheese|meat"},
+{n:37,t:"f",tx:"In 1908 Ikeda discovered a [B]",a:"5th taste|new taste"},
+{n:38,t:"f",tx:"Our ability to detect glutamate — it is so [B] naturally",a:"common"},
+{n:39,t:"f",tx:"[B] tells us food contains toxins",a:"bitterness"},
+{n:40,t:"f",tx:"Saltiness tells us food contains [B]",a:"minerals"}
+]},
+{id:17,ti:"Geography",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"effects on the [B] of the Earth",a:"surface"},
+{n:32,t:"f",tx:"dynamic between [B] and population",a:"environment"},
+{n:33,t:"f",tx:"human lifestyles and their [B]",a:"impact"},
+{n:34,t:"f",tx:"Specific study: [B] geography",a:"urban"},
+{n:35,t:"f",tx:"understand surroundings and associated [B]",a:"problems"},
+{n:36,t:"f",tx:"collect information in the form of [B]",a:"images"},
+{n:37,t:"f",tx:"analyse data — identify [B]",a:"patterns"},
+{n:38,t:"f",tx:"two-dimensional map will always have some [B]",a:"distortion"},
+{n:39,t:"f",tx:"aerial photos show [B] density, ocean floor",a:"traffic"},
+{n:40,t:"f",tx:"Landsat pictures for monitoring [B] conditions",a:"weather"}
+]},
+{id:18,ti:"Research on Doctors",ty:"mixed",ins:"Choose correct letter A/B/C or A-F.",
+q:[
+{n:31,t:"m",tx:"To set up research, Shona got",ops:["advice from personal friends.","help from students.","information from her tutor's contacts."],a:"B"},
+{n:32,t:"m",tx:"Types of people included",ops:["young people in their first job","men who were working","women who were unemployed"],a:"B"},
+{n:33,t:"m",tx:"Shona's aim in questionnaire",ops:["to get a wide range of data.","to limit people's responses.","to guide people through interviews."],a:"A"},
+{n:34,t:"m",tx:"Initial results about medical services in Britain",ops:["Current concerns are misrepresented by the press.","Financial issues are critical.","Reforms within hospitals have been unsuccessful."],a:"A"},
+{n:35,t:"m",tx:"Shona needs further research to",ops:["present findings to government.","decide level of extra funding.","identify preferences of the public."],a:"C"},
+{n:36,t:"m",tx:"Shona has learnt that",ops:["it is important to plan projects carefully.","people do not like answering questions.","colleagues do not always agree."],a:"C"},
+{n:37,t:"m",tx:"Person interviewed in the street",ops:["gave false data","decided to stop participating","refused to tell about their job","kept changing their mind","became very angry","was worried about confidentiality"],a:"B"},
+{n:38,t:"m",tx:"Undergraduate at the university",ops:["gave false data","decided to stop participating","refused to tell about their job","kept changing their mind","became very angry","was worried about confidentiality"],a:"F"},
+{n:39,t:"m",tx:"Colleague in her department",ops:["gave false data","decided to stop participating","refused to tell about their job","kept changing their mind","became very angry","was worried about confidentiality"],a:"D"},
+{n:40,t:"m",tx:"Tutor in a foreign university",ops:["gave false data","decided to stop participating","refused to tell about their job","kept changing their mind","became very angry","was worried about confidentiality"],a:"C"}
+]},
+{id:19,ti:"Trying to Repeat Success",ty:"mixed",ins:"Choose correct letter or write ONE WORD ONLY.",
+q:[
+{n:31,t:"m",tx:"Compared to introducing new processes, copying existing is",ops:["more attractive.","more frequent.","more straightforward."],a:"A"},
+{n:32,t:"m",tx:"Most research into repetition of success",ops:["been done outside United States.","produced consistent findings.","related to only a few contexts."],a:"C"},
+{n:33,t:"m",tx:"About consulting experts",ops:["Too few managers ever do it.","It can be useful in certain circumstances.","Experts are sometimes unwilling."],a:"B"},
+{n:34,t:"m",tx:"Expert's knowledge may be incomplete because",ops:["some details are difficult to explain.","workers choose not to mention details.","details are altered by workers."],a:"A"},
+{n:35,t:"f",tx:"Manager tries to create an ideal [B]",a:"system"},
+{n:36,t:"f",tx:"disadvantages overlooked, e.g. effect on [B]",a:"staff"},
+{n:37,t:"f",tx:"Solution: change [B]",a:"attitude"},
+{n:38,t:"f",tx:"impose rigorous [B]",a:"testing"},
+{n:39,t:"f",tx:"physical features of the [B]",a:"environment"},
+{n:40,t:"f",tx:"the [B] of original employees",a:"behaviour|behavior"}
+]},
+{id:20,ti:"Aboriginal Rock Paintings",ty:"mixed",ins:"Write A (Dynamic), B (Yam), C (Modern); then fill blanks.",
+q:[
+{n:31,t:"m",tx:"figures revealing bones",ops:["A - Dynamic","B - Yam","C - Modern"],a:"C"},
+{n:32,t:"m",tx:"rounded figures",ops:["A - Dynamic","B - Yam","C - Modern"],a:"B"},
+{n:33,t:"m",tx:"figures with parts missing",ops:["A - Dynamic","B - Yam","C - Modern"],a:"C"},
+{n:34,t:"m",tx:"figures smaller than life size",ops:["A - Dynamic","B - Yam","C - Modern"],a:"A"},
+{n:35,t:"m",tx:"sea creatures",ops:["A - Dynamic","B - Yam","C - Modern"],a:"B"},
+{n:36,t:"m",tx:"plants",ops:["A - Dynamic","B - Yam","C - Modern"],a:"B"},
+{n:37,t:"f",tx:"Aim: identify the [B] used as basis for Rainbow Serpent",a:"animal|creature"},
+{n:38,t:"f",tx:"Environmental changes led to higher [B]",a:"sea level|water level"},
+{n:39,t:"f",tx:"Traditional activities affected, especially [B]",a:"hunting"},
+{n:40,t:"f",tx:"Symbolizes [B] in Aboriginal culture",a:"creation"}
+]},
+{id:21,ti:"Mass Strandings of Whales",ty:"fill",ins:"Write NO MORE THAN TWO WORDS for each answer.",
+q:[
+{n:31,t:"f",tx:"Common where the [B] can change quickly",a:"tide|tides"},
+{n:32,t:"f",tx:"Parasites affect marine animals' [B] for navigation",a:"hearing|ear|ears"},
+{n:33,t:"f",tx:"Poisons from [B] or animals consumed",a:"plants|animals|fish"},
+{n:34,t:"f",tx:"Majority were not [B] when stranded",a:"feeding"},
+{n:35,t:"f",tx:"[B] from military tests linked to strandings",a:"noise|noises"},
+{n:36,t:"f",tx:"Bahamas (2000): whales were all [B]",a:"healthy"},
+{n:37,t:"f",tx:"Bahamas (2000): not in a [B]",a:"group"},
+{n:38,t:"f",tx:"More strandings in most [B] species",a:"social"},
+{n:39,t:"f",tx:"1994 dolphin stranding — only the [B] was ill",a:"leader"},
+{n:40,t:"f",tx:"Marine Mammals Ashore: stranding [B] info",a:"network|networks"}
+]},
+{id:22,ti:"Business Cultures",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Power culture: [B] power source",a:"central"},
+{n:32,t:"f",tx:"communication by [B]",a:"conversation|conversational"},
+{n:33,t:"f",tx:"Disadvantage: might not act [B]",a:"effectively"},
+{n:34,t:"f",tx:"Suitable employee: not afraid of [B]",a:"risk|risks"},
+{n:35,t:"f",tx:"Role culture: large, many [B]",a:"levels"},
+{n:36,t:"f",tx:"rules e.g. job [B]",a:"description|descriptions"},
+{n:37,t:"f",tx:"Successful when [B] ability is important",a:"technical"},
+{n:38,t:"f",tx:"Slow to see when [B] is needed",a:"change"},
+{n:39,t:"f",tx:"Suitable employee: doesn't want [B]",a:"responsibility"},
+{n:40,t:"f",tx:"Task culture advantage: [B]",a:"flexible"}
+]},
+{id:23,ti:"The Underground House",ty:"mixed",ins:"Choose correct letter or write ONE WORD AND/OR A NUMBER.",
+q:[
+{n:31,t:"m",tx:"The owners of the underground house",ops:["had no experience of living in rural area.","were interested in environmental issues.","wanted a professional project manager."],a:"B"},
+{n:32,t:"m",tx:"About the site of the house",ops:["The land was quite cheap.","Stone was being extracted nearby.","It was in a completely unspoiled area."],a:"A"},
+{n:33,t:"f",tx:"South-facing side: two layers of [B]",a:"glass"},
+{n:34,t:"f",tx:"Layer of foam used to improve [B]",a:"insulation"},
+{n:35,t:"f",tx:"Building has many internal mirrors and [B]",a:"windows"},
+{n:36,t:"f",tx:"House may produce more [B] than it needs",a:"electricity"},
+{n:37,t:"f",tx:"Recycled wood used for the [B]",a:"floor|floors"},
+{n:38,t:"f",tx:"System for processing domestic [B] is organic",a:"waste"},
+{n:39,t:"f",tx:"Large quantities of [B] in construction was harmful",a:"concrete"},
+{n:40,t:"f",tx:"House pays 'environmental debt' within [B]",a:"15 years"}
+]},
+{id:24,ti:"Wildlife in City Gardens",ty:"mixed",ins:"Choose correct letter or write ONE WORD ONLY.",
+q:[
+{n:31,t:"m",tx:"What led the group to choose their topic?",ops:["Concerned about decline of one species.","Interested in effects of city growth.","Wanted to investigate a recent phenomenon."],a:"C"},
+{n:32,t:"m",tx:"Proportion of land for private gardens confirmed by",ops:["consulting official documents.","taking large-scale photos.","discussions with town surveyors."],a:"A"},
+{n:33,t:"m",tx:"Group asked garden owners to",ops:["take part in formal interviews.","keep a record of animals they saw.","get in contact when they saw a rare species."],a:"B"},
+{n:34,t:"m",tx:"Group made observations in gardens",ops:["with a large number of animal species.","they considered to be representative.","with stable populations of rare animals."],a:"B"},
+{n:35,t:"m",tx:"Group did extensive reading on",ops:["wildlife problems in rural areas.","urban animal populations.","current gardening practices."],a:"A"},
+{n:36,t:"m",tx:"Speaker focuses on three species because",ops:["lot of data has been obtained about them.","group were most interested in them.","they best indicated general trends."],a:"C"},
+{n:37,t:"f",tx:"Animal with suitable water — massive urban increase: [B]",a:"frog|frogs"},
+{n:38,t:"f",tx:"Hedgehogs: Safer from [B] when in cities",a:"predators"},
+{n:39,t:"f",tx:"Easy to [B] them accurately",a:"count"},
+{n:40,t:"f",tx:"Song thrushes: variety of [B] to eat",a:"seeds|seed"}
+]},
+{id:25,ti:"The Spirit Bear",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"colour comes from an uncommon [B]",a:"gene"},
+{n:32,t:"f",tx:"Local people believe it has unusual [B]",a:"powers"},
+{n:33,t:"f",tx:"They protect the bear from [B]",a:"hunters"},
+{n:34,t:"f",tx:"Tree roots stop [B] along salmon streams",a:"erosion"},
+{n:35,t:"f",tx:"found on a small number of [B]",a:"islands"},
+{n:36,t:"f",tx:"Habitat lost to deforestation and [B] by logging companies",a:"roads"},
+{n:37,t:"f",tx:"Unrestricted [B] affecting salmon supply",a:"fishing"},
+{n:38,t:"f",tx:"threatened by low rate of [B]",a:"reproduction"},
+{n:39,t:"f",tx:"Logging companies must improve their [B]",a:"methods"},
+{n:40,t:"f",tx:"Maintenance and [B] of territory needed",a:"expansion"}
+]},
+{id:26,ti:"The Future of Management",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"greater [B] among companies",a:"competition"},
+{n:32,t:"f",tx:"increase in power of large [B] companies",a:"global"},
+{n:33,t:"f",tx:"rising [B] in certain countries",a:"demand"},
+{n:34,t:"f",tx:"more discussion with [B] before making decisions",a:"customers"},
+{n:35,t:"f",tx:"environmental concerns leading to more [B]",a:"regulation"},
+{n:36,t:"f",tx:"teams formed to work on a particular [B]",a:"project"},
+{n:37,t:"f",tx:"offer hours that are [B]",a:"flexible"},
+{n:38,t:"f",tx:"managers need to provide good [B]",a:"leadership"},
+{n:39,t:"f",tx:"changes influenced by [B] taking senior roles",a:"women"},
+{n:40,t:"f",tx:"increase among [B] specialists",a:"self-employed"}
+]},
+{id:27,ti:"Self-regulatory Focus Theory",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Promotion goals focus on [B]",a:"achievement|achievements"},
+{n:32,t:"f",tx:"comes from one's [B]",a:"personality|character"},
+{n:33,t:"f",tx:"The [B] factor",a:"situational"},
+{n:34,t:"f",tx:"focus on promotion goals when with a [B]",a:"friend"},
+{n:35,t:"f",tx:"People think about their [B] and gains",a:"aspirations|ambitions"},
+{n:36,t:"f",tx:"Leadership behavior and [B] affects focus",a:"style"},
+{n:37,t:"f",tx:"Transformational Leaders: pay attention to [B] of followers",a:"development"},
+{n:38,t:"f",tx:"passionately communicate a clear [B]",a:"vision"},
+{n:39,t:"f",tx:"Transactional Leaders: create [B] to make expectations clear",a:"structures"},
+{n:40,t:"f",tx:"Promotion Focus good for jobs requiring [B]",a:"innovation|innovations"}
+]},
+{id:28,ti:"Nanotechnology",ty:"mixed",ins:"Choose correct letter or write ONE WORD ONLY.",
+q:[
+{n:31,t:"m",tx:"One problem with nanotechnology is that",ops:["it could threaten our way of life.","it could be used to spy on people.","it is misunderstood by the public."],a:"C"},
+{n:32,t:"m",tx:"Some scientists believe nano-particles",ops:["should be restricted to secure environments.","should be used with more caution.","should only be developed for essential products."],a:"B"},
+{n:33,t:"m",tx:"Research into nanotechnology",ops:["has yet to win popular support.","could be seen as unethical.","ought to be continued."],a:"C"},
+{n:34,t:"f",tx:"development of stronger [B]",a:"metal|metals"},
+{n:35,t:"f",tx:"[B] travel will be available to the masses",a:"space"},
+{n:36,t:"f",tx:"Computers will have a greater [B]",a:"memory"},
+{n:37,t:"f",tx:"[B] energy will become more affordable",a:"solar"},
+{n:38,t:"f",tx:"Pollutants such as [B] removed from water",a:"oil"},
+{n:39,t:"f",tx:"no [B] from manufacturing",a:"waste"},
+{n:40,t:"f",tx:"Analysis of medical [B] will be sped up",a:"tests"}
+]},
+{id:29,ti:"Ocean Biodiversity",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"important for locating targets for [B]",a:"conservation"},
+{n:32,t:"f",tx:"ocean hotspots not always rich in [B]",a:"food|foods"},
+{n:33,t:"f",tx:"higher temperatures at the [B]",a:"surface"},
+{n:34,t:"f",tx:"sufficient [B] in the water",a:"oxygen"},
+{n:35,t:"f",tx:"hotspots for marine [B]",a:"mammals"},
+{n:36,t:"f",tx:"new species living under the [B]",a:"ice"},
+{n:37,t:"f",tx:"considering rate of [B]",a:"decline|declining|decrease"},
+{n:38,t:"f",tx:"make a distribution [B] for each species",a:"map"},
+{n:39,t:"f",tx:"establish [B] corridors e.g. for turtles",a:"migration"},
+{n:40,t:"f",tx:"catch fish only for [B]",a:"consumption"}
+]},
+{id:30,ti:"The Taylor Concert Hall",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"consider physical and [B] context",a:"social"},
+{n:32,t:"f",tx:"On the site of a disused [B]",a:"factory"},
+{n:33,t:"f",tx:"Beside a [B]",a:"canal"},
+{n:34,t:"f",tx:"approached by a [B] for pedestrians",a:"bridge"},
+{n:35,t:"f",tx:"building is the shape of a [B]",a:"box"},
+{n:36,t:"f",tx:"one exterior wall acts as a large [B]",a:"screen"},
+{n:37,t:"f",tx:"floor built on huge pads made of [B]",a:"rubber"},
+{n:38,t:"f",tx:"walls made of local wood and are [B] in shape",a:"curved"},
+{n:39,t:"f",tx:"ceiling panels and [B] on walls adjust acoustics",a:"curtains"},
+{n:40,t:"f",tx:"critics say the [B] style is inappropriate",a:"international"}
+]},
+{id:31,ti:"Ethnography in Business",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"investigate customer needs and [B]",a:"attitude|attitudes"},
+{n:32,t:"f",tx:"cooks could not see the [B] in measuring cups",a:"numbers"},
+{n:33,t:"f",tx:"customers wanted to check the [B] used",a:"time|minutes"},
+{n:34,t:"f",tx:"need to develop [B] to improve communication",a:"software"},
+{n:35,t:"f",tx:"Nurses needed info about [B] in different parts of hospital",a:"patients"},
+{n:36,t:"f",tx:"Respondents recorded their [B] while travelling",a:"emotions|feelings"},
+{n:37,t:"f",tx:"Participants selected by criteria such as age, [B]",a:"income"},
+{n:38,t:"f",tx:"participants must feel [B] about taking part",a:"comfortable"},
+{n:39,t:"f",tx:"usually direct [B] of participants",a:"observation"},
+{n:40,t:"f",tx:"A lot of time needed for [B] of data",a:"analysis"}
+]},
+{id:32,ti:"Soil and CO₂",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Erosion more likely in soil that is [B]",a:"dry"},
+{n:32,t:"f",tx:"Lal found soil in Africa that was very [B]",a:"hard"},
+{n:33,t:"f",tx:"plants turn CO₂ into substances such as [B]",a:"sugar|sugars"},
+{n:34,t:"f",tx:"CO₂ moves from the [B] of plants to microbes",a:"roots"},
+{n:35,t:"f",tx:"soil remains fertile and [B]",a:"moist|damp|wet"},
+{n:36,t:"f",tx:"increasing the [B] of plants grown",a:"variety"},
+{n:37,t:"f",tx:"taking place on a big [B] farm",a:"cattle"},
+{n:38,t:"f",tx:"compost from agriculture and [B]",a:"gardens|gardening"},
+{n:39,t:"f",tx:"using [B] that are always green",a:"grasses"},
+{n:40,t:"f",tx:"giving farmers [B] for carbon storage",a:"payment|payments|money"}
+]},
+{id:33,ti:"Four Business Values",ty:"fill",ins:"Write NO MORE THAN TWO WORDS for each answer.",
+q:[
+{n:31,t:"f",tx:"business values can result in [B]",a:"damage"},
+{n:32,t:"f",tx:"understand potential [B] that may result",a:"side effects"},
+{n:33,t:"f",tx:"team had to build a [B]",a:"bridge"},
+{n:34,t:"f",tx:"Other teams experienced [B] from trying to collaborate",a:"confusion"},
+{n:35,t:"f",tx:"Sales of a [B] were poor",a:"smartphone"},
+{n:36,t:"f",tx:"Hard work may be bad use of company [B]",a:"resources"},
+{n:37,t:"f",tx:"'Lazy' refers to people who avoid tasks that are [B]",a:"unnecessary|not necessary"},
+{n:38,t:"f",tx:"advertising campaign for a [B] was memorable but failed",a:"chocolate bar"},
+{n:39,t:"f",tx:"Creativity should respond to a particular [B]",a:"problem"},
+{n:40,t:"f",tx:"pioneers had a [B] far higher than followers",a:"market share"}
+]},
+{id:34,ti:"Conflict at Work",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Conflict mostly: [B]",a:"bullying"},
+{n:32,t:"f",tx:"people wanting to prove their [B]",a:"superiority"},
+{n:33,t:"f",tx:"caused by differences in [B]",a:"personality"},
+{n:34,t:"f",tx:"[B] conflicts: people concerned about own team",a:"structural"},
+{n:35,t:"f",tx:"conflict-related stress can cause [B] lasting months",a:"absence"},
+{n:36,t:"f",tx:"Many CEOs have both [B] and anxiety",a:"confidence"},
+{n:37,t:"f",tx:"conflict between people who have different [B]",a:"visions"},
+{n:38,t:"f",tx:"structure that is more [B] creates uncertainty",a:"democratic"},
+{n:39,t:"f",tx:"Bosses need to gain [B]",a:"respect"},
+{n:40,t:"f",tx:"someone from outside may become a [B]",a:"mediator"}
+]},
+{id:35,ti:"Effects of Mercury on Birds",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"recently found to affect birds which feed on [B]",a:"insects"},
+{n:32,t:"f",tx:"effects on birds' [B] or mental processes",a:"behaviour|behavior"},
+{n:33,t:"f",tx:"bird song usually learned from a bird's [B]",a:"father"},
+{n:34,t:"f",tx:"songs exposed to mercury are less [B]",a:"complex|complicated"},
+{n:35,t:"f",tx:"negative effect on birds' [B]",a:"reproduction|breeding"},
+{n:36,t:"f",tx:"lab-based studies allow more [B]",a:"control"},
+{n:37,t:"f",tx:"Migrating birds such as [B] may be eaten by humans",a:"ducks|duck"},
+{n:38,t:"f",tx:"Mercury causes problems in learning [B]",a:"language"},
+{n:39,t:"f",tx:"Mercury in mother from [B] may affect unborn child",a:"food"},
+{n:40,t:"f",tx:"New regulations affect everyone's energy [B]",a:"costs|cost|prices|bills"}
+]},
+{id:36,ti:"Noise in Cities",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"do not show noise when people are in their [B]",a:"garden|gardens"},
+{n:32,t:"f",tx:"noise is a [B] issue that must be dealt with",a:"political"},
+{n:33,t:"f",tx:"effect on the [B] of schoolchildren",a:"work|study"},
+{n:34,t:"f",tx:"pleasant noise e.g. sound of a [B] in a town",a:"fountain"},
+{n:35,t:"f",tx:"researchers use methods from [B] sciences",a:"social"},
+{n:36,t:"f",tx:"urban environments which are [B]",a:"lively"},
+{n:37,t:"f",tx:"architects don't get much [B] in acoustics",a:"training"},
+{n:38,t:"f",tx:"how sound relates to [B]",a:"culture"},
+{n:39,t:"f",tx:"physics can help understand the [B] of sound",a:"nature"},
+{n:40,t:"f",tx:"current disadvantage: virtual reality programs are [B]",a:"silent"}
+]},
+{id:37,ti:"Insect Extinction",ty:"mixed",ins:"Write NO MORE THAN TWO WORDS or ONE WORD ONLY.",
+q:[
+{n:31,t:"f",tx:"important plants no longer found in fields or [B]",a:"gardens"},
+{n:32,t:"f",tx:"In Amazon, [B] might cause butterfly/beetle loss",a:"climate change"},
+{n:33,t:"f",tx:"Pesticides affecting spatial skills and [B] of bees",a:"memory"},
+{n:34,t:"f",tx:"Insects essential part of the [B] everywhere except Antarctica",a:"food chain"},
+{n:35,t:"f",tx:"Researchers can't discover new [B] based on plants",a:"medicine"},
+{n:36,t:"f",tx:"People must reduce consumption of [B]",a:"meat"},
+{n:37,t:"f",tx:"Sand from Antioch Dunes used to make [B] for houses",a:"bricks"},
+{n:38,t:"f",tx:"Metalmark butterfly requires plant for its [B]",a:"eggs"},
+{n:39,t:"f",tx:"In recent years [B] led to loss of wildlife in Antioch Dunes",a:"fire"},
+{n:40,t:"f",tx:"Antioch Dunes shows how [B] doesn't require much land",a:"conservation"}
+]},
+{id:38,ti:"Engineer Sarah Guppy",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Jane Harrison was the first female [B]",a:"academic"},
+{n:32,t:"f",tx:"140 female dentists and 212 [B]",a:"doctors"},
+{n:33,t:"f",tx:"designed bridges that could survive [B]",a:"floods"},
+{n:34,t:"f",tx:"built [B] of the Clifton Suspension Bridge",a:"models"},
+{n:35,t:"f",tx:"was a significant [B] in the Clifton Suspension Bridge",a:"investor|investors"},
+{n:36,t:"f",tx:"'barnacle buster' allowed [B] to go faster",a:"ships"},
+{n:37,t:"f",tx:"helped stop [B] near railway lines",a:"erosion"},
+{n:38,t:"f",tx:"built machine for making parts of [B] at same time",a:"breakfast"},
+{n:39,t:"f",tx:"designed an early type of [B] equipment",a:"gym"},
+{n:40,t:"f",tx:"not until 1906 that a woman [B] in engineering",a:"graduated"}
+]},
+{id:39,ti:"Living in Space",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"blood moves to the head and [B]",a:"chest"},
+{n:32,t:"f",tx:"they lose minerals such as [B]",a:"calcium"},
+{n:33,t:"f",tx:"exercise 2.5 hours to avoid [B] loss",a:"muscle"},
+{n:34,t:"f",tx:"may suffer from poor [B] back on Earth",a:"vision"},
+{n:35,t:"f",tx:"recycle water including [B]",a:"sweat"},
+{n:36,t:"f",tx:"materials which are [B] enough for transport",a:"light"},
+{n:37,t:"f",tx:"Rocks could make metal, brick and possibly [B]",a:"paint"},
+{n:38,t:"f",tx:"NASA needs to find a way to make large [B]",a:"windows"},
+{n:39,t:"f",tx:"virtual reality to visit places like a [B]",a:"museum"},
+{n:40,t:"f",tx:"to get a new [B]",a:"qualification"}
+]},
+{id:40,ti:"Polynesian Navigation",ty:"fill",ins:"Write ONE WORD ONLY for each answer.",
+q:[
+{n:31,t:"f",tx:"Polynesians originally migrated from [B]",a:"Asia"},
+{n:32,t:"f",tx:"Polynesian canoes were [B] than European ships",a:"faster"},
+{n:33,t:"f",tx:"paddles were used for [B]",a:"steering"},
+{n:34,t:"f",tx:"warm clothes made from [B] of paper mulberry tree",a:"bark"},
+{n:35,t:"f",tx:"voyages created fresh interest in [B]",a:"songs|culture|language"},
+{n:36,t:"f",tx:"when cloudy, found direction by using [B]",a:"waves"},
+{n:37,t:"f",tx:"certain [B] that only live near land",a:"birds"},
+{n:38,t:"f",tx:"changes in sea's [B]",a:"colour|color"},
+{n:39,t:"f",tx:"Hokule'a sailed without [B]",a:"instruments"},
+{n:40,t:"f",tx:"voyages created fresh interest in culture, music and [B]",a:"language|languages"}
+]}
+];
+
+// ════════ CONSTANTS ════════
+const K={users:'iu',res:'ir',notifs:'in',pw:'ip',apw:'iap',ses:'is'};
+const gPw=()=>localStorage.getItem(K.pw)||'ielts2024';
+const gApw=()=>localStorage.getItem(K.apw)||'admin2024';
+const lsG=(k,d=null)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}};
+const lsS=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+// ════════ STATE ════════
+let SES=lsG(K.ses);
+let CUR=null,UA={},CHECKED=false,FILTER='all',ABTAB='tests',ADMTAB='n';
+let AUDIO=new Audio(),AP=false;
+
+// ════════ LOGIN ════════
+function setLoginTab(t){
+  document.getElementById('ltS').classList.toggle('on',t==='s');
+  document.getElementById('ltT').classList.toggle('on',t==='t');
+  document.getElementById('lcS').style.display=t==='s'?'block':'none';
+  document.getElementById('lcT').style.display=t==='t'?'block':'none';
+}
+['lName','lSurname','lPw'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')loginStu()}));
+document.getElementById('lAdmPw').addEventListener('keydown',e=>{if(e.key==='Enter')loginAdm()});
+
+function loginStu(){
+  const name=document.getElementById('lName').value.trim();
+  const sur=document.getElementById('lSurname').value.trim();
+  const pw=document.getElementById('lPw').value;
+  if(!name||!sur||pw!==gPw()){shk('lPw');document.getElementById('lErrS').classList.add('on');return}
+  document.getElementById('lErrS').classList.remove('on');
+  const users=lsG(K.users,[]);
+  let u=users.find(x=>x.n.toLowerCase()===name.toLowerCase()&&x.s.toLowerCase()===sur.toLowerCase());
+  if(!u){u={id:Date.now()+'',n:name,s:sur,ca:new Date().toISOString()};users.push(u);lsS(K.users,users)}
+  SES={uid:u.id,n:u.n,s:u.s,adm:false};lsS(K.ses,SES);
+  openApp();
+}
+function loginAdm(){
+  const pw=document.getElementById('lAdmPw').value;
+  if(pw!==gApw()){shk('lAdmPw');document.getElementById('lErrT').classList.add('on');return}
+  document.getElementById('lErrT').classList.remove('on');
+  SES={uid:'admin',n:'Ustoz',s:'',adm:true};lsS(K.ses,SES);
+  document.getElementById('vLogin').classList.remove('on');
+  showAdmin();
+}
+function logout(){
+  AUDIO.pause();AUDIO.src='';SES=null;lsS(K.ses,null);
+  closeAll();
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('vLogin').classList.add('on');
+  document.getElementById('lPw').value='';document.getElementById('lAdmPw').value='';
+}
+function shk(id){const el=document.getElementById(id);el.classList.add('err');setTimeout(()=>el.classList.remove('err'),400)}
+
+// ════════ APP ════════
+function openApp(){
+  document.getElementById('vLogin').classList.remove('on');
+  document.getElementById('vApp').classList.add('on');
+  document.getElementById('navUser').textContent=SES.n+' '+SES.s;
+  renderApp();
+}
+function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge()}
+
+const RES=()=>lsG(K.res,{});
+const sRES=(r)=>lsS(K.res,r);
+const RK=(tid)=>SES.uid+'_'+tid;
+
+function calcKpis(){
+  const res=RES();let done=0,cor=0,tot=0;
+  T.forEach(t=>{const r=res[RK(t.id)];tot+=t.q.length;if(r){done++;cor+=r.sc}});
+  const avg=done>0?(cor/done).toFixed(1):'—';
+  const band=bandCalc(cor,tot,done);
+  document.getElementById('kD').textContent=done;
+  document.getElementById('kC').textContent=cor;
+  document.getElementById('kA').textContent=avg;
+  document.getElementById('kB').textContent=band;
+  document.getElementById('navPill').textContent=done+'/40';
+  const dp=done>0?Math.round(done/40*100):0;
+  document.getElementById('pFill').style.width=dp+'%';
+  document.getElementById('pLbl').textContent=done+' / 40 test bajarildi';
+  document.getElementById('pPct').textContent=dp+'%';
+}
+function bandCalc(cor,tot,done){
+  if(!done)return'—';const p=tot>0?cor/tot:0;
+  if(p>=.9)return'9.0';if(p>=.82)return'8.5';if(p>=.74)return'8.0';
+  if(p>=.67)return'7.5';if(p>=.60)return'7.0';if(p>=.54)return'6.5';
+  if(p>=.47)return'6.0';return'<6';
+}
+const TL={fill:'✏️ To\'ldirish',mc:'🔘 Ko\'p tanlov',mixed:'📝 Aralash'};
+
+function renderGrid(){
+  const g=document.getElementById('tgrid');g.innerHTML='';
+  const res=RES();
+  T.forEach((t,i)=>{
+    const r=res[RK(t.id)];const done=!!r;
+    if(FILTER==='done'&&!done)return;
+    if(FILTER==='todo'&&done)return;
+    if(FILTER==='fill'&&t.ty!=='fill')return;
+    if(FILTER==='mc'&&t.ty!=='mc')return;
+    const pct=done?Math.round(r.sc/t.q.length*100):null;
+    const d=document.createElement('div');
+    d.className='tcard'+(done?' done':'');
+    d.style.animationDelay=Math.min(i%8,.28)*.045+'s';
+    d.innerHTML=`<div class="tc-aud">🎵</div>
+<div class="tc-num">TEST ${String(t.id).padStart(2,'0')}</div>
+<div class="tc-title">${t.ti}</div>
+<div class="tc-tags"><span class="tt tt-q">${t.q.length} savol</span><span class="tt tt-t">${TL[t.ty]||t.ty}</span></div>
+${done?`<div class="tc-score">✓ ${r.sc}/${t.q.length} · ${pct}%</div>`:''}`;
+    d.onclick=()=>openTest(t.id);
+    g.appendChild(d);
+  });
+}
+function renderSGrid(){
+  const g=document.getElementById('sgrid');g.innerHTML='';
+  const res=RES();
+  T.forEach(t=>{
+    const r=res[RK(t.id)];
+    const d=document.createElement('div');d.className='si'+(r?' done':'');
+    d.innerHTML=`<div class="si-n">T${t.id}</div><div class="si-s">${r?r.sc+'/'+t.q.length:'—'}</div>`;
+    d.onclick=()=>openTest(t.id);g.appendChild(d);
+  });
+}
+function switchTab(tab){
+  ABTAB=tab;
+  ['tests','scores'].forEach(t=>{
+    document.getElementById('tab'+t[0].toUpperCase()+t.slice(1)).classList.toggle('on',t===tab);
+    document.getElementById('bn'+t[0].toUpperCase()+t.slice(1)).classList.toggle('on',t===tab);
+  });
+  document.getElementById('frow').style.display=tab==='tests'?'flex':'none';
+  document.getElementById('tgrid').style.display=tab==='tests'?'grid':'none';
+  document.getElementById('ss').classList.toggle('on',tab==='scores');
+}
+function setF(f,btn){
+  FILTER=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderGrid();
+}
+
+// ════════ TEST ════════
+function openTest(id){
+  CUR=T.find(t=>t.id===id);
+  const r=RES()[RK(id)];
+  UA=r?{...r.ans}:{};CHECKED=!!r;
+  document.getElementById('tNum').textContent='TEST '+String(id).padStart(2,'0');
+  document.getElementById('tTitle').textContent=CUR.ti;
+  document.getElementById('vTest').style.display='block';
+  document.getElementById('vTest').scrollTop=0;
+  initAudio(id);
+  renderQ();updQ();
+  document.getElementById('chkBtn').textContent=CHECKED?'Qayta tekshirish ✓':'Tekshirish ✓';
+}
+function closeTest(){
+  document.getElementById('vTest').style.display='none';
+  AUDIO.pause();AP=false;
+  const b=document.getElementById('apPlay');if(b){b.textContent='▶';b.disabled=false}
+  renderApp();
+}
+
+// ════════ AUDIO — avtomatik relative path ════════
+function initAudio(id){
+  AP=false;
+  const path=audioPath(id);
+  const nm=document.getElementById('apNm');
+  const st=document.getElementById('apState');
+  const pb=document.getElementById('apPlay');
+
+  nm.textContent=path;
+  st.textContent='yuklanmoqda…';
+  st.className='ap-state ok';
+  pb.textContent='▶';
+  pb.disabled=true;
+
+  // Reset progress
+  document.getElementById('apSF').style.width='0%';
+  document.getElementById('apSI').value=0;
+  document.getElementById('apTm').textContent='0:00';
+
+  AUDIO.pause();
+  AUDIO.src=path;
+  AUDIO.load();
+
+  AUDIO.oncanplay=function(){
+    st.textContent='tayyor ✓';
+    st.className='ap-state ok';
+    pb.disabled=false;
+  };
+  AUDIO.onerror=function(){
+    st.textContent='topilmadi ✗';
+    st.className='ap-state err';
+    pb.disabled=true;
+    nm.textContent=path+' — mavjud emas';
+  };
+}
+
+function togglePlay(){
+  if(AUDIO.paused){AUDIO.play();AP=true;document.getElementById('apPlay').textContent='⏸'}
+  else{AUDIO.pause();AP=false;document.getElementById('apPlay').textContent='▶'}
+}
+function seekBy(s){AUDIO.currentTime=Math.max(0,Math.min(AUDIO.duration||0,AUDIO.currentTime+s))}
+function setSp(spd,el){AUDIO.playbackRate=spd;document.querySelectorAll('.spd').forEach(b=>b.classList.remove('on'));if(el)el.classList.add('on')}
+function fT(s){s=Math.floor(s)||0;return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60)}
+
+AUDIO.addEventListener('timeupdate',()=>{
+  if(!AUDIO.duration)return;
+  const p=AUDIO.currentTime/AUDIO.duration*100;
+  const sf=document.getElementById('apSF'),si=document.getElementById('apSI'),tm=document.getElementById('apTm');
+  if(sf)sf.style.width=p+'%';if(si)si.value=p;
+  if(tm)tm.textContent=fT(AUDIO.currentTime)+' / '+fT(AUDIO.duration);
+});
+AUDIO.addEventListener('ended',()=>{AP=false;const b=document.getElementById('apPlay');if(b)b.textContent='▶'});
+document.getElementById('apSI').addEventListener('input',function(){if(AUDIO.duration)AUDIO.currentTime=this.value/100*AUDIO.duration});
+
+// ════════ ANSWER CHECKING ════════
+function chkAns(raw,correct,t){
+  const u=(raw||'').toString().trim().toLowerCase();
+  if(!u)return false;
+  const c=correct.toLowerCase();
+  if(t==='m')return u===c;
+  const alts=c.split('|');
+  return alts.some(alt=>{
+    alt=alt.trim();
+    if(u===alt)return true;
+    if(u.includes(alt)||alt.includes(u))return true;
+    const aw=alt.split(/\s+/).filter(w=>w.length>2);
+    const uw=u.split(/\s+/);
+    if(!aw.length)return false;
+    return aw.filter(w=>uw.some(x=>x===w||x.includes(w)||w.includes(x))).length>=Math.ceil(aw.length*.7);
+  });
+}
+function scoreT(qu,ans){return qu.reduce((s,q,i)=>s+(chkAns(ans[i],q.a,q.t)?1:0),0)}
+
+// ════════ RENDER QUESTIONS ════════
+function renderQ(){
+  const body=document.getElementById('qbody');body.innerHTML='';
+  const t=CUR;
+  const ins=document.createElement('div');ins.className='instr';ins.textContent='📋 '+t.ins;body.appendChild(ins);
+  if(CHECKED){
+    const sc=scoreT(t.q,UA),tot=t.q.length,pct=Math.round(sc/tot*100);
+    const b=document.createElement('div');
+    b.className='rbanner on '+(pct>=80?'rb-g':pct>=60?'rb-m':'rb-b');
+    b.textContent=pct>=80?`🎉 Ajoyib! ${sc}/${tot} (${pct}%)`:pct>=60?`👍 Yaxshi! ${sc}/${tot} (${pct}%)`:`💪 Davom eting! ${sc}/${tot} (${pct}%)`;
+    body.appendChild(b);
+  }
+  const hdr=document.createElement('div');hdr.className='qs-hdr';
+  hdr.textContent=`Savollar ${t.q[0].n}–${t.q[t.q.length-1].n}`;body.appendChild(hdr);
+  t.q.forEach((q,i)=>{
+    const cor=CHECKED?chkAns(UA[i],q.a,q.t):null;
+    const item=document.createElement('div');
+    item.className='qi'+(CHECKED?(cor?' qc':' qw'):'');
+    const qn=document.createElement('div');qn.className='qn';
+    qn.innerHTML=`<span>${q.n}</span>${CHECKED?(' '+(cor?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>')):''}`;
+    item.appendChild(qn);
+    if(q.t==='f'){
+      const tx=document.createElement('div');tx.className='qt';
+      tx.innerHTML=q.tx.replace('[B]','<span class="qblank"></span>');
+      item.appendChild(tx);
+      const inp=document.createElement('input');
+      inp.type='text';inp.className='fill-inp'+(CHECKED?(cor?' fc':' fw'):'');
+      inp.placeholder='Javobingizni yozing…';inp.value=UA[i]||'';
+      if(CHECKED)inp.readOnly=true;
+      inp.addEventListener('input',e=>{UA[i]=e.target.value;updQ()});
+      inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.target.blur();nextFocus(i)}});
+      item.appendChild(inp);
+      if(CHECKED&&!cor){
+        const h=document.createElement('div');h.className='ans-hint on';
+        h.innerHTML=`✅ To'g'ri: <span>${q.a.split('|').join(' | ')}</span>`;item.appendChild(h);
+      }
+    } else {
+      const tx=document.createElement('div');tx.className='qt';tx.textContent=q.tx;item.appendChild(tx);
+      const ops=document.createElement('div');ops.className='opts';
+      'ABCDEFG'.split('').slice(0,q.ops.length).forEach((L,oi)=>{
+        const el=document.createElement('div');
+        let cls='opt';
+        if(CHECKED){if(L===q.a)cls+=' oc';else if(UA[i]===L)cls+=' ow';}
+        else if(UA[i]===L)cls+=' sel';
+        el.className=cls;
+        el.innerHTML=`<div class="olet">${L}</div><span>${q.ops[oi]}</span>`;
+        if(!CHECKED)el.addEventListener('click',()=>{UA[i]=L;ops.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');updQ()});
+        ops.appendChild(el);
+      });
+      item.appendChild(ops);
+    }
+    body.appendChild(item);
+  });
+}
+function nextFocus(i){const ins=document.querySelectorAll('#qbody .fill-inp');if(ins[i+1])ins[i+1].focus()}
+function updQ(){
+  const tot=CUR.q.length;
+  const ans=Object.keys(UA).filter(k=>(UA[k]||'').toString().trim()).length;
+  const p=Math.round(ans/tot*100);
+  document.getElementById('tPF').style.width=p+'%';
+  document.getElementById('tPT').textContent=ans+'/'+tot;
+  document.getElementById('tfI').textContent=ans+'/'+tot+' javob';
+}
+function checkAnswers(){
+  CHECKED=true;
+  const sc=scoreT(CUR.q,UA),tot=CUR.q.length,pct=Math.round(sc/tot*100);
+  const res=RES();res[RK(CUR.id)]={sc,ans:{...UA},at:new Date().toISOString(),pct};sRES(res);
+  addNotif(CUR,sc,tot,pct);
+  renderQ();updQ();
+  document.getElementById('vTest').scrollTop=0;
+  document.getElementById('chkBtn').textContent='Qayta tekshirish ✓';
+  toast('✅ Natija: '+sc+'/'+tot+' ('+pct+'%)');
+}
+function resetTest(){
+  UA={};CHECKED=false;const res=RES();delete res[RK(CUR.id)];sRES(res);
+  renderQ();updQ();document.getElementById('chkBtn').textContent='Tekshirish ✓';
+  toast('🔄 Test qayta boshlandi');
+}
+
+// ════════ NOTIFICATIONS ════════
+function addNotif(test,sc,tot,pct){
+  if(!SES||SES.adm)return;
+  const ns=lsG(K.notifs,[]);
+  ns.unshift({id:Date.now()+'',uid:SES.uid,n:SES.n,s:SES.s,tid:test.id,ti:test.ti,sc,tot,pct,time:new Date().toISOString(),read:false});
+  lsS(K.notifs,ns);updNotifBadge();
+}
+function updNotifBadge(){
+  const unr=lsG(K.notifs,[]).filter(n=>!n.read).length;
+  document.getElementById('ndot').classList.toggle('on',unr>0);
+  document.getElementById('bndot').classList.toggle('on',unr>0);
+  document.getElementById('bndot').textContent=unr>9?'9+':unr||'';
+}
+function markAllRead(){
+  const ns=lsG(K.notifs,[]);ns.forEach(n=>n.read=true);lsS(K.notifs,ns);renderNotifs();updNotifBadge();toast('✅ Barchasini o\'qildi');
+}
+
+// ════════ ADMIN ════════
+function openAdmin(){document.getElementById('vAdmin').style.display='block';renderAdmin()}
+function closeAdmin(){document.getElementById('vAdmin').style.display='none';renderApp()}
+function showAdmin(){document.getElementById('vAdmin').style.display='block';renderAdmin()}
+function closeAll(){['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none')}
+function switchAdm(tab){
+  ADMTAB=tab;
+  ['n','st','sz'].forEach(t=>{
+    document.getElementById('at'+t[0].toUpperCase()+t.slice(1)).classList.toggle('on',t===tab);
+    document.getElementById('adm'+t[0].toUpperCase()+t.slice(1)).style.display=t===tab?'block':'none';
+  });
+}
+function renderAdmin(){renderNotifs();renderStudents();renderAdmStats()}
+function renderNotifs(){
+  const ns=lsG(K.notifs,[]);
+  const el=document.getElementById('nlist');el.innerHTML='';
+  const unr=ns.filter(n=>!n.read).length;
+  document.getElementById('nCnt').textContent=unr>0?'('+unr+')':'';
+  if(!ns.length){el.innerHTML='<div class="n-empty">🔔 Hali bildirishnomalar yo\'q</div>';return}
+  ns.slice(0,60).forEach(n=>{
+    const pct=n.pct||Math.round(n.sc/n.tot*100);
+    const cls=pct>=80?'g':pct>=60?'m':'b';
+    const emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
+    const dt=new Date(n.time);
+    const ts=dt.toLocaleDateString('uz-UZ',{day:'2-digit',month:'2-digit'})+' '+dt.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
+    const d=document.createElement('div');d.className='nitem'+(n.read?'':' unr');
+    d.innerHTML=`<div class="ni-dot-w"><div class="ni-dot ${n.read?'read':''}"></div></div>
+<div class="ni-body">
+  <div class="ni-name">👤 ${n.n} ${n.s}</div>
+  <div class="ni-sub">Test ${n.tid}: ${n.ti}</div>
+  <div class="ni-score ${cls}">${emoji} ${n.sc}/${n.tot} — ${pct}%</div>
+  <div class="ni-time">🕐 ${ts}</div>
+</div>`;
+    d.onclick=()=>{
+      if(!n.read){n.read=true;const all=lsG(K.notifs,[]);const idx=all.findIndex(x=>x.id===n.id);if(idx>=0){all[idx].read=true;lsS(K.notifs,all)}}
+      renderNotifs();updNotifBadge();
+    };
+    el.appendChild(d);
+  });
+}
+function renderStudents(){
+  const users=lsG(K.users,[]);const res=RES();const el=document.getElementById('stuList');el.innerHTML='';
+  if(!users.length){el.innerHTML='<div class="n-empty">👥 Hali hech qanday o\'quvchi ro\'yxatdan o\'tmagan</div>';return}
+  users.forEach(u=>{
+    let done=0,cor=0,tq=0;
+    T.forEach(t=>{const r=res[u.id+'_'+t.id];tq+=t.q.length;if(r){done++;cor+=r.sc}});
+    const pct=tq>0?Math.round(cor/tq*100):0;
+    const avg=done>0?(cor/done).toFixed(1):'—';
+    const band=bandCalc(cor,tq,done);
+    const last=lsG(K.notifs,[]).find(n=>n.uid===u.id);
+    const d=document.createElement('div');d.className='stu-card';
+    d.innerHTML=`<div class="sc-top"><span class="sc-name">👤 ${u.n} ${u.s}</span><span class="sc-date">${last?new Date(last.time).toLocaleDateString('uz-UZ',{day:'2-digit',month:'2-digit'}):''}</span></div>
+<div class="sc-bar-r"><div class="sc-bar-bg"><div class="sc-bar-f" style="width:${pct}%"></div></div><span class="sc-pct">${pct}%</span></div>
+<div class="sc-chips"><span class="chip chip-d">✅ ${done}/40</span><span class="chip chip-a">O'rt: ${avg}</span><span class="chip chip-b">Band: ${band}</span></div>`;
+    d.onclick=()=>openStuDetail(u);el.appendChild(d);
+  });
+}
+function renderAdmStats(){
+  const users=lsG(K.users,[]);const res=RES();
+  let td=0,tc=0,tq=0;
+  users.forEach(u=>{T.forEach(t=>{const r=res[u.id+'_'+t.id];tq+=t.q.length;if(r){td++;tc+=r.sc}})});
+  document.getElementById('asT').textContent=users.length;
+  document.getElementById('asD').textContent=td;
+  document.getElementById('asC').textContent=tc;
+  document.getElementById('asB').textContent=bandCalc(tc,tq,td);
+}
+function openStuDetail(u){
+  const res=RES();
+  document.getElementById('sdTitle').textContent='👤 '+u.n+' '+u.s;
+  const body=document.getElementById('sdBody');body.innerHTML='';
+  let done=0,cor=0,tq=0;
+  T.forEach(t=>{const r=res[u.id+'_'+t.id];tq+=t.q.length;if(r){done++;cor+=r.sc}});
+  const pct=tq>0?Math.round(cor/tq*100):0;
+  body.innerHTML=`<div class="astats" style="margin-bottom:14px">
+<div class="astat"><div class="astat-n">${done}</div><div class="astat-l">Bajarilgan</div></div>
+<div class="astat"><div class="astat-n">${cor}</div><div class="astat-l">To'g'ri</div></div>
+<div class="astat"><div class="astat-n">${pct}%</div><div class="astat-l">Foiz</div></div>
+<div class="astat"><div class="astat-n">${bandCalc(cor,tq,done)}</div><div class="astat-l">Band</div></div>
+</div>
+<p style="font-size:.72rem;font-weight:700;color:var(--muted2);margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">📊 Test natijalari</p>`;
+  const sg=document.createElement('div');sg.className='sd-sg';
+  T.forEach(t=>{
+    const r=res[u.id+'_'+t.id];
+    const p=r?Math.round(r.sc/t.q.length*100):null;
+    const cl=r?(p>=80?'var(--green)':p>=60?'var(--yellow)':'var(--red)'):'var(--muted)';
+    const d=document.createElement('div');d.className='sd-si'+(r?' done':'');
+    d.innerHTML=`<div class="sd-si-n">T${t.id}</div><div class="sd-si-s" style="color:${cl}">${r?r.sc+'/'+t.q.length:'—'}</div>`;
+    sg.appendChild(d);
+  });
+  body.appendChild(sg);
+  const ns=lsG(K.notifs,[]).filter(n=>n.uid===u.id).sort((a,b)=>new Date(b.time)-new Date(a.time));
+  if(ns.length){
+    const h=document.createElement('div');h.style.cssText='margin-top:16px';
+    h.innerHTML='<p style="font-size:.72rem;font-weight:700;color:var(--muted2);margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">📅 Faollik tarixi</p>';
+    ns.slice(0,20).forEach(n=>{
+      const p=n.pct||Math.round(n.sc/n.tot*100);
+      const dt=new Date(n.time);
+      const ts=dt.toLocaleDateString('uz-UZ')+' '+dt.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
+      const row=document.createElement('div');
+      row.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:6px';
+      row.innerHTML=`<span style="font-size:.76rem;font-weight:600">Test ${n.tid}: ${n.ti}</span><span style="font-family:var(--mono);font-size:.74rem;font-weight:700;color:${p>=80?'var(--green)':p>=60?'var(--yellow)':'var(--red)'}">${n.sc}/${n.tot} (${p}%)</span>`;
+      h.appendChild(row);
+    });
+    body.appendChild(h);
+  }
+  document.getElementById('vStuDetail').style.display='block';
+}
+function closeStuDetail(){document.getElementById('vStuDetail').style.display='none'}
+
+function chgPw(){
+  const n=document.getElementById('sNP').value,c=document.getElementById('sCP').value;
+  if(n.length<4){toast('❌ Kamida 4 ta belgi kiriting');return}
+  if(n!==c){toast('❌ Parollar bir xil emas');return}
+  localStorage.setItem(K.pw,n);document.getElementById('sNP').value='';document.getElementById('sCP').value='';
+  toast('✅ Foydalanuvchi paroli saqlandi!');
+}
+function chgAdmPw(){
+  const c=document.getElementById('sAC').value,n=document.getElementById('sAN').value;
+  if(c!==gApw()){toast('❌ Joriy admin paroli noto\'g\'ri');return}
+  if(n.length<4){toast('❌ Kamida 4 ta belgi kiriting');return}
+  localStorage.setItem(K.apw,n);document.getElementById('sAC').value='';document.getElementById('sAN').value='';
+  toast('✅ Admin paroli saqlandi!');
+}
+function resetAll(){
+  if(!confirm('Barcha o\'quvchi natijalari va bildirishnomalar o\'chiriladimi?'))return;
+  sRES({});lsS(K.notifs,[]);renderAdmin();toast('🗑️ Barcha natijalar o\'chirildi');
+}
+
+// ════════ TOAST ════════
+let tTm=null;
+function toast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');
+  clearTimeout(tTm);tTm=setTimeout(()=>el.classList.remove('on'),2800);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(document.getElementById('vStuDetail').style.display!=='none'){closeStuDetail();return}
+  if(document.getElementById('vAdmin').style.display!=='none'){closeAdmin();return}
+  if(document.getElementById('vTest').style.display!=='none'){closeTest();return}
+});
+setInterval(()=>{updNotifBadge();if(document.getElementById('vAdmin').style.display!=='none')renderNotifs()},5000);
+
+// ════════ INIT ════════
+['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none');
+if(SES?.uid){
+  if(SES.adm){document.getElementById('vLogin').classList.remove('on');showAdmin()}
+  else{document.getElementById('navUser').textContent=SES.n+' '+SES.s;openApp()}
+}
+</script>
+</body>
+</html>
