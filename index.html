@@ -2395,7 +2395,7 @@ async function sendTelegramMsg(text){
   try{
     await fetch(WEBHOOK_URL,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({text})
+      body:JSON.stringify({message:text})
     });
     const el=document.getElementById('tgStatus');
     if(el){el.style.display='block';el.style.color='var(--green)';el.textContent='✓ Xabar yuborildi!';setTimeout(()=>{if(el)el.style.display='none'},4000);}
