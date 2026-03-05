@@ -2411,7 +2411,7 @@ function checkAnswers(){
     const band=bandCalc(sc,tot,1);
     const dt=new Date().toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
     const emoji=pct>=80?'🟢':pct>=60?'🟡':'🔴';
-    sendTelegramMsg(`${emoji} <b>Yangi natija!</b>\n\n👤 O'quvchi: <b>${SES.n} ${SES.s}</b>\n📋 Test ${CUR.id}: <b>${CUR.ti}</b>\n📊 Natija: <b>${sc}/${tot} (${pct}%)</b>\n🎯 Band: <b>${band}</b>\n🕐 Vaqt: ${dt}`);
+    sendTelegramMsg(`${emoji} Yangi natija!\n\n👤 O'quvchi: ${SES.n} ${SES.s}\n📋 Test ${CUR.id}: ${CUR.ti}\n📊 Natija: ${sc}/${tot} (${pct}%)\n🎯 Band: ${band}\n🕐 Vaqt: ${dt}`);
   }
   renderQ();updQ();
   document.getElementById('vTest').scrollTop=0;
