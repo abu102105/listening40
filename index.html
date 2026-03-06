@@ -355,6 +355,7 @@ input,button,select,textarea{font-family:var(--font)}
       <div class="lerr" id="lErrS">Ism-familiya va to'g'ri parol kiriting</div>
       <button class="lbtn" onclick="loginStu()">Kirish</button>
       <div class="lhint">O'quvchi paroli: <span class="h-pw">ielts2024</span></div>
+      
     </div>
     <div class="l-card" id="lcT" style="display:none">
       <div class="lf"><label>Admin paroli</label><input class="linp" id="lAdmPw" type="password" placeholder="••••••••"></div>
@@ -2061,15 +2062,25 @@ document.getElementById('lAdmPw').addEventListener('keydown',e=>{if(e.key==='Ent
 function loginStu(){
   const name=document.getElementById('lName').value.trim();
   const sur=document.getElementById('lSurname').value.trim();
+  const group=document.getElementById('lGroup').value.trim();
   const pw=document.getElementById('lPw').value;
   if(!name||!sur||pw!==gPw()){shk('lPw');document.getElementById('lErrS').classList.add('on');return}
   document.getElementById('lErrS').classList.remove('on');
   const users=lsG(K.users,[]);
+  const isNew=!users.find(x=>x.n.toLowerCase()===name.toLowerCase()&&x.s.toLowerCase()===sur.toLowerCase());
   let u=users.find(x=>x.n.toLowerCase()===name.toLowerCase()&&x.s.toLowerCase()===sur.toLowerCase());
-  if(!u){u={id:Date.now()+'',n:name,s:sur,ca:new Date().toISOString()};users.push(u);}
+  if(!u){u={id:Date.now()+'',n:name,s:sur,g:group,ca:new Date().toISOString()};users.push(u);}
   lsS(K.users,users);
   SES={uid:u.id,n:u.n,s:u.s,adm:false};lsS(K.ses,SES);
-  openApp();
+  const dt=new Date().toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const loginMsg=isNew?`🆕 Yangi ro'yxatdan o'tish`:`🔄 Tizimga kirish`;
+  const groupLine=group?`
+🏫 Guruh: ${group}`:'';
+  sendTelegramMsg(`${loginMsg}
+
+👤 O'quvchi: ${name} ${sur}${groupLine}
+🕐 Vaqt: ${dt}`);
+  setTimeout(()=>openApp(),300);
 }
 function loginAdm(){
   const pw=document.getElementById('lAdmPw').value;
@@ -2391,15 +2402,13 @@ function saveTg(){toast('Webhook ulangan ✅');}
 function testTg(){
   sendTelegramMsg('🧪 Test xabar!\n\nIELTS tizimi muvaffaqiyatli ulandi ✅');
 }
-async function sendTelegramMsg(text){
+function sendTelegramMsg(text){
   try{
-    await fetch(WEBHOOK_URL,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:text})
-    });
-    const el=document.getElementById('tgStatus');
-    if(el){el.style.display='block';el.style.color='var(--green)';el.textContent='✓ Xabar yuborildi!';setTimeout(()=>{if(el)el.style.display='none'},4000);}
-  }catch(e){console.error(e)}
+    var xhr=new XMLHttpRequest();
+    xhr.open('POST',WEBHOOK_URL,true);
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.send(JSON.stringify({message:text}));
+  }catch(e){}
 }
 
 function checkAnswers(){
@@ -2459,8 +2468,8 @@ function switchAdm(tab){
 function renderAdmin(){renderNotifs();renderStudents();renderAdmStats();loadTgInputs()}
 function loadTgInputs(){
   const el1=document.getElementById('tgToken');const el2=document.getElementById('tgChatId');
-  if(el1)el1.value=localStorage.getItem(TG_K.token)||'';
-  if(el2)el2.value=localStorage.getItem(TG_K.chat)||'';
+  if(el1)el1.value='';
+  if(el2)el2.value='';
 }
 
 function renderNotifs(){
