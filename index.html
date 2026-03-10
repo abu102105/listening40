@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
@@ -2747,9 +2747,8 @@ if(SES?.uid){
 // ══════════════════════════════════════════════════════
 const AI_K = 'groq_api_key_v2';
 let aiSelTest  = null;
-let aiAudioFile= null;
-let aiData     = null;   // { tid, title, paragraphs, words, pronounQuiz }
-let aiTab      = 'para'; // 'para' | 'words' | 'quiz'
+let aiData     = null;
+let aiTab      = 'para';
 let aiWfilter  = 'all';
 let quizScore  = 0;
 
@@ -2804,10 +2803,7 @@ document.addEventListener('click', e=>{
 function renderAiHome(){
   const body = document.getElementById('aiMbody');
   const key  = gGroqKey();
-  const canGo = !!(key && aiSelTest && aiAudioFile);
-  const fname = aiAudioFile ? aiAudioFile.name : null;
-  const expected = aiSelTest ? `Test ${aiSelTest} Section 4.mp3` : null;
-  const fileOk = fname && expected && fname === expected;
+  const canGo = !!(key && aiSelTest);
 
   body.innerHTML = `
   <div class="ai-keybar">
@@ -2822,36 +2818,17 @@ function renderAiHome(){
     </div>
   </div>
 
-  <div class="ai-pick-t">② Test tanlang</div>
+  <div class="ai-pick-t">② Tahlil qilmoqchi bo'lgan testni tanlang</div>
   <div class="ai-tgrid" id="aiTgrid"></div>
-
-  <div class="ai-keybar" style="margin-bottom:12px">
-    <div class="ai-keybar-t">③ Audio MP3 faylni tanlang</div>
-    <div style="font-size:.7rem;color:var(--muted2);margin-bottom:8px;line-height:1.6">
-      ${aiSelTest
-        ? `Kutilayotgan: <span style="color:var(--a2);font-family:var(--mono)">Test ${aiSelTest} Section 4.mp3</span>`
-        : 'Avval test raqamini tanlang'}
-    </div>
-    <label style="display:flex;align-items:center;gap:9px;background:var(--bg2);border:1.5px dashed ${fileOk?'var(--green)':fname?'var(--yellow)':'var(--border2)'};border-radius:var(--r2);padding:13px 12px;cursor:pointer">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${fileOk?'var(--green)':fname?'var(--yellow)':'var(--muted2)'}" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <div>
-        <div style="font-size:.77rem;font-weight:600;color:${fileOk?'var(--green)':fname?'var(--yellow)':'var(--text)'}">
-          ${fileOk?'✓ Fayl to\'g\'ri':fname?'⚠ Fayl tanlandi (nomi farqli)':'Faylni tanlash uchun bosing'}
-        </div>
-        <div style="font-size:.63rem;color:var(--muted);margin-top:2px;font-family:var(--mono)">${fname||'MP3 · max 25MB'}</div>
-      </div>
-      <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg" style="display:none" onchange="aiPickFile(this)">
-    </label>
-  </div>
 
   <button class="ai-go" onclick="aiRun()" ${canGo?'':'disabled'} style="gap:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-    ${canGo?`Test ${aiSelTest} ni tahlil qilish`: !key?'① API kalitni kiriting': !aiSelTest?'② Test tanlang':'③ Audio faylni tanlang'}
+    ${canGo?`Test ${aiSelTest} · tahlil qilish`: !key?'① API kalitni kiriting':'② Test tanlang'}
   </button>
 
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px;font-size:.72rem;color:var(--muted2);line-height:1.8">
-    📄 <strong style="color:var(--text)">Paragraflar</strong> — matn va tarjima<br>
-    🔤 <strong style="color:var(--text)">So'z darajalari</strong> — B1/B2/C1/C2 + talaffuz<br>
+    📄 <strong style="color:var(--text)">Paragraflar</strong> — matn + o'zbek tarjima<br>
+    🔤 <strong style="color:var(--text)">So'z darajalari</strong> — B1/B2/C1/C2 + IPA talaffuz<br>
     🎯 <strong style="color:var(--text)">Pronoun Quiz</strong> — olmoshlarni interaktiv tekshirish
   </div>`;
 
@@ -2860,7 +2837,7 @@ function renderAiHome(){
     const d = document.createElement('div');
     d.className = 'ai-tc'+(aiSelTest===t.id?' on':'');
     d.textContent = t.id; d.title = t.ti;
-    d.onclick = ()=>{ aiSelTest=t.id; aiAudioFile=null; renderAiHome(); };
+    d.onclick = ()=>{ aiSelTest=t.id; renderAiHome(); };
     grid.appendChild(d);
   });
 }
@@ -2874,27 +2851,24 @@ function aiSaveKey(){
   toast('Groq API kaliti saqlandi ✓');
   renderAiHome();
 }
-function aiPickFile(inp){
-  if(!inp.files||!inp.files[0]) return;
-  aiAudioFile = inp.files[0];
-  renderAiHome();
-}
 
 /* ── RUN ANALYSIS ── */
 async function aiRun(){
   const key = gGroqKey();
-  if(!key||!aiSelTest||!aiAudioFile){ toast('Barcha maydonlarni to\'ldiring'); return; }
-  if(aiAudioFile.size > 26214400){ toast('Fayl 25MB dan katta'); return; }
+  if(!key){ toast('Avval API kalitni kiriting'); return; }
+  if(!aiSelTest){ toast('Test tanlang'); return; }
   const testObj = T.find(t=>t.id===aiSelTest);
   if(!testObj){ toast('Test topilmadi'); return; }
 
+  const audioFilename = 'Test ' + aiSelTest + ' Section 4.mp3';
   const body = document.getElementById('aiMbody');
+
   body.innerHTML = `
   <div class="ai-prog">
     <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:3px">Test ${aiSelTest} · ${testObj.ti}</div>
-    <div style="font-size:.63rem;color:var(--muted);font-family:var(--mono);margin-bottom:14px">${aiAudioFile.name}</div>
+    <div style="font-size:.63rem;color:var(--muted);font-family:var(--mono);margin-bottom:14px">${audioFilename}</div>
     <div class="ai-prog-steps">
-      <div class="ai-step active" id="ps1"><div class="ai-step-ic"><span class="ai-spin"></span></div>Fayl tayyorlanmoqda…</div>
+      <div class="ai-step active" id="ps1"><div class="ai-step-ic"><span class="ai-spin"></span></div>Audio fayl yuklanmoqda…</div>
       <div class="ai-step" id="ps2"><div class="ai-step-ic">2</div>Whisper — transkripsiya</div>
       <div class="ai-step" id="ps3"><div class="ai-step-ic">3</div>Paragraflar + tarjima</div>
       <div class="ai-step" id="ps4"><div class="ai-step-ic">4</div>So'z darajalari + pronoun quiz</div>
@@ -2922,16 +2896,23 @@ async function aiRun(){
   };
 
   try{
-    // Step 1 — prepare
-    step(1); await new Promise(r=>setTimeout(r,200)); step(1,true);
+    // Step 1 — fetch audio from same folder
+    step(1);
+    let audioBlob;
+    try{
+      const r = await fetch(audioFilename);
+      if(!r.ok) throw new Error(`"${audioFilename}" topilmadi (HTTP ${r.status})`);
+      audioBlob = await r.blob();
+      if(audioBlob.size > 26214400) throw new Error('Fayl 25MB dan katta');
+    }catch(e){ step(1,false,true); fail('Audio yuklanmadi: '+e.message); return; }
+    step(1,true);
 
     // Step 2 — Whisper
     step(2);
     let transcript='';
     try{
       const fd=new FormData();
-      const fn=aiAudioFile.name.endsWith('.mp3')?aiAudioFile.name:'audio.mp3';
-      fd.append('file',new File([aiAudioFile],fn,{type:'audio/mpeg'}));
+      fd.append('file', new File([audioBlob], audioFilename, {type:'audio/mpeg'}));
       fd.append('model','whisper-large-v3-turbo');
       fd.append('response_format','text');
       fd.append('language','en');
