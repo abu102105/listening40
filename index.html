@@ -452,7 +452,126 @@ input,button,select,textarea{font-family:var(--font)}
 .ai-info{background:rgba(79,126,247,.05);border:1px solid rgba(79,126,247,.15);border-left:3px solid var(--a);border-radius:var(--r2);padding:9px 12px;font-size:.72rem;color:var(--muted2);line-height:1.7;margin-bottom:12px}
 /* bottom nav */
 .bn-ai{color:var(--a3)!important}
-</style>
+
+/* ══ AI CHAT ══ */
+.chat-wrap{display:flex;flex-direction:column;height:100%}
+.chat-msgs{flex:1;overflow-y:auto;padding:10px 0;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:52vh;-webkit-overflow-scrolling:touch}
+.chat-msg{display:flex;gap:8px;align-items:flex-start;animation:fadeUp .2s ease}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-bubble{max-width:82%;padding:9px 12px;border-radius:14px;font-size:.8rem;line-height:1.7;word-break:break-word}
+.chat-msg.ai .chat-bubble{background:var(--card);border:1px solid var(--border2);color:var(--text);border-radius:4px 14px 14px 14px}
+.chat-msg.user .chat-bubble{background:var(--a);color:#fff;border-radius:14px 4px 14px 14px}
+.chat-msg.ai .chat-avatar{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--a),var(--a3));display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+.chat-msg.user .chat-avatar{width:28px;height:28px;border-radius:8px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+.chat-typing{display:flex;gap:4px;padding:10px 12px;align-items:center}
+.chat-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:chatBlink 1.2s ease infinite}
+.chat-dot:nth-child(2){animation-delay:.2s}
+.chat-dot:nth-child(3){animation-delay:.4s}
+@keyframes chatBlink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.chat-inp-row{display:flex;gap:6px;padding:10px 0 0;border-top:1px solid var(--border);margin-top:8px}
+.chat-inp{flex:1;background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:10px 12px;border-radius:var(--r2);font-size:.82rem;outline:none;font-family:var(--font);resize:none;transition:border-color .18s;-webkit-appearance:none;max-height:90px;overflow-y:auto}
+.chat-inp:focus{border-color:var(--a)}
+.chat-send{background:var(--a);color:#fff;border:none;width:40px;height:40px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s}
+.chat-send:disabled{background:var(--border);cursor:not-allowed}
+.chat-send svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* suggested questions */
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.chat-sug{background:var(--card);border:1px solid var(--border2);color:var(--muted2);padding:5px 10px;border-radius:20px;font-size:.68rem;cursor:pointer;transition:all .13s;font-family:var(--font);line-height:1.4}
+.chat-sug:hover{border-color:var(--a);color:var(--a)}
+/* ask btn on wrong answer */
+.ask-ai-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);color:var(--a3);padding:5px 11px;border-radius:20px;font-size:.68rem;font-weight:600;cursor:pointer;margin-top:7px;transition:all .15s;font-family:var(--font)}
+.ask-ai-btn:hover{background:rgba(167,139,250,.18);border-color:rgba(167,139,250,.4)}
+.ask-ai-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
+/* ══ XATO ARXIVI ══ */
+.xa-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:.78rem}
+.xa-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:12px 13px;margin-bottom:7px;animation:fadeUp .2s ease}
+.xa-item.open{border-color:var(--border2)}
+.xa-hdr{display:flex;align-items:flex-start;gap:8px;cursor:pointer;user-select:none}
+.xa-num{font-size:.6rem;font-family:var(--mono);font-weight:700;color:var(--a);background:rgba(79,126,247,.1);border:1px solid rgba(79,126,247,.2);padding:2px 7px;border-radius:5px;flex-shrink:0;margin-top:1px}
+.xa-info{flex:1}
+.xa-test{font-size:.6rem;color:var(--muted);font-family:var(--mono);margin-bottom:2px}
+.xa-q{font-size:.78rem;color:var(--text);line-height:1.5}
+.xa-chev{color:var(--muted);font-size:.75rem;transition:transform .2s;flex-shrink:0;margin-top:2px}
+.xa-item.open .xa-chev{transform:rotate(180deg)}
+.xa-body{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.xa-item.open .xa-body{display:block}
+.xa-row{display:flex;gap:8px;margin-bottom:5px;font-size:.76rem;align-items:baseline}
+.xa-lbl{color:var(--muted);font-size:.66rem;font-family:var(--mono);min-width:55px;flex-shrink:0}
+.xa-wrong{color:var(--red)}
+.xa-right{color:var(--green);font-weight:600}
+.xa-exp{background:rgba(34,197,94,.05);border-left:2px solid var(--green);border-radius:0 var(--r2) var(--r2) 0;padding:8px 10px;font-size:.75rem;color:var(--muted2);line-height:1.7;margin-top:8px;display:none}
+.xa-item.open .xa-exp{display:block}
+.xa-exp.loading{color:var(--muted);font-style:italic}
+.xa-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.xa-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:8px 12px;text-align:center;flex:1;min-width:70px}
+.xa-stat-n{font-size:1.1rem;font-weight:700;font-family:var(--mono)}
+.xa-stat-l{font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+
+/* ══ TTS button ══ */
+.tts-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .15s;display:inline-flex;align-items:center}
+.tts-btn:hover{color:var(--a2)}
+.tts-btn.playing{color:var(--a2);animation:pulse 1s infinite}
+.tts-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
+/* ══ FLASHCARD ══ */
+.fc-scene{perspective:800px;width:100%;height:220px;cursor:pointer;margin-bottom:14px}
+.fc-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border2)}
+.fc-back{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(79,126,247,.06));border:1px solid rgba(34,197,94,.2);transform:rotateY(180deg)}
+.fc-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;font-family:var(--mono)}
+.fc-word{font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:6px;letter-spacing:-.5px}
+.fc-ipa{font-size:.82rem;color:var(--muted);font-family:var(--mono);margin-bottom:4px}
+.fc-pos{font-size:.65rem;background:var(--card2);border:1px solid var(--border);color:var(--muted2);padding:2px 8px;border-radius:5px;font-family:var(--mono)}
+.fc-answer{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.fc-ex{font-size:.76rem;color:var(--muted2);font-style:italic;line-height:1.6;max-width:90%}
+.fc-tap-hint{font-size:.62rem;color:var(--muted);margin-top:10px}
+.fc-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
+.fc-btn{padding:11px 6px;border:none;border-radius:var(--r2);font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .14s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.fc-btn:active{transform:scale(.95)}
+.fc-btn.hard{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.25)}
+.fc-btn.ok{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.25)}
+.fc-btn.easy{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.fc-btn small{font-size:.55rem;font-family:var(--mono);opacity:.7}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;font-size:.68rem;color:var(--muted);margin-bottom:10px}
+.fc-pbar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:0 10px}
+.fc-pfill{height:100%;background:var(--a3);border-radius:2px;transition:width .4s}
+.fc-done{text-align:center;padding:28px 16px}
+.fc-done-n{font-size:2.5rem;font-weight:800;font-family:var(--mono);background:linear-gradient(135deg,var(--green),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.fc-source-sel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.fc-src{background:var(--card);border:1px solid var(--border);color:var(--muted2);padding:6px 13px;border-radius:20px;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .14s;font-family:var(--font)}
+.fc-src.on{background:var(--a3);border-color:var(--a3);color:#fff}
+
+/* ══ PROGRESS GRAFIK ══ */
+.pg-modal{position:fixed;inset:0;z-index:502;display:none;flex-direction:column;background:var(--bg)}
+.pg-modal.on{display:flex}
+.pg-body{flex:1;overflow-y:auto;padding:14px 16px 40px;-webkit-overflow-scrolling:touch}
+.pg-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+@media(min-width:400px){.pg-kpis{grid-template-columns:repeat(4,1fr)}}
+.pg-kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 10px;text-align:center}
+.pg-kpi-n{font-size:1.35rem;font-weight:800;font-family:var(--mono)}
+.pg-kpi-l{font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-top:4px}
+.pg-sec{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.pg-sec-h{font-size:.64rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.pg-chart{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pg-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pg-bar-lbl{font-size:.62rem;font-family:var(--mono);color:var(--muted2);min-width:38px;text-align:right;flex-shrink:0}
+.pg-bar-bg{flex:1;height:20px;background:var(--bg2);border-radius:4px;overflow:hidden;position:relative}
+.pg-bar-fill{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.pg-bar-val{font-size:.6rem;font-family:var(--mono);font-weight:600;color:#fff;white-space:nowrap}
+.pg-heat{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;margin-top:4px}
+.pg-heat-cell{aspect-ratio:1;border-radius:3px;background:var(--border)}
+.pg-heat-cell.d1{background:rgba(79,126,247,.25)}
+.pg-heat-cell.d2{background:rgba(79,126,247,.5)}
+.pg-heat-cell.d3{background:rgba(79,126,247,.75)}
+.pg-heat-cell.d4{background:var(--a)}
+.pg-badge{display:inline-flex;align-items:center;gap:5px;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r2);padding:8px 11px;font-size:.72rem;color:var(--muted2);margin-bottom:6px;width:100%}
+.pg-badge-ic{font-size:1.1rem;flex-shrink:0}
+.pg-badge.earned{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06);color:var(--text)}
+.pg-badge.earned .pg-badge-ic{filter:none}
+.pg-line-svg{width:100%;height:100px;overflow:visible}</style>
 </head>
 <body>
 
@@ -527,9 +646,10 @@ input,button,select,textarea{font-family:var(--font)}
   <nav class="bnav">
     <button class="bn on" id="bnTests" onclick="switchTab('tests')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>Testlar</button>
     <button class="bn" id="bnScores" onclick="switchTab('scores')"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Natija</button>
-    <button class="bn bn-ai" onclick="openAiModal()"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm4 12H8v-1c0-2.67 5.33-4 8-4s8 1.33 8 4z" stroke-width="0" fill="currentColor"/><circle cx="12" cy="12" r="10" fill="none" stroke-width="1.75"/><path d="M9.5 9.5l1 1M14.5 9.5l-1 1M9 13s1 2 3 2 3-2 3-2" stroke-linecap="round"/></svg>AI Tahlil</button>
+    <button class="bn bn-ai" onclick="openAiModal()"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>AI Tahlil</button>
+    <button class="bn" onclick="openXatoModal()"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Xatolar<span class="bn-dot" id="xaDot" style="display:none"></span></button>
+    <button class="bn" onclick="openProgress()"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Progress</button>
     <button class="bn" id="bnAdm" onclick="openAdmin()"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>Admin<span class="bn-dot" id="bndot"></span></button>
-    <button class="bn" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Chiqish</button>
   </nav>
 </div>
 
@@ -606,6 +726,50 @@ input,button,select,textarea{font-family:var(--font)}
   </div>
   <div class="ai-wpop-tr" id="wpTr"></div>
   <div class="ai-wpop-ex" id="wpEx"></div>
+</div>
+
+<!-- AI CHAT MODAL (standalone, opened from Xato arxivi) -->
+<div id="vAiChat" style="position:fixed;inset:0;z-index:600;display:none;flex-direction:column;background:var(--bg)">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeAiChat()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">AI · GROQ CHAT</div>
+      <div class="ai-mhdr-title" id="aiChatTitle">AI Savol-Javob</div>
+    </div>
+  </div>
+  <div id="aiChatBody" style="flex:1;overflow-y:auto;padding:14px 16px;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:10px"></div>
+  <div style="padding:10px 16px;padding-bottom:calc(10px + var(--sab));border-top:1px solid var(--border);background:var(--bg)">
+    <div style="display:flex;gap:5px;margin-bottom:7px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;padding-bottom:2px" id="chatSugRow"></div>
+    <div class="chat-inp-row">
+      <textarea class="chat-inp" id="chatInp" placeholder="Savolingizni yozing…" rows="1" onkeydown="chatKey(event)" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px'"></textarea>
+      <button class="chat-send" id="chatSendBtn" onclick="chatSend()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS GRAFIK MODAL -->
+<div id="vProgress" class="pg-modal">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeProgress()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">STATISTIKA</div>
+      <div class="ai-mhdr-title">Batafsil progress</div>
+    </div>
+  </div>
+  <div class="pg-body" id="pgBody"></div>
+</div>
+
+<!-- XATO ARXIVI MODAL -->
+<div id="vXato" style="position:fixed;inset:0;z-index:502;display:none;flex-direction:column;background:var(--bg)">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeXatoModal()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">XATO ARXIVI</div>
+      <div class="ai-mhdr-title">Noto'g'ri javoblar</div>
+    </div>
+    <button onclick="xatoClearConfirm()" style="background:transparent;border:1px solid rgba(244,63,94,.3);color:var(--red);padding:5px 11px;border-radius:20px;font-size:.68rem;font-weight:600;cursor:pointer;font-family:var(--font)">Tozalash</button>
+  </div>
+  <div class="ai-mbody" id="xatoBody"></div>
 </div>
 
 <!-- ADMIN VIEW -->
@@ -2255,7 +2419,7 @@ function openApp(){
   document.getElementById('navUser').textContent=SES.n+' '+SES.s;
   renderApp();
 }
-function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge()}
+function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge();updXatoBadge()}
 
 const RES=()=>lsG(K.res,{});
 const sRES=(r)=>lsS(K.res,r);
@@ -2460,6 +2624,11 @@ function renderQ(){
       if(CHECKED&&!cor){
         const ah=document.createElement('div');ah.className='ans-hint on';
         ah.innerHTML=`To'g'ri javob: <span>${q.a.split('|')[0]}</span>`;item.appendChild(ah);
+        const askBtn=document.createElement('button');
+        askBtn.className='ask-ai-btn';
+        askBtn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> AI dan so'rash`;
+        askBtn.onclick=()=>openAiChat({q:q.tx, wrong:UA[i]||'(bo\'sh)', right:q.a.split('|')[0], testTitle:CUR.ti, qn:q.n});
+        item.appendChild(askBtn);
       }
     } else if(isGroup){
       const qn=document.createElement('div');qn.className='qn';
@@ -2529,6 +2698,11 @@ function renderQ(){
       if(CHECKED&&!cor){
         const ah=document.createElement('div');ah.className='ans-hint on';
         ah.innerHTML=`To'g'ri javob: <span>${q.a}</span>`;item.appendChild(ah);
+        const askBtn=document.createElement('button');
+        askBtn.className='ask-ai-btn';
+        askBtn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> AI dan so'rash`;
+        askBtn.onclick=()=>openAiChat({q:q.tx, wrong:UA[i]||'(tanlanmagan)', right:q.a, testTitle:CUR.ti, qn:q.n});
+        item.appendChild(askBtn);
       }
     }
     rendered.add(i);
@@ -2564,6 +2738,18 @@ function checkAnswers(){
   CHECKED=true;
   const sc=scoreT(CUR.q,UA),tot=CUR.q.length,pct=Math.round(sc/tot*100);
   const res=RES();res[RK(CUR.id)]={sc,ans:{...UA},at:new Date().toISOString(),pct};sRES(res);
+  // Save wrong answers to xato arxivi
+  if(SES&&!SES.adm){
+    const xa=lsG('xa_v1',{});
+    CUR.q.forEach((q,i)=>{
+      if(!chkAns(UA[i],q.a,q.t)){
+        const key=SES.uid+'_t'+CUR.id+'_q'+q.n;
+        xa[key]={uid:SES.uid,tid:CUR.id,ti:CUR.ti,qn:q.n,qt:q.tx,wrong:UA[i]||'',right:q.a.split('|')[0],at:new Date().toISOString()};
+      }
+    });
+    lsS('xa_v1',xa);
+    updXatoBadge();
+  }
   addNotif(CUR,sc,tot,pct);
   if(SES&&!SES.adm){
     const band=bandCalc(sc,tot,1);
@@ -3009,10 +3195,12 @@ function renderAiResults(){
 
   const body = document.getElementById('aiMbody');
   body.innerHTML=`
-  <div class="ai-rtabs">
-    <button class="ai-rtab ${aiTab==='para'?'on':''}" onclick="switchAiTab('para',this)">📄 Paragraflar</button>
-    <button class="ai-rtab ${aiTab==='words'?'on':''}" onclick="switchAiTab('words',this)">🔤 So'z darajalari</button>
-    <button class="ai-rtab ${aiTab==='quiz'?'on':''}" onclick="switchAiTab('quiz',this)">🎯 Pronoun Quiz</button>
+  <div class="ai-rtabs" style="display:grid;grid-template-columns:repeat(5,1fr)">
+    <button class="ai-rtab ${aiTab==='para'?'on':''}" onclick="switchAiTab('para',this)">📄<br><span style="font-size:.6rem">Paragraf</span></button>
+    <button class="ai-rtab ${aiTab==='words'?'on':''}" onclick="switchAiTab('words',this)">🔤<br><span style="font-size:.6rem">So'zlar</span></button>
+    <button class="ai-rtab ${aiTab==='fc'?'on':''}" onclick="switchAiTab('fc',this)">🃏<br><span style="font-size:.6rem">Kartochka</span></button>
+    <button class="ai-rtab ${aiTab==='quiz'?'on':''}" onclick="switchAiTab('quiz',this)">🎯<br><span style="font-size:.6rem">Quiz</span></button>
+    <button class="ai-rtab ${aiTab==='chat'?'on':''}" onclick="switchAiTab('chat',this)">💬<br><span style="font-size:.6rem">AI Chat</span></button>
   </div>
   <div id="aiTabBody"></div>`;
 
@@ -3027,9 +3215,11 @@ function switchAiTab(tab, btn){
 function renderAiTab(){
   const body=document.getElementById('aiTabBody');
   if(!body||!aiData) return;
-  if(aiTab==='para')   renderParaTab(body);
-  else if(aiTab==='words') renderWordsTab(body);
-  else renderQuizTab(body);
+  if(aiTab==='para')        renderParaTab(body);
+  else if(aiTab==='words')  renderWordsTab(body);
+  else if(aiTab==='fc')     renderFcTab(body);
+  else if(aiTab==='quiz')   renderQuizTab(body);
+  else if(aiTab==='chat')   renderInlineChat(body);
 }
 
 /* ── PARAGRAPHS TAB ── */
@@ -3185,12 +3375,669 @@ function aiResetQuiz(){
   if(body) renderQuizTab(body);
 }
 
-/* ESC */
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    if(document.getElementById('aiWpop').classList.contains('on')){closeWpop();return;}
-    if(document.getElementById('vAiModal').style.display==='flex'){closeAiModal();}
+// ══════════════════════════════════════════════════
+// FLASHCARD TAB (spaced repetition inside AI Tahlil)
+// ══════════════════════════════════════════════════
+let fcDeck=[];      // [{word,ipa,pos,uzbek,example,level}]
+let fcIdx=0;
+let fcFlipped=false;
+let fcStats={easy:0,ok:0,hard:0};
+let fcHardQueue=[];  // words to repeat
+
+function renderFcTab(body){
+  const words=(aiData&&aiData.words)||[];
+  if(!words.length){body.innerHTML='<div class="ai-info">So\'zlar topilmadi. Avval tahlil qiling.</div>';return;}
+
+  // init deck on first open or restart
+  if(!fcDeck.length){
+    fcDeck=[...words].sort(()=>Math.random()-.5);
+    fcIdx=0;fcFlipped=false;fcStats={easy:0,ok:0,hard:0};fcHardQueue=[];
   }
+
+  const total=fcDeck.length+fcHardQueue.length;
+  const done=fcStats.easy+fcStats.ok+fcStats.hard;
+
+  // Finished?
+  if(fcIdx>=fcDeck.length&&!fcHardQueue.length){
+    body.innerHTML=`
+    <div class="fc-done">
+      <div style="font-size:2.4rem;margin-bottom:6px">🎉</div>
+      <div class="fc-done-n">${fcStats.easy+fcStats.ok}</div>
+      <div style="font-size:.76rem;color:var(--muted2);margin-top:4px;margin-bottom:18px">ta so'z o'zlashtirildi</div>
+      <div style="display:flex;justify-content:center;gap:10px;font-size:.76rem;margin-bottom:20px">
+        <span style="color:var(--green)">✓ Oson: ${fcStats.easy}</span>
+        <span style="color:var(--yellow)">≈ O'rtacha: ${fcStats.ok}</span>
+        <span style="color:var(--red)">✗ Qiyin: ${fcStats.hard}</span>
+      </div>
+      <button class="ai-go" onclick="fcRestart()" style="max-width:220px;margin:0 auto">🔁 Qaytadan boshlash</button>
+    </div>`;
+    return;
+  }
+
+  // Merge hard queue back when main deck exhausted
+  if(fcIdx>=fcDeck.length&&fcHardQueue.length){
+    fcDeck=[...fcHardQueue].sort(()=>Math.random()-.5);
+    fcIdx=0;fcFlipped=false;fcHardQueue=[];
+    body.innerHTML='';
+    renderFcTab(body);return;
+  }
+
+  const w=fcDeck[fcIdx];
+  const pct=Math.round(done/Math.max(total,1)*100);
+
+  body.innerHTML=`
+  <div class="fc-progress">
+    <span>${done}/${total}</span>
+    <div class="fc-pbar"><div class="fc-pfill" style="width:${pct}%"></div></div>
+    <span>${pct}%</span>
+  </div>
+  <div class="fc-scene" onclick="fcFlip()">
+    <div class="fc-card${fcFlipped?' flipped':''}" id="fcCard">
+      <div class="fc-face fc-front">
+        <div class="fc-label">So'zni tarjima qiling</div>
+        <div class="fc-word">${w.word}
+          <button class="tts-btn" style="margin-left:6px;vertical-align:middle" onclick="event.stopPropagation();tts('${w.word.replace(/'/g,"\\'")}',this)" title="Eshitish">
+            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+        </div>
+        ${w.ipa?`<div class="fc-ipa">/${w.ipa}/</div>`:''}
+        ${w.pos?`<div class="fc-pos">${w.pos}</div>`:''}
+        <div class="fc-tap-hint">👆 Javobni ko'rish uchun bosing</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">Tarjima</div>
+        <div class="fc-answer">🇺🇿 ${w.uzbek||'—'}</div>
+        ${w.example?`<div class="fc-ex">"${w.example}"</div>`:''}
+        <span class="ai-lvl ${(w.level||'cx').toLowerCase().replace('+','x')}" style="margin-top:10px">${w.level||'?'}</span>
+      </div>
+    </div>
+  </div>
+  <div class="fc-btns" id="fcBtns" style="${fcFlipped?'':'opacity:.35;pointer-events:none'}">
+    <button class="fc-btn hard" onclick="fcRate('hard')">😓 Qiyin<small>Yana ko'raman</small></button>
+    <button class="fc-btn ok"   onclick="fcRate('ok')">🤔 O'rtacha<small>Yaxshi</small></button>
+    <button class="fc-btn easy" onclick="fcRate('easy')">😊 Oson<small>Bilaman</small></button>
+  </div>
+  <div style="text-align:center;margin-top:8px">
+    <button onclick="fcRestart()" style="background:transparent;border:none;color:var(--muted);font-size:.68rem;cursor:pointer;font-family:var(--font)">🔁 Qayta boshlash</button>
+  </div>`;
+}
+
+function fcFlip(){
+  fcFlipped=!fcFlipped;
+  const card=document.getElementById('fcCard');
+  const btns=document.getElementById('fcBtns');
+  if(card){card.classList.toggle('flipped',fcFlipped);}
+  if(btns){btns.style.opacity=fcFlipped?'1':'0.35';btns.style.pointerEvents=fcFlipped?'':'none';}
+}
+function fcRate(r){
+  fcStats[r]=(fcStats[r]||0)+1;
+  if(r==='hard') fcHardQueue.push(fcDeck[fcIdx]);
+  fcIdx++;fcFlipped=false;
+  const body=document.getElementById('aiTabBody');
+  if(body) renderFcTab(body);
+}
+function fcRestart(){
+  const words=(aiData&&aiData.words)||[];
+  fcDeck=[...words].sort(()=>Math.random()-.5);
+  fcIdx=0;fcFlipped=false;fcStats={easy:0,ok:0,hard:0};fcHardQueue=[];
+  const body=document.getElementById('aiTabBody');
+  if(body) renderFcTab(body);
+}
+
+// ══════════════════════════════════════════════════
+// INLINE CHAT TAB (inside AI Tahlil)
+// ══════════════════════════════════════════════════
+let inlineChatHistory=[];
+let inlineChatBusy=false;
+
+function renderInlineChat(body){
+  const key=gGroqKey();
+  if(!key){
+    body.innerHTML=`<div class="ai-info">💬 AI Chat uchun Groq API kaliti kerak.<br>Orqaga qaytib kalitni kiriting.</div>`;
+    return;
+  }
+  if(body.querySelector('.chat-wrap')){return;}// already rendered
+
+  body.innerHTML=`
+  <div class="chat-wrap" style="height:calc(100vh - 200px);min-height:320px">
+    <div style="font-size:.68rem;color:var(--muted2);margin-bottom:8px;padding:0 2px">
+      💬 Test ${aiData.tid} · <strong style="color:var(--text)">${aiData.title}</strong> haqida savollar bering
+    </div>
+    <div class="chat-msgs" id="inlineChatMsgs" style="max-height:none;flex:1"></div>
+    <div style="padding:8px 0 0;border-top:1px solid var(--border);margin-top:8px">
+      <div style="display:flex;gap:5px;margin-bottom:6px;overflow-x:auto;scrollbar-width:none;white-space:nowrap" id="inlineSugRow">
+        ${['Bu matn nima haqida?','Qiyin so\'zlarni tushuntiring','Asosiy g\'oyani ayting','IELTS uchun nima muhim?','Grammatika xatolarim'].map(s=>`<button class="chat-sug" onclick="inlineSug('${s.replace(/'/g,"\\'")}')">${s}</button>`).join('')}
+      </div>
+      <div class="chat-inp-row">
+        <textarea class="chat-inp" id="inlineChatInp" placeholder="Savol yozing…" rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();inlineChatSend()}"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
+        <button class="chat-send" id="inlineSendBtn" onclick="inlineChatSend()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>`;
+
+  if(!inlineChatHistory.length){
+    inlineAppend('ai','Salom! 👋 Test '+aiData.tid+' tahlili bo\'yicha yordamchi chatman.\n\nMatn, so\'zlar, grammatika yoki IELTS strategiyasi haqida istalgan savol bering!');
+  } else {
+    inlineChatHistory.forEach(m=>inlineAppend(m.role,m.content));
+  }
+}
+
+function inlineSug(text){
+  const inp=document.getElementById('inlineChatInp');
+  if(inp){inp.value=text;inlineChatSend();}
+}
+
+function inlineAppend(role,text){
+  const msgs=document.getElementById('inlineChatMsgs');
+  if(!msgs) return;
+  const div=document.createElement('div');
+  div.className='chat-msg '+role;
+  div.innerHTML=`<div class="chat-avatar">${role==='ai'?'🤖':'👤'}</div>
+    <div class="chat-bubble">${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+async function inlineChatSend(){
+  if(inlineChatBusy) return;
+  const inp=document.getElementById('inlineChatInp');
+  const sendBtn=document.getElementById('inlineSendBtn');
+  const text=(inp.value||'').trim();
+  if(!text) return;
+  const key=gGroqKey();
+  if(!key) return;
+  inp.value='';inp.style.height='auto';
+  inlineChatBusy=true;
+  if(sendBtn) sendBtn.disabled=true;
+  document.getElementById('inlineSugRow').innerHTML='';
+  inlineAppend('user',text);
+  inlineChatHistory.push({role:'user',content:text});
+
+  // typing
+  const msgs=document.getElementById('inlineChatMsgs');
+  const typing=document.createElement('div');
+  typing.className='chat-msg ai';typing.id='ilTyping';
+  typing.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><div class="chat-dot"></div><div class="chat-dot"></div><div class="chat-dot"></div></div></div>';
+  if(msgs){msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;}
+
+  const sys=`Sen IELTS listening mutaxassisi va o'zbek tili o'qituvchisisisan. Foydalanuvchi Test ${aiData.tid} "${aiData.title}" matni bo'yicha savol bermoqda. Matn qisqacha: ${(aiData.paragraphs||[]).slice(0,2).map(p=>p.summary||'').join('. ')}. Qisqa va foydali javob ber, o'zbek tilida.`;
+
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:500,temperature:0.5,
+        messages:[{role:'system',content:sys},...inlineChatHistory.slice(-8)]})
+    });
+    const t=document.getElementById('ilTyping');if(t)t.remove();
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||r.status);}
+    const d=await r.json();
+    const reply=(d.choices?.[0]?.message?.content||'Javob yo\'q').trim();
+    inlineChatHistory.push({role:'assistant',content:reply});
+    inlineAppend('ai',reply);
+  }catch(e){
+    const t=document.getElementById('ilTyping');if(t)t.remove();
+    inlineAppend('ai','❌ Xato: '+e.message);
+  }
+  inlineChatBusy=false;
+  if(sendBtn) sendBtn.disabled=false;
+}
+
+// ══════════════════════════════════════════════════
+// AI CHAT  (Savol-Javob)
+// ══════════════════════════════════════════════════
+let chatHistory = [];   // [{role,content}]
+let chatContext = null; // optional question context
+let chatBusy    = false;
+
+const CHAT_SUGGESTIONS_GENERAL = [
+  'Nega bu javob to\'g\'ri?',
+  'Bu so\'z qanday talaffuz qilinadi?',
+  'IELTS Listening uchun maslahat',
+  'Section 4 qanday bo\'ladi?',
+  'Band score qanday hisoblanadi?'
+];
+
+function openAiChat(ctx){
+  const key = gGroqKey();
+  if(!key){
+    toast('AI Chat uchun Groq API kaliti kerak — AI Tahlil bo\'limiga kiring');
+    openAiModal(); return;
+  }
+  chatContext = ctx || null;
+  chatHistory = [];
+  const modal = document.getElementById('vAiChat');
+  modal.style.display = 'flex';
+  document.getElementById('aiChatTitle').textContent = ctx ? `Test ${ctx.tid||''} · Savol ${ctx.qn||''}` : 'AI Savol-Javob';
+  const body = document.getElementById('aiChatBody');
+  body.innerHTML = '';
+
+  // Greeting
+  let greeting = 'Salom! 👋 Men IELTS listening bo\'yicha AI yordamchiman.\n\nIstalgan savolingizni bering — so\'z ma\'nosi, grammatika, test strategiyasi yoki noto\'g\'ri javob sababini tushuntiraman.';
+  if(ctx){
+    greeting = `Savol ${ctx.qn} bo\'yicha yordam.\n\n**Savol:** ${ctx.q}\n**Sizning javobingiz:** ${ctx.wrong}\n**To\'g\'ri javob:** ${ctx.right}\n\nNima tushunmadingiz?`;
+  }
+  appendChatMsg('ai', greeting);
+  renderChatSuggestions(ctx);
+  document.getElementById('chatInp').focus();
+}
+function closeAiChat(){
+  document.getElementById('vAiChat').style.display='none';
+  chatHistory=[];chatContext=null;chatBusy=false;
+}
+
+function appendChatMsg(role, text){
+  const body = document.getElementById('aiChatBody');
+  const div = document.createElement('div');
+  div.className = 'chat-msg '+role;
+  const avatar = document.createElement('div');
+  avatar.className = 'chat-avatar';
+  avatar.textContent = role==='ai' ? '🤖' : '👤';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  // simple markdown: **bold**, newlines
+  bubble.innerHTML = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function appendTyping(){
+  const body = document.getElementById('aiChatBody');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai'; div.id = 'chatTyping';
+  div.innerHTML = '<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><div class="chat-dot"></div><div class="chat-dot"></div><div class="chat-dot"></div></div></div>';
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function removeTyping(){ const t=document.getElementById('chatTyping');if(t)t.remove(); }
+
+function renderChatSuggestions(ctx){
+  const row = document.getElementById('chatSugRow');
+  if(!row) return;
+  const sugs = ctx
+    ? [`Nega "${ctx.right}" to'g'ri javob?`, `"${ctx.wrong}" nima uchun xato?`, 'Bu so\'zni tarjima qiling', 'Bu savolda chalg\'ituvchi nima edi?', ...CHAT_SUGGESTIONS_GENERAL]
+    : CHAT_SUGGESTIONS_GENERAL;
+  row.innerHTML = sugs.slice(0,5).map(s=>
+    `<button class="chat-sug" onclick="chatUseSug(this)">${s}</button>`
+  ).join('');
+}
+function chatUseSug(btn){
+  const inp = document.getElementById('chatInp');
+  if(inp){ inp.value = btn.textContent; inp.style.height='auto'; chatSend(); }
+}
+
+function chatKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend();}
+}
+
+async function chatSend(){
+  if(chatBusy) return;
+  const inp = document.getElementById('chatInp');
+  const text = (inp.value||'').trim();
+  if(!text) return;
+  const key = gGroqKey();
+  if(!key){ toast('Groq API kaliti yo\'q'); return; }
+
+  inp.value=''; inp.style.height='auto';
+  document.getElementById('chatSendBtn').disabled=true;
+  chatBusy=true;
+  appendChatMsg('user', text);
+
+  // Build system prompt
+  let sys = `Sen IELTS listening bo'yicha mutaxassis va o'zbek tili o'qituvchisisan. Qisqa, aniq va foydali javob ber. O'zbek tilida javob ber (ingliz so'zlar kerak bo'lsa ishlataver). Markdown bold (**so'z**) ishlatishing mumkin.`;
+  if(chatContext){
+    sys += `\n\nKontekst — Test: "${chatContext.testTitle||''}", Savol ${chatContext.qn||''}: "${chatContext.q||''}", O'quvchi javob berdi: "${chatContext.wrong||''}", To'g'ri javob: "${chatContext.right||''}"`;
+  }
+
+  chatHistory.push({role:'user',content:text});
+  appendTyping();
+
+  try{
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:600,
+        temperature:0.5,
+        messages:[{role:'system',content:sys},...chatHistory.slice(-8)]
+      })
+    });
+    removeTyping();
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||'HTTP '+r.status);}
+    const d = await r.json();
+    const reply = (d.choices?.[0]?.message?.content||'Javob olinmadi').trim();
+    chatHistory.push({role:'assistant',content:reply});
+    appendChatMsg('ai', reply);
+    // hide suggestions after first exchange
+    const sr=document.getElementById('chatSugRow');if(sr)sr.innerHTML='';
+  }catch(e){
+    removeTyping();
+    appendChatMsg('ai','❌ Xato: '+e.message);
+  }
+  document.getElementById('chatSendBtn').disabled=false;
+  chatBusy=false;
+}
+
+// ══════════════════════════════════════════════════
+// XATO ARXIVI
+// ══════════════════════════════════════════════════
+function openXatoModal(){
+  const m=document.getElementById('vXato');
+  m.style.display='flex';
+  renderXato();
+}
+function closeXatoModal(){ document.getElementById('vXato').style.display='none'; }
+
+function updXatoBadge(){
+  if(!SES||SES.adm) return;
+  const xa=lsG('xa_v1',{});
+  const mine=Object.values(xa).filter(x=>x.uid===SES.uid);
+  const dot=document.getElementById('xaDot');
+  if(dot){ dot.style.display=mine.length?'block':'none'; }
+}
+
+function renderXato(){
+  if(!SES||SES.adm) return;
+  const body=document.getElementById('xatoBody');
+  const xa=lsG('xa_v1',{});
+  const items=Object.entries(xa)
+    .filter(([,v])=>v.uid===SES.uid)
+    .sort((a,b)=>new Date(b[1].at)-new Date(a[1].at));
+
+  if(!items.length){
+    body.innerHTML='<div class="xa-empty">🎉 Hozircha xato yo\'q!<br><span style="font-size:.7rem;color:var(--muted);margin-top:6px;display:block">Testlarni bajaring — noto\'g\'ri javoblar shu yerda to\'planadi</span></div>';
+    return;
+  }
+
+  // Stats
+  const byTest={};
+  items.forEach(([,v])=>{ byTest[v.tid]=(byTest[v.tid]||0)+1; });
+  const mostWrong=Object.entries(byTest).sort((a,b)=>b[1]-a[1])[0];
+
+  body.innerHTML=`
+  <div class="xa-stats">
+    <div class="xa-stat"><div class="xa-stat-n" style="color:var(--red)">${items.length}</div><div class="xa-stat-l">Jami xato</div></div>
+    <div class="xa-stat"><div class="xa-stat-n" style="color:var(--a)">${Object.keys(byTest).length}</div><div class="xa-stat-l">Test</div></div>
+    <div class="xa-stat"><div class="xa-stat-n" style="color:var(--yellow)">T${mostWrong?.[0]||'—'}</div><div class="xa-stat-l">Ko'p xato</div></div>
+  </div>
+  <div id="xaList"></div>`;
+
+  const list=document.getElementById('xaList');
+  items.forEach(([key,v],idx)=>{
+    const d=document.createElement('div');
+    d.className='xa-item'; d.id='xa'+idx;
+    d.innerHTML=`
+    <div class="xa-hdr" onclick="toggleXa(${idx},${JSON.stringify(v).replace(/"/g,'&quot;')})">
+      <span class="xa-num">Q${v.qn}</span>
+      <div class="xa-info">
+        <div class="xa-test">Test ${v.tid} · ${v.ti||''}</div>
+        <div class="xa-q">${v.qt||''}</div>
+      </div>
+      <span class="xa-chev">▾</span>
+    </div>
+    <div class="xa-body">
+      <div class="xa-row"><span class="xa-lbl">Javobim:</span><span class="xa-wrong">${v.wrong||'(bo\'sh)'}</span></div>
+      <div class="xa-row"><span class="xa-lbl">To'g'ri:</span><span class="xa-right">${v.right}</span></div>
+      <div class="xa-exp" id="xaExp${idx}"><span style="color:var(--muted);font-style:italic">AI tushuntirishini yuklash uchun ochiq holatda saqlang…</span></div>
+      <button class="ask-ai-btn" style="margin-top:8px" onclick="xaAskAi(${idx},${JSON.stringify(v).replace(/"/g,'&quot;')})">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> AI Chat
+      </button>
+    </div>`;
+    list.appendChild(d);
+  });
+}
+
+function toggleXa(idx, v){
+  const el=document.getElementById('xa'+idx);
+  if(!el) return;
+  el.classList.toggle('open');
+  if(el.classList.contains('open')) xaLoadExp(idx,v);
+}
+
+async function xaLoadExp(idx, v){
+  const expEl=document.getElementById('xaExp'+idx);
+  if(!expEl||expEl.dataset.loaded) return;
+  const key=gGroqKey();
+  if(!key){expEl.innerHTML='<span style="color:var(--muted)">AI tushuntirish uchun Groq API kaliti kerak</span>';return;}
+  expEl.className='xa-exp loading';
+  expEl.innerHTML='<span class="ai-spin" style="display:inline-block;width:12px;height:12px;border:2px solid rgba(167,139,250,.3);border-top-color:var(--a3);border-radius:50%;animation:aiSpin .7s linear infinite"></span> Tushuntirish yuklanmoqda…';
+
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:250,temperature:0.3,
+        messages:[{role:'user',content:`IELTS Listening savoli bo'yicha qisqa tushuntirish ber (o'zbekcha, 2-3 jumla):
+Test: "${v.ti}", Savol: "${v.qt}"
+O'quvchi yozdi: "${v.wrong||'(bo\'sh)'}"
+To'g'ri javob: "${v.right}"
+Nima uchun "${v.right}" to'g'ri ekanini va "${v.wrong}" nima uchun noto'g'ri ekanini tushuntir.`}]})
+    });
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    const txt=(d.choices?.[0]?.message?.content||'').trim();
+    expEl.className='xa-exp'; expEl.dataset.loaded='1';
+    expEl.innerHTML=txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  }catch(e){
+    expEl.className='xa-exp';
+    expEl.innerHTML='<span style="color:var(--red)">Xato: '+e.message+'</span>';
+  }
+}
+
+function xaAskAi(idx, v){
+  closeXatoModal();
+  openAiChat({qn:v.qn, q:v.qt, wrong:v.wrong, right:v.right, testTitle:v.ti, tid:v.tid});
+}
+
+function xatoClearConfirm(){
+  if(!confirm('Barcha xatolarni o\'chirish?')) return;
+  const xa=lsG('xa_v1',{});
+  Object.keys(xa).forEach(k=>{ if(xa[k].uid===SES?.uid) delete xa[k]; });
+  lsS('xa_v1',xa);
+  updXatoBadge();
+  renderXato();
+  toast('Xatolar tozalandi');
+}
+
+// ══════════════════════════════════════════════════
+// TTS — Text To Speech
+// ══════════════════════════════════════════════════
+function tts(text, btn){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  if(btn&&btn.classList.contains('playing')){ btn.classList.remove('playing'); return; }
+  document.querySelectorAll('.tts-btn.playing').forEach(b=>b.classList.remove('playing'));
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang='en-US'; utt.rate=0.85; utt.pitch=1;
+  if(btn){ btn.classList.add('playing'); utt.onend=()=>btn.classList.remove('playing'); utt.onerror=()=>btn.classList.remove('playing'); }
+  window.speechSynthesis.speak(utt);
+}
+
+// Add TTS button to word popup
+const _origShowWpop = showWpop;
+showWpop = function(idx){
+  _origShowWpop(idx);
+  const w=_wpWords[idx];
+  if(!w) return;
+  // Add TTS button next to word
+  const wordEl=document.getElementById('wpWord');
+  if(wordEl && !wordEl.querySelector('.tts-btn')){
+    const btn=document.createElement('button');
+    btn.className='tts-btn'; btn.title='Talaffuzini eshitish';
+    btn.innerHTML='<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+    btn.onclick=(e)=>{e.stopPropagation();tts(w.word,btn);};
+    wordEl.appendChild(btn);
+  }
+};
+
+// Reset inline chat when switching away from chat tab
+const _origSwitchAiTab = switchAiTab;
+
+// ══════════════════════════════════════════════════
+// PROGRESS GRAFIK
+// ══════════════════════════════════════════════════
+function openProgress(){
+  const m=document.getElementById('vProgress');
+  m.classList.add('on');
+  renderProgress();
+}
+function closeProgress(){
+  document.getElementById('vProgress').classList.remove('on');
+}
+
+function renderProgress(){
+  if(!SES||SES.adm) return;
+  const body=document.getElementById('pgBody');
+  const res=RES();
+  const done=Object.values(res);
+  const total=T.length;
+  const pcts=done.map(r=>r.pct||0);
+  const avg=pcts.length?Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length):0;
+  const best=pcts.length?Math.max(...pcts):0;
+  const streak=calcStreak(done);
+
+  // Band from avg
+  const avgSc=done.length?Math.round(done.reduce((a,r)=>a+(r.sc||0),0)/done.length):0;
+  const avgTot=done.length?Math.round(done.reduce((a,r)=>a+(r.tot||40),0)/done.length):40;
+  const band=done.length?bandCalc(avgSc,avgTot,1):'—';
+
+  body.innerHTML=`
+  <div class="pg-kpis">
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:var(--a)">${done.length}/${total}</div><div class="pg-kpi-l">Bajarildi</div></div>
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:${avg>=80?'var(--green)':avg>=60?'var(--yellow)':'var(--red)'}">${avg}%</div><div class="pg-kpi-l">O'rtacha</div></div>
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:var(--green)">${best}%</div><div class="pg-kpi-l">Eng yaxshi</div></div>
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:var(--a3)">${band}</div><div class="pg-kpi-l">Band taxmin</div></div>
+  </div>
+  <div class="pg-kpis" style="grid-template-columns:repeat(2,1fr)">
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:var(--yellow)">${streak}🔥</div><div class="pg-kpi-l">Streak (kun)</div></div>
+    <div class="pg-kpi"><div class="pg-kpi-n" style="color:var(--a2)">${done.length?Math.round(done.reduce((a,r)=>a+(r.sc||0),0)/done.length*10)/10:'—'}</div><div class="pg-kpi-l">O'rt. ball</div></div>
+  </div>
+
+  <div class="pg-sec">
+    <div class="pg-sec-h">📊 Har bir test natijasi <span style="font-size:.6rem;color:var(--muted);font-weight:400">so'nggi 20 ta</span></div>
+    <div class="pg-chart" id="pgBarChart"></div>
+  </div>
+
+  <div class="pg-sec">
+    <div class="pg-sec-h">📈 Dinamika (ketma-ket natijalari)</div>
+    <svg class="pg-line-svg" id="pgLineSvg" viewBox="0 0 300 80" preserveAspectRatio="none"></svg>
+  </div>
+
+  <div class="pg-sec">
+    <div class="pg-sec-h">📅 Faollik (oxirgi 40 kun)</div>
+    <div class="pg-heat" id="pgHeat"></div>
+    <div style="display:flex;gap:10px;margin-top:6px;font-size:.6rem;color:var(--muted);align-items:center">
+      <span>Kam</span>
+      <div style="display:flex;gap:3px">${['var(--border)','rgba(79,126,247,.25)','rgba(79,126,247,.5)','rgba(79,126,247,.75)','var(--a)'].map(c=>`<div style="width:12px;height:12px;border-radius:2px;background:${c}"></div>`).join('')}</div>
+      <span>Ko'p</span>
+    </div>
+  </div>
+
+  <div class="pg-sec">
+    <div class="pg-sec-h">🏅 Yutuqlar</div>
+    <div id="pgBadges"></div>
+  </div>`;
+
+  // Bar chart — build entries with tid
+  const allEntries=Object.entries(res).map(([k,v])=>({tid:k.replace(SES.uid+'_',''),...v}));
+  const recent=allEntries.sort((a,b)=>new Date(b.at||0)-new Date(a.at||0)).slice(0,20);
+  const barDiv=document.getElementById('pgBarChart');
+  if(barDiv&&recent.length){
+    barDiv.innerHTML=recent.map(r=>{
+      const color=r.pct>=80?'var(--green)':r.pct>=60?'var(--yellow)':'var(--red)';
+      return `<div class="pg-bar-row">
+        <span class="pg-bar-lbl">T${r.tid||'?'}</span>
+        <div class="pg-bar-bg"><div class="pg-bar-fill" style="width:${r.pct}%;background:${color}">
+          <span class="pg-bar-val">${r.pct}%</span>
+        </div></div>
+      </div>`;
+    }).join('');
+  } else if(barDiv){barDiv.innerHTML='<div style="color:var(--muted);font-size:.75rem;padding:8px 0">Hali test bajarilmagan</div>';}
+
+  // Line SVG
+  const svg=document.getElementById('pgLineSvg');
+  if(svg&&pcts.length>1){
+    const pts=pcts.slice(-15);
+    const w=300,h=70,pad=5;
+    const xs=pts.map((_,i)=>pad+i*(w-pad*2)/(pts.length-1));
+    const ys=pts.map(p=>pad+(1-p/100)*(h-pad*2));
+    const path='M'+xs.map((x,i)=>`${x},${ys[i]}`).join('L');
+    const area='M'+xs[0]+','+h+' L'+xs.map((x,i)=>`${x},${ys[i]}`).join('L')+` L${xs[xs.length-1]},${h} Z`;
+    svg.innerHTML=`
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--a)" stop-opacity=".25"/><stop offset="100%" stop-color="var(--a)" stop-opacity="0"/></linearGradient></defs>
+      <line x1="0" y1="${pad+(1-0.8)*(h-pad*2)}" x2="300" y2="${pad+(1-0.8)*(h-pad*2)}" stroke="rgba(34,197,94,.2)" stroke-width="1" stroke-dasharray="4,3"/>
+      <path d="${area}" fill="url(#lg)"/>
+      <path d="${path}" fill="none" stroke="var(--a)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      ${xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3" fill="${pts[i]>=80?'var(--green)':pts[i]>=60?'var(--yellow)':'var(--red)'}" stroke="var(--bg)" stroke-width="1.5"/>`).join('')}`;
+  } else if(svg){svg.innerHTML='<text x="50%" y="50%" text-anchor="middle" fill="var(--muted)" font-size="11">Kamida 2 ta natija kerak</text>';}
+
+  // Heat map
+  const heat=document.getElementById('pgHeat');
+  if(heat){
+    const now=Date.now();
+    const dayMs=86400000;
+    const cells=Array(40).fill(0);
+    done.forEach(r=>{
+      if(!r.at) return;
+      const diff=Math.floor((now-new Date(r.at).getTime())/dayMs);
+      if(diff>=0&&diff<40) cells[diff]++;
+    });
+    heat.innerHTML=cells.map(c=>{
+      const d=c===0?'':c===1?'d1':c===2?'d2':c===3?'d3':'d4';
+      return `<div class="pg-heat-cell ${d}" title="${c} ta test"></div>`;
+    }).join('');
+  }
+
+  // Badges
+  const badgesEl=document.getElementById('pgBadges');
+  if(badgesEl){
+    const badges=[
+      {ic:'🎯',name:'Birinchi qadam',desc:'1 ta test bajardingiz',earned:done.length>=1},
+      {ic:'⚡',name:'Besh test',desc:'5 ta test bajardingiz',earned:done.length>=5},
+      {ic:'🔟',name:'O\'nta test',desc:'10 ta test bajardingiz',earned:done.length>=10},
+      {ic:'🏆',name:'Barcha testlar',desc:'40 ta testni bajardingiz',earned:done.length>=40},
+      {ic:'💎',name:'Mukammal',desc:'80%+ o\'rtacha ball',earned:avg>=80},
+      {ic:'🔥',name:'Streak ustasi',desc:'7 kun ketma-ket',earned:streak>=7},
+      {ic:'⭐',name:'Band 8+',desc:'Band 8 yoki undan yuqori',earned:parseFloat(band)>=8},
+    ];
+    badgesEl.innerHTML=badges.map(b=>`
+      <div class="pg-badge ${b.earned?'earned':''}">
+        <span class="pg-badge-ic" style="${b.earned?'':'filter:grayscale(1) opacity(.4)'}">${b.ic}</span>
+        <div>
+          <div style="font-size:.74rem;font-weight:600;color:${b.earned?'var(--text)':'var(--muted)'}">${b.name}</div>
+          <div style="font-size:.62rem;color:var(--muted)">${b.desc}${b.earned?' ✓':''}</div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function calcStreak(results){
+  if(!results.length) return 0;
+  const days=new Set(results.filter(r=>r.at).map(r=>new Date(r.at).toDateString()));
+  let streak=0,d=new Date();
+  while(days.has(d.toDateString())){
+    streak++;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+// ESC handling for new modals
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape') return;
+  if(document.getElementById('vAiChat').style.display==='flex'){closeAiChat();return;}
+  if(document.getElementById('vXato').style.display==='flex'){closeXatoModal();return;}
+  if(document.getElementById('vProgress').classList.contains('on')){closeProgress();return;}
 });
 </script>
 </body>
