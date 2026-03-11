@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
@@ -3118,52 +3118,63 @@ async function aiRun(){
     }catch(e){step(2,false,true);fail('Whisper: '+e.message);return;}
     step(2,true);
 
-    // Step 3 — paragraphs + uzbek translation (full transcript)
+    // Step 3 — split transcript in JS, ask LLaMA only for uzbek + summary + hardWords
     step(3);
     const correctAnswers = testObj.q.map(q=>q.a.split('|')[0]).join(', ');
-    const prompt3=`You are an IELTS expert and Uzbek teacher. Analyze this IELTS Section 4 audio transcript.
+
+    // Split transcript into ~5 equal sentence-aware chunks in JavaScript
+    function splitTranscript(text, n){
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const size = Math.ceil(sentences.length / n);
+      const chunks = [];
+      for(let i=0;i<n;i++){
+        const chunk = sentences.slice(i*size,(i+1)*size).join(' ').trim();
+        if(chunk) chunks.push(chunk);
+      }
+      return chunks;
+    }
+    const chunks = splitTranscript(transcript, 5);
+
+    const prompt3=`You are an IELTS expert and Uzbek language teacher.
 
 Topic: "${testObj.ti}"
-Correct answers: ${correctAnswers}
 
-Transcript:
-"""
-${transcript}
-"""
+Below are ${chunks.length} numbered transcript chunks. For EACH chunk provide:
+1. A short English summary title (5-7 words)
+2. A COMPLETE Uzbek translation of every sentence in that chunk
+3. 2-4 difficult words (B2/C1/C2 level) from that chunk
 
-Return ONLY valid JSON (no markdown, no extra text):
-{
-  "paragraphs": [
-    {
-      "id": 1,
-      "summary": "short English title (5-7 words)",
-      "english": "FULL paragraph text — include ALL sentences, do not cut short",
-      "uzbek": "To'liq o'zbekcha tarjima — har bir gapni tarjima qiling",
-      "hardWords": ["word1","word2","word3"]
-    }
-  ]
-}
+${chunks.map((c,i)=>`CHUNK ${i+1}:\n"""${c}"""`).join('\n\n')}
 
-Rules:
-- Split transcript into 4-6 logical paragraphs covering the ENTIRE transcript
-- "english" field must contain the COMPLETE original sentences for that paragraph, nothing omitted
-- "uzbek" must be a full accurate translation of every sentence
-- hardWords: 2-4 difficult words per paragraph (B2/C1/C2 level only)`;
+Return ONLY valid JSON array (no markdown):
+[
+  {"id":1,"summary":"title here","uzbek":"to'liq tarjima","hardWords":["w1","w2"]},
+  {"id":2,"summary":"...","uzbek":"...","hardWords":[...]}
+]`;
 
-    let paragraphsData, wordsQuizData;
+    let wordsQuizData;
+    let paragraphsArr;
     try{
       const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
-        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:8000,temperature:0.2,
+        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:6000,temperature:0.2,
           messages:[{role:'user',content:prompt3}]})
       });
       if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||'HTTP '+r.status);}
       const d=await r.json();
       let raw=(d.choices?.[0]?.message?.content||'').trim();
       raw=raw.replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
-      const m=raw.match(/\{[\s\S]*\}/); if(m) raw=m[0];
-      paragraphsData=JSON.parse(raw);
+      const m=raw.match(/\[[\s\S]*\]/); if(m) raw=m[0];
+      const aiChunks=JSON.parse(raw);
+      // Merge: english comes from our JS split, the rest from AI
+      paragraphsArr = chunks.map((eng,i)=>({
+        id: i+1,
+        summary: aiChunks[i]?.summary || `Part ${i+1}`,
+        english: eng,            // ← always the full original text
+        uzbek:   aiChunks[i]?.uzbek || '',
+        hardWords: aiChunks[i]?.hardWords || []
+      }));
     }catch(e){step(3,false,true);step(4,false,true);fail('Paragraf tahlil: '+e.message);return;}
     step(3,true);
 
@@ -3222,7 +3233,7 @@ Rules:
     }catch(e){step(4,false,true);fail('So\'z tahlil: '+e.message);return;}
     step(4,true);
 
-    aiData={tid:aiSelTest,title:testObj.ti,transcript,...paragraphsData,...wordsQuizData};
+    aiData={tid:aiSelTest,title:testObj.ti,transcript,paragraphs:paragraphsArr,...wordsQuizData};
     quizScore=0;
     setTimeout(()=>renderAiResults(),400);
 
