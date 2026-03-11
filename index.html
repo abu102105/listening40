@@ -675,44 +675,59 @@ input,button,select,textarea{font-family:var(--font)}
 .ak-status{text-align:center;font-size:.72rem;color:var(--muted);margin-bottom:8px;min-height:20px}
 .ak-sample{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid var(--border2);color:var(--muted2);padding:5px 12px;border-radius:20px;font-size:.7rem;cursor:pointer;font-family:var(--font);transition:all .14s;margin-bottom:12px}
 .ak-sample:hover{border-color:var(--a2);color:var(--a2)}
-/* ══ SHADOWING MODAL ══ */
+/* ══ SHADOWING MODAL — Sentence repeat method ══ */
 .sh-modal{position:fixed;inset:0;z-index:503;display:none;flex-direction:column;background:var(--bg)}
 .sh-modal.on{display:flex}
 .sh-body{flex:1;overflow-y:auto;padding:14px 16px 44px;-webkit-overflow-scrolling:touch}
-.sh-test-card{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);overflow:hidden;margin-bottom:12px}
-.sh-audio-bar{background:var(--bg2);padding:12px 14px;border-bottom:1px solid var(--border)}
-.sh-wave{height:48px;display:flex;align-items:center;justify-content:center;gap:2px;margin:10px 0}
-.sh-wave-bar{width:3px;background:var(--a);border-radius:2px;animation:shWave .8s ease infinite}
-.sh-wave-bar:nth-child(2){animation-delay:.1s;height:60%}
-.sh-wave-bar:nth-child(3){animation-delay:.2s;height:90%}
-.sh-wave-bar:nth-child(4){animation-delay:.3s;height:70%}
-.sh-wave-bar:nth-child(5){animation-delay:.4s;height:50%}
-.sh-wave-bar:nth-child(6){animation-delay:.3s;height:80%}
-.sh-wave-bar:nth-child(7){animation-delay:.2s;height:65%}
-.sh-wave-bar:nth-child(8){animation-delay:.1s;height:40%}
-@keyframes shWave{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-.sh-wave.paused .sh-wave-bar{animation-play-state:paused}
-.sh-ctrl{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border)}
-.sh-play{width:44px;height:44px;border-radius:50%;background:var(--a);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.sh-play svg{width:18px;height:18px;fill:currentColor}
-.sh-seek-wrap{flex:1;display:flex;flex-direction:column;gap:4px}
-.sh-seek{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
-.sh-seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--a);cursor:pointer}
-.sh-time{font-size:.62rem;font-family:var(--mono);color:var(--muted2)}
-.sh-loop-panel{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
-.sh-loop-row{display:flex;align-items:center;gap:8px}
-.sh-loop-btn{padding:6px 14px;border-radius:20px;font-size:.72rem;font-weight:700;border:1.5px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s}
-.sh-loop-btn.active{background:var(--a);border-color:var(--a);color:#fff}
-.sh-loop-range{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--muted2);font-family:var(--mono)}
-.sh-ab-btn{padding:4px 10px;border-radius:12px;font-size:.68rem;font-weight:700;border:1px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s;white-space:nowrap}
-.sh-ab-btn.set{background:var(--a3);border-color:var(--a3);color:#fff}
-.sh-spd-row{display:flex;align-items:center;gap:5px;padding:10px 14px}
-.sh-spd{padding:5px 10px;border-radius:12px;font-size:.7rem;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--mono);transition:all .14s}
+/* sentence card */
+.sh-sent-card{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;text-align:center}
+.sh-sent-num{font-size:.58rem;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.sh-sent-text{font-size:1rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:10px;min-height:52px}
+.sh-sent-text.hidden .sh-sent-words span{background:var(--border2);color:transparent;border-radius:3px;transition:all .3s}
+.sh-sent-words span{transition:all .3s}
+.sh-sent-uz{font-size:.78rem;color:var(--muted2);font-style:italic;line-height:1.5;margin-top:6px;display:none}
+.sh-sent-card.revealed .sh-sent-uz{display:block}
+/* state phases */
+.sh-phase{display:flex;flex-direction:column;align-items:center;gap:10px;padding:8px 0}
+.sh-phase-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+/* listen button */
+.sh-listen-btn{background:linear-gradient(135deg,#06b6d4,#0ea5e9);color:#fff;border:none;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;box-shadow:0 4px 18px rgba(6,182,212,.4);flex-shrink:0}
+.sh-listen-btn:active{transform:scale(.93)}
+.sh-listen-btn.playing{animation:akPulse .9s ease infinite;background:linear-gradient(135deg,#0ea5e9,#06b6d4)}
+.sh-listen-btn svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+/* speak button */
+.sh-speak-btn{background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;border:none;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;box-shadow:0 4px 18px rgba(239,68,68,.4);flex-shrink:0}
+.sh-speak-btn.listening{animation:akPulse .9s ease infinite}
+.sh-speak-btn svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+/* score */
+.sh-score-row{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 0}
+.sh-score-big{font-size:2.2rem;font-weight:800;font-family:var(--mono)}
+.sh-score-detail{font-size:.76rem;color:var(--muted2);line-height:1.7}
+.sh-match-words{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:8px 0}
+.sh-mw{padding:3px 8px;border-radius:8px;font-size:.74rem;font-weight:600}
+.sh-mw.ok{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.sh-mw.miss{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.2);text-decoration:line-through}
+.sh-mw.extra{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.2)}
+/* nav */
+.sh-nav{display:flex;gap:8px;margin-top:4px}
+.sh-nav-btn{flex:1;padding:12px;border-radius:var(--r2);font-size:.8rem;font-weight:700;border:1px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s}
+.sh-nav-btn.primary{background:var(--a);color:#fff;border-color:var(--a)}
+.sh-nav-btn:disabled{opacity:.35;pointer-events:none}
+/* speed bar */
+.sh-spd-row{display:flex;align-items:center;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.sh-spd{padding:5px 11px;border-radius:12px;font-size:.7rem;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--mono);transition:all .14s}
 .sh-spd.on{background:var(--a);border-color:var(--a);color:#fff}
-.sh-tip{background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:var(--r2);padding:10px 12px;font-size:.74rem;color:var(--muted2);line-height:1.8;margin-bottom:12px}
-.sh-step{display:flex;gap:10px;margin-bottom:8px;font-size:.78rem;color:var(--text);align-items:flex-start}
-.sh-step-n{width:22px;height:22px;border-radius:50%;background:var(--a);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-/* ══ SHADOWING ══ */
+/* progress */
+.sh-prog-wrap{margin-bottom:12px}
+.sh-prog-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.sh-prog-fill{height:100%;background:linear-gradient(90deg,#06b6d4,var(--a));border-radius:2px;transition:width .4s}
+/* summary */
+.sh-sum-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sh-sum-kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px;text-align:center}
+.sh-sum-n{font-size:1.3rem;font-weight:800;font-family:var(--mono)}
+.sh-sum-l{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.sh-tip{background:rgba(6,182,212,.05);border:1px solid rgba(6,182,212,.18);border-radius:var(--r2);padding:10px 12px;font-size:.74rem;color:var(--muted2);line-height:1.8;margin-bottom:12px}
+/* inline player bar */
 .sh-bar{display:flex;align-items:center;gap:6px;padding:7px 10px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r2);margin-top:6px}
 .sh-btn{background:var(--a3);color:#fff;border:none;border-radius:var(--r3);padding:4px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0;transition:all .14s}
 .sh-btn.active{background:#ef4444;animation:akPulse .9s ease infinite}
@@ -957,19 +972,15 @@ input,button,select,textarea{font-family:var(--font)}
 </div>
 
 <!-- SHADOWING MODAL -->
-<div id="vShadow" class="msh-modal">
+<div id="vShadow" class="sh-modal">
   <div class="ai-mhdr">
-    <button class="bk" onclick="closeShadow()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="bk" onclick="closeShadowing()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="ai-mhdr-info">
-      <div class="ai-mhdr-badge">🔊 SHADOWING</div>
-      <div class="ai-mhdr-title" id="shTitle">Shadowing</div>
-    </div>
-    <div style="display:flex;gap:5px">
-      <button class="sh-spd on" id="shSpd075" onclick="shSetSpeed(.75,this)">0.75×</button>
-      <button class="sh-spd" id="shSpd1" onclick="shSetSpeed(1,this)">1×</button>
+      <div class="ai-mhdr-badge" style="color:#06b6d4">🎧 SHADOWING MASHQI</div>
+      <div class="ai-mhdr-title" id="shTitle">Test tanlang</div>
     </div>
   </div>
-  <div class="msh-body" id="shBody"></div>
+  <div class="sh-body" id="shBody"></div>
 </div>
 
 <!-- DIKTANT MODAL -->
@@ -982,18 +993,6 @@ input,button,select,textarea{font-family:var(--font)}
     </div>
   </div>
   <div class="msh-body" id="dkBody"></div>
-</div>
-
-<!-- SHADOWING MODAL -->
-<div id="vShadowing" class="sh-modal">
-  <div class="ai-mhdr">
-    <button class="bk" onclick="closeShadowing()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div class="ai-mhdr-info">
-      <div class="ai-mhdr-badge" style="color:#06b6d4">🎧 SHADOWING MASHQI</div>
-      <div class="ai-mhdr-title" id="shTitle">Test tanlang</div>
-    </div>
-  </div>
-  <div class="sh-body" id="shBody"></div>
 </div>
 
 <!-- AKSENT MASHQI MODAL -->
@@ -4934,134 +4933,361 @@ function akRestartDrill(){
 // ESC for modals
 document.addEventListener('keydown', e=>{
   if(e.key==='Escape'){
-    if(document.getElementById('vShadowing').classList.contains('on')){closeShadowing();return;}
+    if(document.getElementById('vShadow').classList.contains('on')){closeShadowing();return;}
     if(document.getElementById('vAksent').classList.contains('on')){closeAksent();return;}
   }
 });
 
 // ══════════════════════════════════════════════════
-// SHADOWING MASHQI
 // ══════════════════════════════════════════════════
-let shState = { segments:[], idx:0, audio:null, loop:false, speed:.75, playing:false, timer:null };
+// SHADOWING MASHQI — haqiqiy metod
+// 1. Jumla TTS bilan gapiradi
+// 2. O'quvchi mikrofonga takrorlaydi
+// 3. So'z-so'z taqqoslanadi → % ball
+// ══════════════════════════════════════════════════
+let SH = {
+  sentences: [],   // [{text, uz}]
+  idx: 0,
+  scores: {},      // idx → {pct, heard, matched, missed}
+  phase: 'home',   // 'home'|'loading'|'drill'|'summary'
+  speed: 1,
+  rec: null,
+  recActive: false,
+  speaking: false,
+  testId: null
+};
 
 function openShadowing(){
-  if(!CUR){ toast('Avval test oching'); return; }
   document.getElementById('vShadow').classList.add('on');
-  document.getElementById('shTitle').textContent = `Test ${CUR.id} · Shadowing`;
-  shState.segments=[];shState.idx=0;shState.loop=false;shState.speed=.75;shState.playing=false;
-  shBuildSegments();
-  renderShBody();
+  SH.phase='home'; SH.testId=null; SH.sentences=[]; SH.scores={}; SH.idx=0;
+  renderShHome();
+  akRequestMicOnce(); // permission upfront
 }
-function closeShadow(){
-  shStop();
+function closeShadowing(){
+  shStopAll();
   document.getElementById('vShadow').classList.remove('on');
 }
-function shBuildSegments(){
-  // Split questions text into sentences for shadowing
-  const sentences = [];
-  // Use audio timestamp sections — split by ~15s segments via question groups
-  // Fallback: use question text as hints
-  CUR.q.forEach((q,i)=>{
-    if(q.tx && q.tx.length > 10) sentences.push(q.tx);
-  });
-  // Also add correct answers context
-  shState.segments = sentences.length ? sentences.map(s=>s.trim()).filter(Boolean) :
-    ['Bu testda audio matni mavjud. Audioni tinglang va takrorlang.'];
+function shStopAll(){
+  if(SH.rec){try{SH.rec.stop();}catch{} SH.rec=null;}
+  SH.recActive=false; SH.speaking=false;
+  window.speechSynthesis && speechSynthesis.cancel();
 }
 
-function renderShBody(){
-  const body = document.getElementById('shBody');
-  const segs = shState.segments;
-  body.innerHTML = `
-  <div style="background:rgba(79,126,247,.06);border:1px solid rgba(79,126,247,.15);border-radius:var(--r2);padding:10px 13px;font-size:.74rem;color:var(--muted2);line-height:1.7;margin-bottom:14px">
-    🔊 <strong style="color:var(--text)">Shadowing qoidasi:</strong> Audio gapiradi → <strong>1–2 soniya kechikib</strong> aynan takrorlang. 
-    Loop rejimida bir bo'lak qayta-qayta aylanadi. Tezlikni 0.75× dan boshlang.
+/* ── HOME ── */
+function renderShHome(){
+  document.getElementById('shTitle').textContent = 'Test tanlang';
+  document.getElementById('shBody').innerHTML = `
+  <div class="sh-tip">
+    <strong style="color:#06b6d4">🎧 Shadowing nima?</strong><br>
+    Dunyo bo'yicha №1 listening oshirish usuli. Har bir jumla <strong>eshitiladi</strong> → siz <strong>takrorlaysiz</strong> → tizim <strong>foiz bilan baholaydi</strong>.<br><br>
+    ✅ Aksent • intonatsiya • rhythm • so'z tartibini bir vaqtda mashq qilasiz
   </div>
+  <div style="font-size:.64rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Test tanlang</div>
+  <div class="ai-tgrid" id="shTestGrid"></div>`;
 
-  <div class="sh-ctrl">
-    <button class="sh-play" id="shPlayBtn" onclick="shTogglePlay()">▶</button>
-    <div style="flex:1">
-      <div style="font-size:.72rem;color:var(--muted2);margin-bottom:4px">
-        Bo'lak <span id="shSegIdx">${shState.idx+1}</span> / ${segs.length}
-      </div>
-      <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-        <div id="shMainBar" style="height:100%;background:var(--a);border-radius:2px;width:0%;transition:width .2s"></div>
-      </div>
+  const grid = document.getElementById('shTestGrid');
+  T.forEach(t => {
+    const d = document.createElement('div');
+    d.className = 'ai-tc' + (SH.testId===t.id?' on':'');
+    d.textContent = t.id; d.title = t.ti;
+    d.onclick = () => shLoadTest(t);
+    grid.appendChild(d);
+  });
+}
+
+/* ── LOAD: jumlalar olish ── */
+async function shLoadTest(t){
+  const key = gGroqKey();
+  if(!key){ toast('Groq API kaliti kerak — AI Tahlil ga kiring'); return; }
+
+  SH.testId=t.id; SH.sentences=[]; SH.scores={}; SH.idx=0; SH.phase='loading';
+  document.getElementById('shTitle').textContent = `Test ${t.id} · ${t.ti}`;
+  document.getElementById('shBody').innerHTML = `
+  <div class="ai-prog" style="margin-top:24px">
+    <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:14px">Jumlalar tayyorlanmoqda…</div>
+    <div class="ai-prog-steps">
+      <div class="ai-step active" id="shP1"><div class="ai-step-ic"><span class="ai-spin"></span></div>AI jumlalar yaratmoqda…</div>
+      <div class="ai-step" id="shP2"><div class="ai-step-ic">2</div>Shadowing rejimi tayyor bo'lmoqda…</div>
     </div>
-    <button class="sh-loop-badge ${shState.loop?'on':''}" id="shLoopBtn" onclick="shToggleLoop()">
-      🔁 Loop ${shState.loop?'ON':'OFF'}
-    </button>
+  </div>`;
+
+  // Use existing transcript if available
+  let existingTranscript = '';
+  if(typeof aiData!=='undefined' && aiData && aiData.tid===t.id && aiData.transcript)
+    existingTranscript = aiData.transcript;
+
+  try{
+    const prompt = existingTranscript
+      ? `From this IELTS Section 4 transcript, extract 12 clear complete sentences that are good for shadowing practice (varied length, academic vocabulary, natural English rhythm). Avoid sentence fragments.
+
+Transcript:
+${existingTranscript.substring(0,3000)}
+
+Return ONLY JSON array (no markdown):
+[{"en":"Full sentence here.","uz":"O'zbek tarjimasi"},...]`
+      : `Generate 12 realistic IELTS Section 4 academic lecture sentences on the topic: "${t.ti}".
+Requirements: natural academic English, varied length (8-20 words), clear pronunciation patterns, IELTS C1 level.
+
+Return ONLY JSON array (no markdown):
+[{"en":"Full sentence here.","uz":"O'zbek tarjimasi"},...]`;
+
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:2000,temperature:0.4,
+        messages:[{role:'user',content:prompt}]})
+    });
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    let raw=(d.choices?.[0]?.message?.content||'').trim()
+      .replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+    const m=raw.match(/\[[\s\S]*\]/); if(m) raw=m[0];
+    SH.sentences = JSON.parse(raw);
+  }catch(e){
+    document.getElementById('shBody').innerHTML=`<div style="color:var(--red);padding:16px">❌ Xato: ${e.message}</div>
+    <button class="ai-go" onclick="renderShHome()" style="margin-top:10px">← Orqaga</button>`;
+    return;
+  }
+
+  document.getElementById('shP1').className='ai-step done';
+  document.getElementById('shP1').querySelector('.ai-step-ic').innerHTML='✓';
+  document.getElementById('shP2').className='ai-step done';
+  document.getElementById('shP2').querySelector('.ai-step-ic').innerHTML='✓';
+  await new Promise(r=>setTimeout(r,300));
+
+  SH.phase='drill';
+  renderShDrill();
+}
+
+/* ── DRILL SCREEN ── */
+function renderShDrill(){
+  const s = SH.sentences[SH.idx];
+  if(!s) return;
+  const total = SH.sentences.length;
+  const pct = Math.round(SH.idx/total*100);
+  const prev = SH.scores[SH.idx];
+
+  document.getElementById('shBody').innerHTML = `
+  <div class="sh-prog-wrap">
+    <div class="sh-prog-bar"><div class="sh-prog-fill" style="width:${pct}%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--muted);font-family:var(--mono)">
+      <span>${SH.idx+1} / ${total}</span>
+      <span>${Object.keys(SH.scores).length} ta baholandi</span>
+    </div>
   </div>
 
-  <div class="sh-speed-row">
-    <span style="font-size:.62rem;color:var(--muted);font-family:var(--mono);align-self:center">Tezlik:</span>
-    ${[.5,.75,1,1.25].map(s=>`<button class="sh-spd ${shState.speed===s?'on':''}" onclick="shSetSpeed(${s},this)">${s}×</button>`).join('')}
+  <!-- Sentence card — hidden until after speaking -->
+  <div class="sh-sent-card" id="shCard">
+    <div class="sh-sent-num">Jumla ${SH.idx+1}</div>
+    <div class="sh-sent-text" id="shSentText" style="filter:blur(5px);transition:filter .4s;user-select:none">${s.en}</div>
+    <div style="font-size:.7rem;color:var(--muted);font-style:italic;margin-top:4px;display:none" id="shUzEl">🇺🇿 ${s.uz||''}</div>
   </div>
 
-  <div style="font-size:.64rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Audio bo'laklari — bosib tinglang:</div>
-  ${segs.map((s,i)=>`
-    <div class="sh-seg ${i===shState.idx?'active':''}" id="shSeg${i}" onclick="shJumpTo(${i})">
-      <div class="sh-seg-txt">${i===shState.idx?`<span class="hl">${s}</span>`:s}</div>
-      <div class="sh-seg-bar"><div class="sh-seg-fill" id="shFill${i}" style="width:0%"></div></div>
-    </div>`).join('')}
+  <!-- Speed -->
+  <div class="sh-spd-row" style="justify-content:center;margin-bottom:14px">
+    <span style="font-size:.62rem;color:var(--muted);font-family:var(--mono);margin-right:4px">Tezlik:</span>
+    ${[0.75,1,1.25].map(sp=>`<button class="sh-spd ${SH.speed===sp?'on':''}" onclick="shSetSpd(${sp},this)">${sp}×</button>`).join('')}
+  </div>
 
-  <div style="margin-top:14px;background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);padding:12px;font-size:.76rem;color:var(--muted2);line-height:1.8">
-    💡 <strong style="color:var(--text)">Maslahat:</strong> Birinchi marta faqat <strong>tinglang</strong>, ikkinchi marta <strong>takrorlang</strong>. 
-    Uchinchi marta ovozingizni <strong>audio bilan bir vaqtda</strong> gapiring.
+  <!-- Two big buttons: LISTEN then SPEAK -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:8px 0">
+
+    <div style="text-align:center">
+      <div class="sh-phase-label">1️⃣ TINGLASH</div>
+      <button class="sh-listen-btn" id="shListenBtn" onclick="shListen()" title="Jumlani eshitish">
+        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      </button>
+      <div style="font-size:.64rem;color:var(--muted);margin-top:6px">Bosing → eshiting</div>
+    </div>
+
+    <div style="font-size:.8rem;color:var(--muted)">↓</div>
+
+    <div style="text-align:center">
+      <div class="sh-phase-label">2️⃣ TAKRORLASH</div>
+      <button class="sh-speak-btn" id="shSpeakBtn" onclick="shSpeak()" title="Mikrofon">
+        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
+      <div style="font-size:.64rem;color:var(--muted);margin-top:6px" id="shMicHint">Eshitgandan keyin takrorlang</div>
+    </div>
+  </div>
+
+  <!-- Score area (shows after speaking) -->
+  <div id="shScoreArea" style="margin-top:14px">
+    ${prev ? shRenderScore(prev) : ''}
+  </div>
+
+  <!-- Nav -->
+  <div class="sh-nav" style="margin-top:16px">
+    <button class="sh-nav-btn" onclick="shNav(-1)" ${SH.idx===0?'disabled':''}>← Oldingi</button>
+    ${SH.idx<total-1
+      ? `<button class="sh-nav-btn primary" onclick="shNav(1)">Keyingi →</button>`
+      : `<button class="sh-nav-btn primary" onclick="shShowSummary()">✅ Natija</button>`}
   </div>`;
 }
 
-function shSetSpeed(s, btn){
-  shState.speed = s;
+function shSetSpd(s,btn){
+  SH.speed=s;
   document.querySelectorAll('.sh-spd').forEach(b=>b.classList.remove('on'));
   if(btn) btn.classList.add('on');
-  if(shState.audio) shState.audio.playbackRate = s;
 }
-function shToggleLoop(){
-  shState.loop = !shState.loop;
-  const btn=document.getElementById('shLoopBtn');
-  if(btn){btn.textContent=`🔁 Loop ${shState.loop?'ON':'OFF'}`;btn.classList.toggle('on',shState.loop);}
-}
-function shJumpTo(i){
-  shStop();
-  shState.idx=i;
-  renderShBody();
-}
-function shTogglePlay(){
-  if(shState.playing){shStop();return;}
-  shPlay();
-}
-function shPlay(){
-  // Use the main test audio
-  const audioPath_ = CUR ? `Test ${CUR.id} Section 4.mp3` : null;
-  if(!audioPath_){toast('Audio topilmadi');return;}
-  // We share the existing AUDIO element but at chosen speed
-  shState.playing=true;
-  const playBtn=document.getElementById('shPlayBtn');
-  if(playBtn) playBtn.textContent='⏸';
-  AUDIO.playbackRate=shState.speed;
-  if(AUDIO.paused) AUDIO.play();
-  AP=true;
 
-  // Track progress
-  const onTime=()=>{
-    const pct=AUDIO.duration?Math.round(AUDIO.currentTime/AUDIO.duration*100):0;
-    const bar=document.getElementById('shMainBar');if(bar) bar.style.width=pct+'%';
-  };
-  AUDIO.ontimeupdate=onTime;
+/* ── LISTEN: TTS gapiradi ── */
+function shListen(){
+  const s=SH.sentences[SH.idx]; if(!s) return;
+  const btn=document.getElementById('shListenBtn');
+  if(SH.speaking){ speechSynthesis.cancel(); SH.speaking=false; if(btn) btn.classList.remove('playing'); return; }
 
-  const onEnd=()=>{
-    if(shState.loop){AUDIO.currentTime=0;AUDIO.play();return;}
-    shStop();
-  };
-  AUDIO.onended=onEnd;
+  speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(s.en);
+  utt.rate=SH.speed; utt.lang='en-US';
+  // Try to pick an English voice
+  const voices=speechSynthesis.getVoices();
+  const eng=voices.find(v=>v.lang.startsWith('en-')&&v.name.includes('Google'))
+         ||voices.find(v=>v.lang.startsWith('en-'));
+  if(eng) utt.voice=eng;
+
+  SH.speaking=true;
+  if(btn) btn.classList.add('playing');
+  utt.onend=()=>{ SH.speaking=false; if(btn) btn.classList.remove('playing'); };
+  utt.onerror=()=>{ SH.speaking=false; if(btn) btn.classList.remove('playing'); };
+  speechSynthesis.speak(utt);
 }
-function shStop(){
-  shState.playing=false;
-  AUDIO.pause();AP=false;
-  AUDIO.ontimeupdate=null;
-  AUDIO.onended=null;
-  const btn=document.getElementById('shPlayBtn');if(btn)btn.textContent='▶';
+
+/* ── SPEAK: mikrofon ── */
+async function shSpeak(){
+  if(SH.recActive){ shStopRec(); return; }
+  const ok=await akRequestMicOnce(); if(!ok) return;
+  speechSynthesis.cancel(); SH.speaking=false;
+
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ toast('Chrome yoki Edge kerak'); return; }
+
+  const btn=document.getElementById('shSpeakBtn');
+  const hint=document.getElementById('shMicHint');
+
+  SH.rec=new SR(); SH.rec.lang='en-US'; SH.rec.maxAlternatives=5; SH.rec.interimResults=false;
+  SH.recActive=true;
+  if(btn) btn.classList.add('listening');
+  if(hint) hint.textContent='🎙 Gapiring…';
+
+  SH.rec.onresult=(e)=>{
+    const alts=Array.from(e.results[0]).map(a=>a.transcript.toLowerCase().trim());
+    const target=SH.sentences[SH.idx].en.toLowerCase();
+    const result=shScoreSentence(target, alts);
+    SH.scores[SH.idx]=result;
+    shStopRec();
+    // Reveal sentence
+    const txt=document.getElementById('shSentText');
+    const uzEl=document.getElementById('shUzEl');
+    if(txt) txt.style.filter='none';
+    if(uzEl) uzEl.style.display='block';
+    // Show score
+    const area=document.getElementById('shScoreArea');
+    if(area) area.innerHTML=shRenderScore(result);
+    // Auto-advance if great score
+    if(result.pct>=85) setTimeout(()=>shNav(1), 1600);
+  };
+  SH.rec.onerror=(e)=>{
+    shStopRec();
+    if(hint) hint.textContent=e.error==='no-speech'?'Ovoz eshitilmadi — qayta bosing':'Xato: '+e.error;
+  };
+  SH.rec.onend=()=>{ SH.recActive=false; };
+  SH.rec.start();
+}
+function shStopRec(){
+  if(SH.rec){try{SH.rec.stop();}catch{} SH.rec=null;}
+  SH.recActive=false;
+  const btn=document.getElementById('shSpeakBtn');
+  if(btn) btn.classList.remove('listening');
+  const hint=document.getElementById('shMicHint');
+  if(hint) hint.textContent='Eshitgandan keyin takrorlang';
+}
+
+/* ── SCORING: so'z-so'z taqqoslash ── */
+function shScoreSentence(target, alts){
+  const tWords=target.replace(/[^a-z\s]/g,'').split(/\s+/).filter(Boolean);
+  let bestPct=0, bestHeard='', bestMatched=[], bestMissed=[];
+
+  for(const alt of alts){
+    const aWords=alt.replace(/[^a-z\s]/g,'').split(/\s+/).filter(Boolean);
+    // Count matched words (order-aware with window)
+    let matched=[], missed=[], usedA=new Set();
+    tWords.forEach((w,ti)=>{
+      // look for w in a window around position ti in aWords
+      let found=false;
+      for(let ai=Math.max(0,ti-3);ai<=Math.min(aWords.length-1,ti+3);ai++){
+        if(!usedA.has(ai)&&(aWords[ai]===w||shSimilar(aWords[ai],w))){
+          matched.push(w); usedA.add(ai); found=true; break;
+        }
+      }
+      if(!found) missed.push(w);
+    });
+    const pct=Math.round(matched.length/Math.max(tWords.length,1)*100);
+    if(pct>bestPct){ bestPct=pct; bestHeard=alt; bestMatched=matched; bestMissed=missed; }
+  }
+  return {pct:bestPct, heard:bestHeard, matched:bestMatched, missed:bestMissed};
+}
+function shSimilar(a,b){
+  if(!a||!b) return false;
+  if(a===b) return true;
+  if(Math.abs(a.length-b.length)>2) return false;
+  return akLevenshtein(a,b)<=1;
+}
+
+function shRenderScore(r){
+  const color=r.pct>=80?'var(--green)':r.pct>=55?'var(--yellow)':'var(--red)';
+  const emoji=r.pct>=80?'🎉':r.pct>=55?'👍':'🔄';
+  const msg=r.pct>=80?'Ajoyib! Jumlani to\'g\'ri takrorladingiz':r.pct>=55?'Yaxshi, bir-ikki so\'z tushib qoldi':'Ko\'proq mashq kerak';
+  const allWords=[...r.matched.map(w=>`<span class="sh-mw ok">${w}</span>`),
+                  ...r.missed.map(w=>`<span class="sh-mw miss">${w}</span>`)];
+  return `
+  <div style="background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);padding:14px;text-align:center">
+    <div style="font-size:2rem;font-weight:800;font-family:var(--mono);color:${color};margin-bottom:4px">${r.pct}%</div>
+    <div style="font-size:.75rem;color:${color};margin-bottom:10px">${emoji} ${msg}</div>
+    <div style="font-size:.68rem;color:var(--muted2);font-style:italic;margin-bottom:8px">"${r.heard||'—'}"</div>
+    <div class="sh-match-words">${allWords.join('')}</div>
+    <div style="font-size:.6rem;color:var(--muted);margin-top:6px">
+      🟢 to'g'ri: ${r.matched.length} · 🔴 tushib qolgan: ${r.missed.length}
+    </div>
+  </div>`;
+}
+
+function shNav(dir){
+  shStopAll();
+  SH.idx=Math.max(0,Math.min(SH.sentences.length-1,SH.idx+dir));
+  renderShDrill();
+}
+
+/* ── SUMMARY ── */
+function shShowSummary(){
+  shStopAll();
+  const scores=Object.values(SH.scores);
+  const avg=scores.length?Math.round(scores.reduce((a,s)=>a+s.pct,0)/scores.length):0;
+  const perfect=scores.filter(s=>s.pct>=80).length;
+  const hard=scores.filter(s=>s.pct<55).length;
+
+  const rows=SH.sentences.map((s,i)=>{
+    const sc=SH.scores[i];
+    return `<div class="ak-word-row" style="flex-direction:column;align-items:stretch;gap:4px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.74rem;color:var(--muted2);max-width:80%;line-height:1.4">${s.en.substring(0,60)}${s.en.length>60?'…':''}</span>
+        ${sc?`<span style="font-family:var(--mono);font-weight:700;color:${sc.pct>=80?'var(--green)':sc.pct>=55?'var(--yellow)':'var(--red)'}">${sc.pct}%</span>`:'<span style="font-size:.65rem;color:var(--muted)">o\'tilmadi</span>'}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('shBody').innerHTML = `
+  <div class="sh-sum-kpis">
+    <div class="sh-sum-kpi"><div class="sh-sum-n" style="color:${avg>=70?'var(--green)':'var(--yellow)'}">${avg}%</div><div class="sh-sum-l">O'rtacha</div></div>
+    <div class="sh-sum-kpi"><div class="sh-sum-n" style="color:var(--green)">${perfect}</div><div class="sh-sum-l">Mukammal</div></div>
+    <div class="sh-sum-kpi"><div class="sh-sum-n" style="color:var(--red)">${hard}</div><div class="sh-sum-l">Qiyin</div></div>
+  </div>
+  <div style="font-size:.64rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Har bir jumla natijasi</div>
+  ${rows}
+  <div style="display:flex;gap:8px;margin-top:16px">
+    <button class="sh-nav-btn" onclick="SH.idx=0;SH.scores={};renderShDrill()" style="flex:1">🔁 Qayta</button>
+    <button class="sh-nav-btn primary" onclick="renderShHome()" style="flex:1">🏠 Bosh sahifa</button>
+  </div>`;
 }
 
 // ══════════════════════════════════════════════════
