@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>IELTS Section 4 · 40 Tests</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -17,6 +18,20 @@
   --sab:env(safe-area-inset-bottom,0px);--sat:env(safe-area-inset-top,0px);
   --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25);
 }
+/* Telegram WebApp light theme override */
+body.tg-light{
+  --bg:#f0f2f5;--bg2:#e8eaed;--card:#ffffff;--card2:#f5f7fa;
+  --border:#dde1e7;--border2:#c8cdd6;
+  --text:#1a1a2e;--muted:#8a9ab0;--muted2:#5a6a7e;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
+}
+body.tg-light .bnav{background:rgba(240,242,245,.97)}
+body.tg-light .tf{background:rgba(240,242,245,.97)}
+body.tg-light #vTest,body.tg-light #vAdmin,body.tg-light #vStuDetail{background:var(--bg)}
+/* Hide login in Telegram — auto-login via initData */
+body.tg-autologin #vLogin{display:none!important}
+/* Telegram back button replaces our bk buttons — hide native ones when TG back is active */
+body.tg-backbtn .bk-hide{display:none!important}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
 input,button,select,textarea{font-family:var(--font)}
@@ -571,7 +586,138 @@ input,button,select,textarea{font-family:var(--font)}
 .pg-badge-ic{font-size:1.1rem;flex-shrink:0}
 .pg-badge.earned{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06);color:var(--text)}
 .pg-badge.earned .pg-badge-ic{filter:none}
-.pg-line-svg{width:100%;height:100px;overflow:visible}</style>
+.pg-line-svg{width:100%;height:100px;overflow:visible}
+/* ══ MASHQLAR PANEL ══ */
+.mq-btn{background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 6px;cursor:pointer;text-align:center;transition:all .14s;font-family:var(--font)}
+.mq-btn:active{transform:scale(.96)}
+.mq-ic{font-size:1.4rem;margin-bottom:3px}
+.mq-t{font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.mq-s{font-size:.58rem;color:var(--muted);line-height:1.4}
+/* ══ SHARED MASHQ MODAL ══ */
+.msh-modal{position:fixed;inset:0;z-index:510;display:none;flex-direction:column;background:var(--bg)}
+.msh-modal.on{display:flex}
+.msh-body{flex:1;overflow-y:auto;padding:14px 16px 40px;-webkit-overflow-scrolling:touch}
+/* ══ SHADOWING ══ */
+.sh-lyric{font-size:1.05rem;color:var(--text);line-height:1.8;font-weight:500;margin-bottom:14px;padding:14px;background:var(--card);border-radius:var(--r);border:1px solid var(--border2)}
+.sh-lyric .hl{background:linear-gradient(135deg,rgba(79,126,247,.2),rgba(167,139,250,.2));border-radius:4px;padding:2px 4px;color:var(--a3);font-weight:700}
+.sh-ctrl{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+.sh-play{width:48px;height:48px;border-radius:50%;background:var(--a);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;transition:all .14s}
+.sh-loop-badge{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--a3);padding:4px 10px;border-radius:12px;font-size:.68rem;font-weight:600;font-family:var(--mono);cursor:pointer}
+.sh-loop-badge.on{background:rgba(167,139,250,.25)}
+.sh-speed-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.sh-spd{background:var(--card);border:1px solid var(--border);color:var(--muted2);padding:4px 10px;border-radius:12px;font-size:.68rem;font-weight:600;cursor:pointer;font-family:var(--mono);transition:all .14s}
+.sh-spd.on{background:var(--a);border-color:var(--a);color:#fff}
+.sh-seg{padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:6px;cursor:pointer;transition:all .13s}
+.sh-seg:hover{border-color:var(--border2)}
+.sh-seg.active{border-color:var(--a);background:rgba(79,126,247,.05)}
+.sh-seg-txt{font-size:.8rem;color:var(--text);line-height:1.6;margin-bottom:4px}
+.sh-seg-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.sh-seg-fill{height:100%;background:var(--a);border-radius:2px;transition:width .1s linear}
+/* ══ DIKTANT ══ */
+.dk-sentence{font-size:1rem;font-weight:700;color:var(--a);text-align:center;padding:18px 16px;background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);margin-bottom:12px;min-height:70px;display:flex;align-items:center;justify-content:center;line-height:1.5}
+.dk-inp{width:100%;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);padding:12px 14px;border-radius:var(--r2);font-size:.9rem;outline:none;font-family:var(--font);resize:none;-webkit-appearance:none;box-sizing:border-box;transition:border-color .18s;line-height:1.6}
+.dk-inp:focus{border-color:var(--a)}
+.dk-result{padding:12px 14px;border-radius:var(--r2);margin-top:10px;font-size:.82rem;line-height:1.8}
+.dk-result.good{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2)}
+.dk-result.bad{background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.2)}
+.dk-word{display:inline}
+.dk-word.ok{color:var(--green);font-weight:600}
+.dk-word.wrong{color:var(--red);text-decoration:underline;font-weight:600}
+.dk-word.miss{color:var(--yellow)}
+.dk-score-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:.72rem;color:var(--muted2)}
+.dk-nav{display:flex;gap:7px;margin-top:10px}
+.dk-nav button{flex:1;padding:10px;border-radius:var(--r2);font-size:.78rem;font-weight:700;border:1px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s}
+.dk-nav button.primary{background:var(--a);color:#fff;border-color:var(--a)}
+.dk-stat{display:flex;gap:8px;margin-bottom:12px}
+.dk-stat-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:8px 6px;text-align:center}
+.dk-stat-n{font-size:1.1rem;font-weight:800;font-family:var(--mono)}
+.dk-stat-l{font-size:.54rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+/* ══ AKSENT MASHQI ══ */
+.ak-modal{position:fixed;inset:0;z-index:503;display:none;flex-direction:column;background:var(--bg)}
+.ak-modal.on{display:flex}
+.ak-body{flex:1;overflow-y:auto;padding:14px 16px 44px;-webkit-overflow-scrolling:touch}
+.ak-card{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);padding:22px 20px;text-align:center;margin-bottom:14px}
+.ak-word{font-size:2rem;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:6px}
+.ak-ipa{font-size:1rem;color:var(--muted);font-family:var(--mono);margin-bottom:8px}
+.ak-pos-lvl{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
+.ak-uz{font-size:.88rem;color:var(--text);font-weight:600;margin-bottom:14px}
+.ak-mic{width:72px;height:72px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:all .2s;position:relative;flex-shrink:0}
+.ak-mic.idle{background:linear-gradient(135deg,var(--a),var(--a3));box-shadow:0 4px 20px rgba(79,126,247,.35)}
+.ak-mic.listening{background:linear-gradient(135deg,#ef4444,#f97316);box-shadow:0 4px 24px rgba(239,68,68,.45);animation:akPulse 1s ease infinite}
+.ak-mic.done{background:linear-gradient(135deg,var(--green),var(--a2));box-shadow:0 4px 20px rgba(34,197,94,.35)}
+.ak-mic svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+@keyframes akPulse{0%,100%{transform:scale(1);box-shadow:0 4px 24px rgba(239,68,68,.4)}50%{transform:scale(1.08);box-shadow:0 6px 32px rgba(239,68,68,.65)}}
+.ak-ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(239,68,68,.5);animation:akRing 1.4s ease-out infinite;display:none;pointer-events:none}
+.ak-ring:nth-child(2){animation-delay:.4s}.ak-ring:nth-child(3){animation-delay:.8s}
+.ak-mic.listening .ak-ring{display:block}
+@keyframes akRing{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+.ak-score-wrap{margin-bottom:12px;min-height:90px;display:flex;flex-direction:column;align-items:center}
+.ak-score-ring{width:80px;height:80px;position:relative;margin-bottom:6px}
+.ak-score-ring svg{transform:rotate(-90deg)}
+.ak-score-ring circle{transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)}
+.ak-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;font-family:var(--mono)}
+.ak-heard{font-size:.78rem;color:var(--muted2);text-align:center;margin-bottom:5px;font-style:italic}
+.ak-heard span{color:var(--text);font-weight:600;font-style:normal}
+.ak-hint{font-size:.74rem;padding:6px 12px;border-radius:var(--r2);text-align:center;margin-bottom:10px;line-height:1.6;width:100%}
+.ak-hint.good{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.ak-hint.ok{background:rgba(245,158,11,.08);color:var(--yellow);border:1px solid rgba(245,158,11,.2)}
+.ak-hint.bad{background:rgba(244,63,94,.08);color:var(--red);border:1px solid rgba(244,63,94,.2)}
+.ak-nav{display:flex;gap:8px;margin-bottom:12px}
+.ak-nav-btn{flex:1;padding:11px;border-radius:var(--r2);font-size:.8rem;font-weight:700;border:1px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s}
+.ak-nav-btn.primary{background:var(--a);color:#fff;border-color:var(--a)}
+.ak-prog-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.ak-prog-fill{height:100%;background:linear-gradient(90deg,var(--a),var(--a3));border-radius:2px;transition:width .4s}
+.ak-sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ak-sum-kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px;text-align:center}
+.ak-sum-n{font-size:1.3rem;font-weight:800;font-family:var(--mono)}
+.ak-sum-l{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.ak-word-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:5px;font-size:.78rem}
+.ak-status{text-align:center;font-size:.72rem;color:var(--muted);margin-bottom:8px;min-height:20px}
+.ak-sample{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid var(--border2);color:var(--muted2);padding:5px 12px;border-radius:20px;font-size:.7rem;cursor:pointer;font-family:var(--font);transition:all .14s;margin-bottom:12px}
+.ak-sample:hover{border-color:var(--a2);color:var(--a2)}
+/* ══ SHADOWING MODAL ══ */
+.sh-modal{position:fixed;inset:0;z-index:503;display:none;flex-direction:column;background:var(--bg)}
+.sh-modal.on{display:flex}
+.sh-body{flex:1;overflow-y:auto;padding:14px 16px 44px;-webkit-overflow-scrolling:touch}
+.sh-test-card{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);overflow:hidden;margin-bottom:12px}
+.sh-audio-bar{background:var(--bg2);padding:12px 14px;border-bottom:1px solid var(--border)}
+.sh-wave{height:48px;display:flex;align-items:center;justify-content:center;gap:2px;margin:10px 0}
+.sh-wave-bar{width:3px;background:var(--a);border-radius:2px;animation:shWave .8s ease infinite}
+.sh-wave-bar:nth-child(2){animation-delay:.1s;height:60%}
+.sh-wave-bar:nth-child(3){animation-delay:.2s;height:90%}
+.sh-wave-bar:nth-child(4){animation-delay:.3s;height:70%}
+.sh-wave-bar:nth-child(5){animation-delay:.4s;height:50%}
+.sh-wave-bar:nth-child(6){animation-delay:.3s;height:80%}
+.sh-wave-bar:nth-child(7){animation-delay:.2s;height:65%}
+.sh-wave-bar:nth-child(8){animation-delay:.1s;height:40%}
+@keyframes shWave{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.sh-wave.paused .sh-wave-bar{animation-play-state:paused}
+.sh-ctrl{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border)}
+.sh-play{width:44px;height:44px;border-radius:50%;background:var(--a);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.sh-play svg{width:18px;height:18px;fill:currentColor}
+.sh-seek-wrap{flex:1;display:flex;flex-direction:column;gap:4px}
+.sh-seek{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
+.sh-seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--a);cursor:pointer}
+.sh-time{font-size:.62rem;font-family:var(--mono);color:var(--muted2)}
+.sh-loop-panel{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.sh-loop-row{display:flex;align-items:center;gap:8px}
+.sh-loop-btn{padding:6px 14px;border-radius:20px;font-size:.72rem;font-weight:700;border:1.5px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s}
+.sh-loop-btn.active{background:var(--a);border-color:var(--a);color:#fff}
+.sh-loop-range{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--muted2);font-family:var(--mono)}
+.sh-ab-btn{padding:4px 10px;border-radius:12px;font-size:.68rem;font-weight:700;border:1px solid var(--border2);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--font);transition:all .14s;white-space:nowrap}
+.sh-ab-btn.set{background:var(--a3);border-color:var(--a3);color:#fff}
+.sh-spd-row{display:flex;align-items:center;gap:5px;padding:10px 14px}
+.sh-spd{padding:5px 10px;border-radius:12px;font-size:.7rem;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--muted2);cursor:pointer;font-family:var(--mono);transition:all .14s}
+.sh-spd.on{background:var(--a);border-color:var(--a);color:#fff}
+.sh-tip{background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:var(--r2);padding:10px 12px;font-size:.74rem;color:var(--muted2);line-height:1.8;margin-bottom:12px}
+.sh-step{display:flex;gap:10px;margin-bottom:8px;font-size:.78rem;color:var(--text);align-items:flex-start}
+.sh-step-n{width:22px;height:22px;border-radius:50%;background:var(--a);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+/* ══ SHADOWING ══ */
+.sh-bar{display:flex;align-items:center;gap:6px;padding:7px 10px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r2);margin-top:6px}
+.sh-btn{background:var(--a3);color:#fff;border:none;border-radius:var(--r3);padding:4px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0;transition:all .14s}
+.sh-btn.active{background:#ef4444;animation:akPulse .9s ease infinite}
+.sh-loop-sel{background:var(--card);border:1px solid var(--border2);color:var(--muted2);border-radius:var(--r3);padding:3px 6px;font-size:.68rem;font-family:var(--mono);cursor:pointer;flex-shrink:0}
+.sh-info{font-size:.62rem;color:var(--muted2);line-height:1.4;flex:1}</style>
 </head>
 <body>
 
@@ -645,10 +791,10 @@ input,button,select,textarea{font-family:var(--font)}
   </div>
   <nav class="bnav">
     <button class="bn on" id="bnTests" onclick="switchTab('tests')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>Testlar</button>
-    <button class="bn" id="bnScores" onclick="switchTab('scores')"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Natija</button>
     <button class="bn bn-ai" onclick="openAiModal()"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>AI Tahlil</button>
+    <button class="bn" onclick="openShadowing()" style="color:#06b6d4!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Shadow</button>
+    <button class="bn" onclick="openAksent()" style="color:#f59e0b!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Aksent</button>
     <button class="bn" onclick="openXatoModal()"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Xatolar<span class="bn-dot" id="xaDot" style="display:none"></span></button>
-    <button class="bn" onclick="openProgress()"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Progress</button>
     <button class="bn" id="bnAdm" onclick="openAdmin()"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>Admin<span class="bn-dot" id="bndot"></span></button>
   </nav>
 </div>
@@ -698,6 +844,16 @@ input,button,select,textarea{font-family:var(--font)}
         <button class="spd" onclick="setSp(1.25,this)">1.25×</button>
         <button class="spd" onclick="setSp(1.5,this)">1.5×</button>
       </div>
+      <div class="sh-bar">
+        <button class="sh-btn" id="shBtn" onclick="toggleShadowing()">🔁 Shadowing</button>
+        <select class="sh-loop-sel" id="shSec" onchange="updateShLoop()">
+          <option value="3">3s</option>
+          <option value="5" selected>5s</option>
+          <option value="8">8s</option>
+          <option value="10">10s</option>
+        </select>
+        <div class="sh-info" id="shInfo">Bosing → joriy pozitsiyadan <strong>5s</strong> loop takrorlanadi</div>
+      </div>
     </div>
   </div>
   <div class="qbody" id="qbody"></div>
@@ -705,6 +861,27 @@ input,button,select,textarea{font-family:var(--font)}
     <div class="tf-info" id="tfI">0/10</div>
     <button class="btn btn-out" onclick="resetTest()">Qayta</button>
     <button class="btn btn-chk" id="chkBtn" onclick="checkAnswers()">Tekshirish</button>
+  </div>
+  <!-- POST-TEST MASHQLAR PANEL (shown after checking) -->
+  <div id="mashqPanel" style="display:none;padding:10px 16px 14px;border-top:1px solid var(--border);background:var(--bg)">
+    <div style="font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">🎯 Listening ko'nikmangizni oshiring</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+      <button class="mq-btn" onclick="openShadowing()">
+        <div class="mq-ic">🔊</div>
+        <div class="mq-t">Shadowing</div>
+        <div class="mq-s">Ovozni takrorlang</div>
+      </button>
+      <button class="mq-btn" onclick="openDiktant()">
+        <div class="mq-ic">✍️</div>
+        <div class="mq-t">Diktant</div>
+        <div class="mq-s">Eshitib yozing</div>
+      </button>
+      <button class="mq-btn" onclick="openAksentFromTest()">
+        <div class="mq-ic">🎤</div>
+        <div class="mq-t">Aksent</div>
+        <div class="mq-s">So'zlarni gapiring</div>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -777,6 +954,59 @@ input,button,select,textarea{font-family:var(--font)}
     <button onclick="xatoClearConfirm()" style="background:transparent;border:1px solid rgba(244,63,94,.3);color:var(--red);padding:5px 11px;border-radius:20px;font-size:.68rem;font-weight:600;cursor:pointer;font-family:var(--font)">Tozalash</button>
   </div>
   <div class="ai-mbody" id="xatoBody"></div>
+</div>
+
+<!-- SHADOWING MODAL -->
+<div id="vShadow" class="msh-modal">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeShadow()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">🔊 SHADOWING</div>
+      <div class="ai-mhdr-title" id="shTitle">Shadowing</div>
+    </div>
+    <div style="display:flex;gap:5px">
+      <button class="sh-spd on" id="shSpd075" onclick="shSetSpeed(.75,this)">0.75×</button>
+      <button class="sh-spd" id="shSpd1" onclick="shSetSpeed(1,this)">1×</button>
+    </div>
+  </div>
+  <div class="msh-body" id="shBody"></div>
+</div>
+
+<!-- DIKTANT MODAL -->
+<div id="vDiktant" class="msh-modal">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeDiktant()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">✍️ DIKTANT</div>
+      <div class="ai-mhdr-title" id="dkTitle">Diktant</div>
+    </div>
+  </div>
+  <div class="msh-body" id="dkBody"></div>
+</div>
+
+<!-- SHADOWING MODAL -->
+<div id="vShadowing" class="sh-modal">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeShadowing()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge" style="color:#06b6d4">🎧 SHADOWING MASHQI</div>
+      <div class="ai-mhdr-title" id="shTitle">Test tanlang</div>
+    </div>
+  </div>
+  <div class="sh-body" id="shBody"></div>
+</div>
+
+<!-- AKSENT MASHQI MODAL -->
+<div id="vAksent" class="ak-modal">
+  <div class="ai-mhdr">
+    <button class="bk" onclick="closeAksent()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="ai-mhdr-info">
+      <div class="ai-mhdr-badge">🎤 AKSENT MASHQI</div>
+      <div class="ai-mhdr-title" id="akTitle">Test tanlang</div>
+    </div>
+    <button id="akAccentBtn" onclick="toggleAkAccent()" style="background:var(--card);border:1px solid var(--border);color:var(--muted2);padding:5px 10px;border-radius:16px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:var(--font)">🇺🇸 US</button>
+  </div>
+  <div class="ak-body" id="akBody"></div>
 </div>
 
 <!-- ADMIN VIEW -->
@@ -2514,14 +2744,8 @@ function openTest(id){
   initAudio(id);
   renderQ();updQ();
   document.getElementById('chkBtn').textContent=CHECKED?'Qayta tekshirish':'Tekshirish';
+  timerInitForTest();
 }
-function closeTest(){
-  document.getElementById('vTest').style.display='none';
-  AUDIO.pause();AP=false;
-  const b=document.getElementById('apPlay');if(b){b.textContent='▶';b.disabled=false}
-  renderApp();
-}
-
 // ════════════════════ AUDIO ════════════════════
 function initAudio(id){
   AP=false;
@@ -2553,9 +2777,61 @@ AUDIO.addEventListener('timeupdate',()=>{
   const sf=document.getElementById('apSF'),si=document.getElementById('apSI'),tm=document.getElementById('apTm');
   if(sf)sf.style.width=p+'%';if(si)si.value=p;
   if(tm)tm.textContent=fT(AUDIO.currentTime)+' / '+fT(AUDIO.duration);
+  // Shadowing loop check
+  if(_shActive && _shEnd>0 && AUDIO.currentTime >= _shEnd){
+    AUDIO.currentTime = _shStart;
+    AUDIO.play();
+  }
 });
-AUDIO.addEventListener('ended',()=>{AP=false;const b=document.getElementById('apPlay');if(b)b.textContent='▶'});
+AUDIO.addEventListener('ended',()=>{
+  AP=false;const b=document.getElementById('apPlay');if(b)b.textContent='▶';
+  if(_shActive){AUDIO.currentTime=_shStart;AUDIO.play();}
+});
 document.getElementById('apSI').addEventListener('input',function(){if(AUDIO.duration)AUDIO.currentTime=this.value/100*AUDIO.duration});
+
+// ── SHADOWING ──
+let _shActive=false, _shStart=0, _shEnd=0;
+
+function toggleShadowing(){
+  _shActive=!_shActive;
+  const btn=document.getElementById('shBtn');
+  const info=document.getElementById('shInfo');
+  if(_shActive){
+    _shStart=AUDIO.currentTime;
+    const sec=parseInt(document.getElementById('shSec')?.value||5);
+    _shEnd=_shStart+sec;
+    if(btn){btn.classList.add('active');btn.textContent='⏹ To\'xtatish';}
+    if(info)info.innerHTML=`🔁 <strong>${fT(_shStart)} → ${fT(_shEnd)}</strong> loopda · gapirish uchun audio pasaytirib qo'ying`;
+    if(AUDIO.paused){AUDIO.play();AP=true;const pb=document.getElementById('apPlay');if(pb)pb.textContent='⏸';}
+  } else {
+    _shStart=0;_shEnd=0;
+    if(btn){btn.classList.remove('active');btn.textContent='🔁 Shadowing';}
+    const sec=document.getElementById('shSec')?.value||5;
+    if(info)info.innerHTML=`Bosing → joriy pozitsiyadan <strong>${sec}s</strong> loop takrorlanadi`;
+  }
+}
+
+function updateShLoop(){
+  const sec=parseInt(document.getElementById('shSec')?.value||5);
+  const info=document.getElementById('shInfo');
+  if(_shActive){
+    _shEnd=_shStart+sec;
+    if(info)info.innerHTML=`🔁 <strong>${fT(_shStart)} → ${fT(_shEnd)}</strong> loopda`;
+  } else {
+    if(info)info.innerHTML=`Bosing → joriy pozitsiyadan <strong>${sec}s</strong> loop takrorlanadi`;
+  }
+}
+
+// Stop shadowing when test is closed
+function closeTest(){
+  _shActive=false;_shStart=0;_shEnd=0;
+  const btn=document.getElementById('shBtn');
+  if(btn){btn.classList.remove('active');btn.textContent='🔁 Shadowing';}
+  document.getElementById('vTest').style.display='none';
+  AUDIO.pause();AP=false;
+  const b=document.getElementById('apPlay');if(b){b.textContent='▶';b.disabled=false}
+  renderApp();
+}
 
 // ════════════════════ ANSWER CHECK ════════════════════
 function chkAns(raw,correct,t){
@@ -2726,6 +3002,64 @@ function updQ(){
   document.getElementById('tfI').textContent=ans+'/'+tot+' javob';
 }
 
+// ════════════════════ TIMER ════════════════════
+let timerSecs = 1800; // 30 daqiqa
+let timerRunning = false;
+let timerInterval = null;
+
+function timerToggle(){
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    const btn = document.getElementById('timerStartBtn');
+    if(btn) btn.textContent = '▶ Start';
+  } else {
+    timerRunning = true;
+    const btn = document.getElementById('timerStartBtn');
+    if(btn) btn.textContent = '⏸ Pause';
+    timerInterval = setInterval(()=>{
+      if(timerSecs <= 0){
+        clearInterval(timerInterval);
+        timerRunning = false;
+        const b = document.getElementById('timerStartBtn');
+        if(b) b.textContent = '▶ Start';
+        toast('⏰ Vaqt tugadi!');
+        return;
+      }
+      timerSecs--;
+      timerUpdate();
+    }, 1000);
+  }
+}
+function timerReset(){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSecs = 1800;
+  timerUpdate();
+  const btn = document.getElementById('timerStartBtn');
+  if(btn) btn.textContent = '▶ Start';
+}
+function timerUpdate(){
+  const m = Math.floor(timerSecs/60);
+  const s = timerSecs % 60;
+  const txt = m+':'+(s<10?'0':'')+s;
+  const el = document.getElementById('timerDisp');
+  if(!el) return;
+  el.textContent = txt;
+  // Color warning
+  if(timerSecs <= 300)      el.style.color = 'var(--red)';
+  else if(timerSecs <= 600) el.style.color = 'var(--yellow)';
+  else                      el.style.color = 'var(--text)';
+}
+function timerInitForTest(){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSecs = 1800;
+  timerUpdate();
+  const btn = document.getElementById('timerStartBtn');
+  if(btn) btn.textContent = '▶ Start';
+}
+
 // ════════════════════ TELEGRAM ════════════════════
 const WEBHOOK_URL='https://hook.us2.make.com/qryxvaho2e5rr44fu84u992p3mwjdk56';
 function saveTg(){toast('Webhook ulangan ✅');}
@@ -2767,10 +3101,12 @@ function checkAnswers(){
   renderQ();updQ();
   document.getElementById('vTest').scrollTop=0;
   document.getElementById('chkBtn').textContent='Qayta tekshirish';
+  document.getElementById('mashqPanel').style.display='block';
   toast('Natija: '+sc+'/'+tot+' ('+pct+'%)');
 }
 function resetTest(){
   UA={};CHECKED=false;const res=RES();delete res[RK(CUR.id)];sRES(res);
+  document.getElementById('mashqPanel').style.display='none';
   renderQ();updQ();document.getElementById('chkBtn').textContent='Tekshirish';
   toast('Test qayta boshlandi');
 }
@@ -3118,64 +3454,63 @@ async function aiRun(){
     }catch(e){step(2,false,true);fail('Whisper: '+e.message);return;}
     step(2,true);
 
-    // Step 3 — split transcript in JS, ask LLaMA only for uzbek + summary + hardWords
+    // Step 3 — split in JS, translate each chunk individually (guaranteed complete)
     step(3);
     const correctAnswers = testObj.q.map(q=>q.a.split('|')[0]).join(', ');
 
-    // Split transcript into ~5 equal sentence-aware chunks in JavaScript
+    // Split transcript into sentence-aware chunks
     function splitTranscript(text, n){
-      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const sentences = text.match(/[^.!?]+[.!?]+[\s]*/g) || [text];
       const size = Math.ceil(sentences.length / n);
       const chunks = [];
       for(let i=0;i<n;i++){
-        const chunk = sentences.slice(i*size,(i+1)*size).join(' ').trim();
+        const chunk = sentences.slice(i*size,(i+1)*size).join('').trim();
         if(chunk) chunks.push(chunk);
       }
       return chunks;
     }
     const chunks = splitTranscript(transcript, 5);
 
-    const prompt3=`You are an IELTS expert and Uzbek language teacher.
-
-Topic: "${testObj.ti}"
-
-Below are ${chunks.length} numbered transcript chunks. For EACH chunk provide:
-1. A short English summary title (5-7 words)
-2. A COMPLETE Uzbek translation of every sentence in that chunk
-3. 2-4 difficult words (B2/C1/C2 level) from that chunk
-
-${chunks.map((c,i)=>`CHUNK ${i+1}:\n"""${c}"""`).join('\n\n')}
-
-Return ONLY valid JSON array (no markdown):
-[
-  {"id":1,"summary":"title here","uzbek":"to'liq tarjima","hardWords":["w1","w2"]},
-  {"id":2,"summary":"...","uzbek":"...","hardWords":[...]}
-]`;
-
-    let wordsQuizData;
-    let paragraphsArr;
-    try{
-      const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    // Translate each chunk with a small, fast individual call
+    async function translateChunk(chunk, idx, topic){
+      const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
-        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:6000,temperature:0.2,
-          messages:[{role:'user',content:prompt3}]})
+        body:JSON.stringify({
+          model:'llama-3.3-70b-versatile',
+          max_tokens:1200,
+          temperature:0.2,
+          messages:[{role:'user',content:
+`IELTS audio transcript chunk (topic: "${topic}"):
+"""
+${chunk}
+"""
+Return ONLY JSON (no markdown):
+{"summary":"5-7 word English title","uzbek":"har bir gapni to'liq o'zbekcha tarjima qiling","hardWords":["qiyin_soz1","qiyin_soz2","qiyin_soz3"]}`
+          }]
+        })
       });
       if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||'HTTP '+r.status);}
       const d=await r.json();
       let raw=(d.choices?.[0]?.message?.content||'').trim();
       raw=raw.replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
-      const m=raw.match(/\[[\s\S]*\]/); if(m) raw=m[0];
-      const aiChunks=JSON.parse(raw);
-      // Merge: english comes from our JS split, the rest from AI
+      const m=raw.match(/\{[\s\S]*\}/);if(m)raw=m[0];
+      return JSON.parse(raw);
+    }
+
+    let wordsQuizData;
+    let paragraphsArr;
+    try{
+      // Run all chunk translations in parallel
+      const aiChunks = await Promise.all(chunks.map((c,i)=>translateChunk(c,i,testObj.ti)));
       paragraphsArr = chunks.map((eng,i)=>({
         id: i+1,
-        summary: aiChunks[i]?.summary || `Part ${i+1}`,
-        english: eng,            // ← always the full original text
-        uzbek:   aiChunks[i]?.uzbek || '',
+        summary:   aiChunks[i]?.summary   || `Part ${i+1}`,
+        english:   eng,   // ← 100% original Whisper text, AI never touches it
+        uzbek:     aiChunks[i]?.uzbek     || '',
         hardWords: aiChunks[i]?.hardWords || []
       }));
-    }catch(e){step(3,false,true);step(4,false,true);fail('Paragraf tahlil: '+e.message);return;}
+    }catch(e){step(3,false,true);step(4,false,true);fail('Tarjima: '+e.message);return;}
     step(3,true);
 
     // Step 4 — words + pronoun quiz (separate call for quality)
@@ -3330,7 +3665,8 @@ function renderWordsTab(body){
   const filtered=aiWfilter==='all'?words:words.filter(w=>(w.level||'').toUpperCase()===aiWfilter);
 
   body.innerHTML=`
-  <div style="font-size:.7rem;color:var(--muted2);margin-bottom:8px">${words.length} ta so'z — bosib batafsil ko'ring</div>
+  ${accentToggleHTML()}
+  <div style="font-size:.7rem;color:var(--muted2);margin-bottom:8px">${words.length} ta so'z — 🔊 bosib talaffuzni eshiting</div>
   <div class="ai-wlev-filters">
     ${lvls.map(l=>{
       const cnt=l==='all'?words.length:words.filter(w=>(w.level||'').toUpperCase()===l).length;
@@ -3343,13 +3679,17 @@ function renderWordsTab(body){
     const idx=words.indexOf(w);
     const lvlCls=(w.level||'cx').toLowerCase().replace('+','x');
     const cls=(lvlCls in {b1:1,b2:1,c1:1,c2:1})?lvlCls:'cx';
-    return `<div class="ai-wcard" id="wc${idx}" onclick="toggleWcard(${idx})">
-      <div class="ai-wcard-l">
+    const safeWord=w.word.replace(/'/g,"\\'");
+    return `<div class="ai-wcard" id="wc${idx}">
+      <div class="ai-wcard-l" onclick="toggleWcard(${idx})">
         <span class="ai-lvl ${cls}" style="display:block;text-align:center">${w.level||'?'}</span>
       </div>
-      <div class="ai-wcard-r">
-        <div style="display:flex;align-items:baseline;gap:7px;flex-wrap:wrap">
+      <div class="ai-wcard-r" onclick="toggleWcard(${idx})">
+        <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
           <span class="ai-wcard-word">${w.word}</span>
+          <button class="tts-btn" onclick="event.stopPropagation();playWord('${safeWord}',this)" title="Talaffuz eshitish">
+            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          </button>
           <span class="ai-wcard-ipa">${w.ipa?'/'+w.ipa+'/':''}</span>
           <span style="font-size:.64rem;color:var(--muted2);background:var(--card2);padding:1px 6px;border-radius:4px;font-family:var(--mono)">${w.pos||''}</span>
         </div>
@@ -3904,33 +4244,127 @@ function xatoClearConfirm(){
 }
 
 // ══════════════════════════════════════════════════
-// TTS — Text To Speech
+// PRONUNCIATION — Dictionary API real audio + TTS fallback
 // ══════════════════════════════════════════════════
-function tts(text, btn){
-  if(!window.speechSynthesis) return;
+let _audioCache = {};   // word → {us:'url', uk:'url'} | null
+let _currentAudio = null;
+let _pronAccent = localStorage.getItem('pron_accent')||'us'; // 'us' | 'uk'
+
+function setPronAccent(a){
+  _pronAccent=a;
+  localStorage.setItem('pron_accent',a);
+  // Update accent toggle buttons if visible
+  document.querySelectorAll('.pron-acc-btn').forEach(b=>{
+    b.classList.toggle('on', b.dataset.acc===a);
+  });
+}
+
+async function playWord(word, btn){
+  if(!word) return;
+  const w = word.toLowerCase().replace(/[^a-z\s-]/g,'').trim();
+
+  // Stop any playing audio
+  if(_currentAudio){
+    _currentAudio.pause();_currentAudio=null;
+    document.querySelectorAll('.tts-btn.playing').forEach(b=>b.classList.remove('playing'));
+    if(btn&&btn._lastWord===w){return;}
+  }
+
+  if(btn){ btn.classList.add('playing'); btn._lastWord=w; }
+
+  // Check cache
+  if(_audioCache[w]===null){
+    // known miss → use TTS fallback
+    ttsSpeak(w,btn); return;
+  }
+  if(_audioCache[w]){
+    playAudioUrl(_audioCache[w][_pronAccent]||_audioCache[w].us||_audioCache[w].uk, btn);
+    return;
+  }
+
+  // Fetch from Free Dictionary API
+  try{
+    const r=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(w)}`);
+    if(!r.ok) throw new Error('not found');
+    const data=await r.json();
+    const phonetics=(data[0]?.phonetics||[]).filter(p=>p.audio);
+    let us='',uk='';
+    phonetics.forEach(p=>{
+      const url=p.audio||'';
+      if(url.includes('-us.'))      us=url;
+      else if(url.includes('-uk.')) uk=url;
+      else if(!us)                  us=url;  // fallback: first available
+    });
+    if(!us&&!uk){ _audioCache[w]=null; ttsSpeak(w,btn); return; }
+    _audioCache[w]={us:us||uk, uk:uk||us};
+    playAudioUrl(_audioCache[w][_pronAccent], btn);
+  }catch{
+    _audioCache[w]=null;
+    ttsSpeak(w,btn);
+  }
+}
+
+function playAudioUrl(url, btn){
+  if(!url){ if(btn)btn.classList.remove('playing'); return; }
+  const audio=new Audio(url);
+  _currentAudio=audio;
+  audio.onended=()=>{ if(btn)btn.classList.remove('playing'); _currentAudio=null; };
+  audio.onerror=()=>{ if(btn)btn.classList.remove('playing'); _currentAudio=null; };
+  audio.play().catch(()=>{ if(btn)btn.classList.remove('playing'); });
+}
+
+function ttsSpeak(text, btn){
+  if(!window.speechSynthesis){ if(btn)btn.classList.remove('playing'); return; }
   window.speechSynthesis.cancel();
-  if(btn&&btn.classList.contains('playing')){ btn.classList.remove('playing'); return; }
-  document.querySelectorAll('.tts-btn.playing').forEach(b=>b.classList.remove('playing'));
   const utt=new SpeechSynthesisUtterance(text);
-  utt.lang='en-US'; utt.rate=0.85; utt.pitch=1;
-  if(btn){ btn.classList.add('playing'); utt.onend=()=>btn.classList.remove('playing'); utt.onerror=()=>btn.classList.remove('playing'); }
+  utt.lang=_pronAccent==='uk'?'en-GB':'en-US';
+  utt.rate=0.8;
+  if(btn){ utt.onend=()=>btn.classList.remove('playing'); utt.onerror=()=>btn.classList.remove('playing'); }
   window.speechSynthesis.speak(utt);
 }
 
-// Add TTS button to word popup
+// Legacy wrapper (still used in some places)
+function tts(text,btn){ playWord(text,btn); }
+
+// Accent toggle HTML helper
+function accentToggleHTML(){
+  return `<div style="display:flex;gap:4px;margin-bottom:10px;align-items:center">
+    <span style="font-size:.62rem;color:var(--muted);font-family:var(--mono);margin-right:2px">Aksent:</span>
+    <button class="pron-acc-btn${_pronAccent==='us'?' on':''}" data-acc="us" onclick="setPronAccent('us')" style="font-size:.65rem;padding:3px 9px;border-radius:12px;border:1px solid var(--border);background:${_pronAccent==='us'?'var(--a)':'var(--card)'};color:${_pronAccent==='us'?'#fff':'var(--muted2)'};cursor:pointer;font-family:var(--font);font-weight:600">🇺🇸 US</button>
+    <button class="pron-acc-btn${_pronAccent==='uk'?' on':''}" data-acc="uk" onclick="setPronAccent('uk')" style="font-size:.65rem;padding:3px 9px;border-radius:12px;border:1px solid var(--border);background:${_pronAccent==='uk'?'var(--a)':'var(--card)'};color:${_pronAccent==='uk'?'#fff':'var(--muted2)'};cursor:pointer;font-family:var(--font);font-weight:600">🇬🇧 UK</button>
+    <span style="font-size:.58rem;color:var(--muted);margin-left:4px">Lug'at audiosi · TTS zahira</span>
+  </div>`;
+}
+
+// Add pronunciation button to word popup
 const _origShowWpop = showWpop;
 showWpop = function(idx){
   _origShowWpop(idx);
   const w=_wpWords[idx];
   if(!w) return;
-  // Add TTS button next to word
   const wordEl=document.getElementById('wpWord');
-  if(wordEl && !wordEl.querySelector('.tts-btn')){
+  // Remove old btn if exists
+  const old=wordEl&&wordEl.querySelector('.tts-btn');
+  if(old) old.remove();
+  if(wordEl){
     const btn=document.createElement('button');
-    btn.className='tts-btn'; btn.title='Talaffuzini eshitish';
+    btn.className='tts-btn'; btn.title='Talaffuzini eshitish (lug\'at audiosi)';
     btn.innerHTML='<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
-    btn.onclick=(e)=>{e.stopPropagation();tts(w.word,btn);};
+    btn.onclick=(e)=>{e.stopPropagation();playWord(w.word,btn);};
     wordEl.appendChild(btn);
+  }
+  // Add accent toggle below IPA if not present
+  const pop=document.getElementById('aiWpop');
+  if(pop&&!pop.querySelector('.pron-acc-row')){
+    const row=document.createElement('div');
+    row.className='pron-acc-row';
+    row.innerHTML=`<div style="display:flex;gap:4px;margin:6px 0 2px;align-items:center">
+      <span style="font-size:.6rem;color:var(--muted);font-family:var(--mono)">Aksent:</span>
+      <button class="pron-acc-btn${_pronAccent==='us'?' on':''}" data-acc="us" onclick="setPronAccent('us')" style="font-size:.62rem;padding:2px 8px;border-radius:10px;border:1px solid var(--border);background:${_pronAccent==='us'?'var(--a)':'var(--card)'};color:${_pronAccent==='us'?'#fff':'var(--muted2)'};cursor:pointer;font-family:var(--font);font-weight:600;transition:all .15s">🇺🇸 US</button>
+      <button class="pron-acc-btn${_pronAccent==='uk'?' on':''}" data-acc="uk" onclick="setPronAccent('uk')" style="font-size:.62rem;padding:2px 8px;border-radius:10px;border:1px solid var(--border);background:${_pronAccent==='uk'?'var(--a)':'var(--card)'};color:${_pronAccent==='uk'?'#fff':'var(--muted2)'};cursor:pointer;font-family:var(--font);font-weight:600;transition:all .15s">🇬🇧 UK</button>
+    </div>`;
+    const ipaEl=document.getElementById('wpIpa');
+    if(ipaEl) ipaEl.after(row);
   }
 };
 
@@ -4086,13 +4520,880 @@ function calcStreak(results){
   return streak;
 }
 
-// ESC handling for new modals
-document.addEventListener('keydown',e=>{
-  if(e.key!=='Escape') return;
-  if(document.getElementById('vAiChat').style.display==='flex'){closeAiChat();return;}
-  if(document.getElementById('vXato').style.display==='flex'){closeXatoModal();return;}
-  if(document.getElementById('vProgress').classList.contains('on')){closeProgress();return;}
+// ══════════════════════════════════════════════════
+// AKSENT MASHQI — Pronunciation Practice
+// ══════════════════════════════════════════════════
+let akState = {
+  testId: null,
+  words: [],       // [{word,ipa,pos,uzbek,example,level,audioUrl}]
+  idx: 0,
+  scores: {},      // word → {score, heard}
+  phase: 'home',   // 'home' | 'loading' | 'drill' | 'summary'
+  recognizing: false,
+  recognition: null
+};
+
+function openAksent(){
+  document.getElementById('vAksent').classList.add('on');
+  akState.phase = 'home';
+  akState.testId = null;
+  akState.words = [];
+  akState.scores = {};
+  akState.idx = 0;
+  // Request mic permission upfront — one time only
+  akRequestMicOnce();
+  renderAkHome();
+}
+function closeAksent(){
+  document.getElementById('vAksent').classList.remove('on');
+  akStopRecognition();
+}
+function toggleAkAccent(){
+  setPronAccent(_pronAccent === 'us' ? 'uk' : 'us');
+  document.getElementById('akAccentBtn').textContent = _pronAccent === 'uk' ? '🇬🇧 UK' : '🇺🇸 US';
+  // refresh audio cache for current word
+  if(akState.phase === 'drill') renderAkDrill();
+}
+
+/* ── HOME ── */
+function renderAkHome(){
+  document.getElementById('akTitle').textContent = 'Test tanlang';
+  const body = document.getElementById('akBody');
+  body.innerHTML = `
+  <div style="background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:14px;font-size:.78rem;color:var(--muted2);line-height:1.8">
+    🎤 <strong style="color:var(--text)">Qanday ishlaydi?</strong><br>
+    1. Testni tanlang — AI o'sha mavzu bo'yicha <strong>15–20 ta qiyin so'z</strong> tayyorlaydi<br>
+    2. Har so'zni <strong>lug'at audiosi</strong> bilan tinglang<br>
+    3. 🎙 tugmasini bosib gapiring — <strong>foiz natija</strong> chiqadi<br>
+    4. Oxirida umumiy natija va eng qiyin so'zlar ko'rsatiladi
+  </div>
+  <div style="font-size:.64rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">② Test tanlang</div>
+  <div class="ai-tgrid" id="akTestGrid"></div>`;
+
+  const grid = document.getElementById('akTestGrid');
+  T.forEach(t => {
+    const d = document.createElement('div');
+    d.className = 'ai-tc' + (akState.testId === t.id ? ' on' : '');
+    d.textContent = t.id; d.title = t.ti;
+    d.onclick = () => { akState.testId = t.id; akLoadWords(t); };
+    grid.appendChild(d);
+  });
+}
+
+/* ── LOAD WORDS via Groq ── */
+async function akLoadWords(testObj){
+  const key = gGroqKey();
+  if(!key){ toast('Groq API kaliti kerak — AI Tahlil ga kiring'); return; }
+
+  akState.phase = 'loading';
+  document.getElementById('akTitle').textContent = `Test ${testObj.id} · ${testObj.ti}`;
+  const body = document.getElementById('akBody');
+  body.innerHTML = `
+  <div class="ai-prog" style="margin-top:20px">
+    <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:14px">Qiyin so'zlar yuklanmoqda…</div>
+    <div class="ai-prog-steps">
+      <div class="ai-step active" id="akP1"><div class="ai-step-ic"><span class="ai-spin"></span></div>AI so'zlarni tayyorlayapti…</div>
+      <div class="ai-step" id="akP2"><div class="ai-step-ic">2</div>Lug'at audiolari yuklanmoqda…</div>
+    </div>
+  </div>`;
+
+  const setStep = (n, done) => {
+    for(let i=1;i<=2;i++){
+      const el=document.getElementById('akP'+i); if(!el) return;
+      const ic=el.querySelector('.ai-step-ic');
+      if(i<n){el.className='ai-step done';ic.innerHTML='✓';}
+      else if(i===n&&!done){el.className='ai-step active';ic.innerHTML='<span class="ai-spin"></span>';}
+      else if(i===n&&done){el.className='ai-step done';ic.innerHTML='✓';}
+    }
+  };
+
+  // Step 1: Generate difficult words for this topic via Groq
+  try{
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:2000, temperature:0.3,
+        messages:[{role:'user',content:
+`IELTS Section 4 topic: "${testObj.ti}"
+
+Generate 18 difficult English words/phrases that would appear in an academic lecture on this topic.
+Focus on: words with tricky pronunciation, stress patterns, or accent differences (US vs UK).
+Include: technical terms, academic vocabulary (B2-C2 level).
+
+Return ONLY JSON array (no markdown):
+[
+  {"word":"photosynthesis","ipa":"ˌfoʊtəˈsɪnθɪsɪs","pos":"noun","level":"C1","uzbek":"fotosintez","example":"Photosynthesis converts light into energy.","stress":"fo-to-SYN-the-sis"},
+  ...
+]
+Rules: ipa = standard IPA without slashes, stress = show syllable stress with CAPS, uzbek = translation`
+        }]
+      })
+    });
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d = await r.json();
+    let raw = (d.choices?.[0]?.message?.content||'').trim();
+    raw = raw.replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+    const m = raw.match(/\[[\s\S]*\]/); if(m) raw=m[0];
+    akState.words = JSON.parse(raw);
+    akState.scores = {};
+    akState.idx = 0;
+  }catch(e){
+    body.innerHTML=`<div style="color:var(--red);padding:16px">❌ So'zlar yuklanmadi: ${e.message}</div>
+    <button class="ai-go" onclick="renderAkHome()" style="margin-top:10px">← Orqaga</button>`;
+    return;
+  }
+  setStep(1, true);
+
+  // Step 2: Prefetch Dictionary audio for first 5 words
+  setStep(2, false);
+  const first5 = akState.words.slice(0,5);
+  await Promise.allSettled(first5.map(w => akPrefetchAudio(w.word)));
+  setStep(2, true);
+
+  await new Promise(r=>setTimeout(r,300));
+  akState.phase = 'drill';
+  renderAkDrill();
+}
+
+async function akPrefetchAudio(word){
+  const w = word.toLowerCase().trim();
+  if(_audioCache[w] !== undefined) return;
+  try{
+    const r = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(w)}`);
+    if(!r.ok) throw new Error('miss');
+    const data = await r.json();
+    const phonetics = (data[0]?.phonetics||[]).filter(p=>p.audio);
+    let us='', uk='';
+    phonetics.forEach(p=>{
+      const url=p.audio||'';
+      if(url.includes('-us.')) us=url;
+      else if(url.includes('-uk.')) uk=url;
+      else if(!us) us=url;
+    });
+    _audioCache[w] = (us||uk) ? {us:us||uk, uk:uk||us} : null;
+  }catch{ _audioCache[w]=null; }
+}
+
+/* ── DRILL SCREEN ── */
+function renderAkDrill(){
+  const w = akState.words[akState.idx];
+  if(!w) return;
+  const total = akState.words.length;
+  const done = Object.keys(akState.scores).length;
+  const pct = Math.round((akState.idx / total)*100);
+  const prevScore = akState.scores[w.word];
+  const lvlCls = (w.level||'cx').toLowerCase().replace('+','x');
+  const hasAudio = _audioCache[w.word.toLowerCase()] !== null;
+
+  document.getElementById('akTitle').textContent = `${akState.idx+1}/${total} — Test ${akState.testId}`;
+  const body = document.getElementById('akBody');
+  body.innerHTML = `
+  <div class="ak-prog-bar"><div class="ak-prog-fill" style="width:${pct}%"></div></div>
+  <div style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--muted);margin-bottom:10px;font-family:var(--mono)">
+    <span>${akState.idx+1} / ${total}</span>
+    <span>${done} ta baholandi</span>
+  </div>
+
+  <div class="ak-card">
+    <div class="ak-word">${w.word}</div>
+    <div class="ak-ipa">${w.ipa ? '/' + w.ipa + '/' : ''}</div>
+    ${w.stress ? `<div style="font-size:.72rem;color:var(--a3);font-family:var(--mono);margin-bottom:6px">bo'g'in urgu: <strong>${w.stress}</strong></div>` : ''}
+    <div class="ak-pos-lvl">
+      ${w.pos ? `<span style="font-size:.65rem;background:var(--card2);border:1px solid var(--border);color:var(--muted2);padding:2px 8px;border-radius:5px;font-family:var(--mono)">${w.pos}</span>` : ''}
+      <span class="ai-lvl ${lvlCls in {b1:1,b2:1,c1:1,c2:1}?lvlCls:'cx'}">${w.level||'?'}</span>
+    </div>
+    <div class="ak-uz">🇺🇿 ${w.uzbek||''}</div>
+    <button class="ak-sample" onclick="akPlaySample()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      ${hasAudio ? 'Namuna talaffuzni eshitish' : 'TTS namuna eshitish'}
+      <span style="font-size:.58rem;opacity:.6">(${_pronAccent==='uk'?'🇬🇧 UK':'🇺🇸 US'})</span>
+    </button>
+  </div>
+
+  <div class="ak-score-wrap" id="akScoreWrap">
+    ${prevScore ? renderAkScoreRing(prevScore.score, prevScore.heard, w.word) : '<div style="color:var(--muted);font-size:.75rem;text-align:center;padding:10px 0">Mikrofon tugmasini bosib so\'zni gapiring</div>'}
+  </div>
+
+  <div class="ak-status" id="akStatus">Tayyor</div>
+
+  <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <button class="ak-mic idle" id="akMicBtn" onclick="akToggleMic()">
+      <div class="ak-ring"></div><div class="ak-ring"></div><div class="ak-ring"></div>
+      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </button>
+  </div>
+
+  <div class="ak-nav">
+    <button class="ak-nav-btn" onclick="akNav(-1)" ${akState.idx===0?'disabled style="opacity:.4"':''}>← Oldingi</button>
+    ${akState.idx < total-1
+      ? `<button class="ak-nav-btn primary" onclick="akNav(1)">Keyingi →</button>`
+      : `<button class="ak-nav-btn primary" onclick="akShowSummary()">✅ Natija</button>`
+    }
+  </div>
+
+  ${w.example ? `<div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--a3);border-radius:0 var(--r2) var(--r2) 0;padding:8px 12px;font-size:.75rem;color:var(--muted2);font-style:italic;line-height:1.6">📌 "${w.example}"</div>` : ''}`;
+
+  // Prefetch next word audio in background
+  if(akState.words[akState.idx+1])
+    akPrefetchAudio(akState.words[akState.idx+1].word);
+}
+
+function renderAkScoreRing(score, heard, word){
+  const r = 34, circ = 2*Math.PI*r;
+  const offset = circ - (score/100)*circ;
+  const color = score>=80?'var(--green)':score>=55?'var(--yellow)':'var(--red)';
+  const emoji = score>=80?'🎉':score>=55?'👍':'🔄';
+  const label = score>=80?'Ajoyib! Talaffuz to\'g\'ri':score>=55?'Yaxshi, lekin yana mashq qiling':'Yana bir marta urinib ko\'ring';
+  const cls = score>=80?'good':score>=55?'ok':'bad';
+  return `
+  <div class="ak-score-ring">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="${r}" fill="none" stroke="var(--border)" stroke-width="6"/>
+      <circle cx="40" cy="40" r="${r}" fill="none" stroke="${color}" stroke-width="6"
+        stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+    </svg>
+    <div class="ak-score-num" style="color:${color}">${score}%</div>
+  </div>
+  <div class="ak-heard">Eshitildi: <span>"${heard||'—'}"</span></div>
+  <div class="ak-hint ${cls}">${emoji} ${score>=80?'Ajoyib! Talaffuz to\'g\'ri':score>=55?'Yaxshi, lekin yana mashq qiling':'Yana bir marta urinib ko\'ring'}</div>`;
+}
+
+/* ── SPEECH RECOGNITION — permission once, reuse ── */
+let _micStream = null;   // MediaStream — kept alive so permission not re-asked
+
+async function akRequestMicOnce(){
+  if(_micStream) return true;
+  try{
+    _micStream = await navigator.mediaDevices.getUserMedia({audio:true});
+    return true;
+  }catch(e){
+    toast('Mikrofon ruxsati berilmagan. Brauzer sozlamalarini tekshiring.');
+    return false;
+  }
+}
+
+function akToggleMic(){
+  if(akState.recognizing){ akStopRecognition(); return; }
+  akStartRecognition();
+}
+
+async function akStartRecognition(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ toast('Chrome yoki Edge ishlatib ko\'ring (SpeechRecognition kerak)'); return; }
+
+  // Request mic permission once — after first grant never asked again
+  const ok = await akRequestMicOnce();
+  if(!ok) return;
+
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.interimResults = false;
+  rec.maxAlternatives = 5;
+  akState.recognition = rec;
+  akState.recognizing = true;
+
+  const btn = document.getElementById('akMicBtn');
+  const status = document.getElementById('akStatus');
+  if(btn) btn.className='ak-mic listening';
+  if(status) status.textContent = '🎙 Gapiring…';
+
+  rec.onresult = (e) => {
+    const alternatives = Array.from(e.results[0]).map(a=>a.transcript.toLowerCase().trim());
+    const target = akState.words[akState.idx]?.word?.toLowerCase().trim()||'';
+    const score = akScoreWord(target, alternatives);
+    const heard = alternatives[0];
+    akState.scores[akState.words[akState.idx].word] = { score, heard };
+    akStopRecognition();
+    if(btn) btn.className = 'ak-mic done';
+    if(status) status.textContent = '';
+    const wrap = document.getElementById('akScoreWrap');
+    if(wrap) wrap.innerHTML = renderAkScoreRing(score, heard, target);
+    if(score >= 80) setTimeout(()=>akNav(1), 1400);
+  };
+
+  rec.onerror = (e) => {
+    akStopRecognition();
+    if(btn) btn.className='ak-mic idle';
+    const msg = e.error==='not-allowed' ? 'Mikrofon ruxsati yo\'q' :
+                e.error==='no-speech'   ? 'Ovoz eshitilmadi — qayta bosing' :
+                'Xato: '+e.error;
+    if(status) status.textContent = msg;
+  };
+
+  rec.onend = () => { akState.recognizing = false; };
+  rec.start();
+}
+
+function akStopRecognition(){
+  if(akState.recognition){ try{akState.recognition.stop();}catch{} akState.recognition=null; }
+  akState.recognizing = false;
+  const btn=document.getElementById('akMicBtn');
+  if(btn&&btn.classList.contains('listening')) btn.className='ak-mic idle';
+}
+
+/* ── SCORING ── score: 0–100 based on phonetic similarity */
+function akScoreWord(target, alternatives){
+  // Try each alternative, return best score
+  let best = 0;
+  for(const alt of alternatives){
+    // 1. Exact match
+    if(alt===target){ best=100; break; }
+    // 2. Target appears inside the heard phrase
+    if(alt.includes(target)){ best=Math.max(best,92); continue; }
+    // 3. Levenshtein similarity
+    const lev = akLevenshtein(target, alt.split(' ')[0]); // compare first spoken word
+    const maxLen = Math.max(target.length, alt.length, 1);
+    const sim = Math.round((1 - lev/maxLen)*100);
+    best = Math.max(best, sim);
+    // 4. Phonetic shortcut — if first 3 chars match and length similar
+    if(target.length>3 && alt.startsWith(target.substring(0,3)) && Math.abs(target.length-alt.length)<=2)
+      best = Math.max(best, 78);
+  }
+  return Math.min(100, Math.max(0, best));
+}
+
+function akLevenshtein(a, b){
+  const m=a.length, n=b.length;
+  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i?j?0:i:j));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+/* ── NAVIGATION ── */
+function akNav(dir){
+  akStopRecognition();
+  akState.idx = Math.max(0, Math.min(akState.words.length-1, akState.idx+dir));
+  renderAkDrill();
+}
+
+function akPlaySample(){
+  const w = akState.words[akState.idx];
+  if(!w) return;
+  const btn = document.querySelector('.ak-sample');
+  playWord(w.word, btn);
+}
+
+/* ── SUMMARY ── */
+function akShowSummary(){
+  akStopRecognition();
+  akState.phase = 'summary';
+  document.getElementById('akTitle').textContent = 'Natija';
+  const body = document.getElementById('akBody');
+  const scores = Object.values(akState.scores);
+  const avg = scores.length ? Math.round(scores.reduce((a,s)=>a+s.score,0)/scores.length) : 0;
+  const perfect = scores.filter(s=>s.score>=80).length;
+  const needWork = scores.filter(s=>s.score<55).length;
+
+  // Sort words by score ascending for "need work" section
+  const ranked = akState.words
+    .filter(w=>akState.scores[w.word])
+    .map(w=>({...w, ...akState.scores[w.word]}))
+    .sort((a,b)=>a.score-b.score);
+
+  body.innerHTML = `
+  <div class="ak-sum-grid">
+    <div class="ak-sum-kpi"><div class="ak-sum-n" style="color:${avg>=70?'var(--green)':'var(--yellow)'}">${avg}%</div><div class="ak-sum-l">O'rt. ball</div></div>
+    <div class="ak-sum-kpi"><div class="ak-sum-n" style="color:var(--green)">${perfect}</div><div class="ak-sum-l">Mukammal</div></div>
+    <div class="ak-sum-kpi"><div class="ak-sum-n" style="color:var(--red)">${needWork}</div><div class="ak-sum-l">Mashq kerak</div></div>
+  </div>
+
+  ${needWork>0?`<div style="font-size:.7rem;font-weight:700;color:var(--red);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">⚠ Mashq kerak bo'lgan so'zlar</div>
+  ${ranked.filter(w=>w.score<55).map(w=>`
+    <div class="ak-word-row">
+      <div>
+        <span class="w">${w.word}</span>
+        <span style="font-size:.65rem;color:var(--muted);font-family:var(--mono);margin-left:6px">${w.ipa?'/'+w.ipa+'/':''}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="s" style="color:var(--red)">${w.score}%</span>
+        <button class="tts-btn" onclick="playWord('${w.word.replace(/'/g,"\\'")}',this)" title="Eshitish"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+      </div>
+    </div>`).join('')}`:''}
+
+  ${perfect>0?`<div style="font-size:.7rem;font-weight:700;color:var(--green);margin:12px 0 8px;text-transform:uppercase;letter-spacing:.6px">✅ Yaxshi bajarilgan</div>
+  ${ranked.filter(w=>w.score>=80).map(w=>`
+    <div class="ak-word-row">
+      <span class="w">${w.word}</span>
+      <span class="s" style="color:var(--green)">${w.score}%</span>
+    </div>`).join('')}`:''}
+
+  <div style="display:flex;gap:8px;margin-top:18px">
+    <button class="ak-nav-btn" onclick="akRestartDrill()" style="flex:1">🔁 Qayta mashq</button>
+    <button class="ak-nav-btn primary" onclick="renderAkHome()" style="flex:1">🏠 Bosh sahifa</button>
+  </div>`;
+}
+
+function akRestartDrill(){
+  akState.idx=0; akState.scores={}; akState.phase='drill';
+  renderAkDrill();
+}
+
+// ESC for modals
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('vShadowing').classList.contains('on')){closeShadowing();return;}
+    if(document.getElementById('vAksent').classList.contains('on')){closeAksent();return;}
+  }
 });
+
+// ══════════════════════════════════════════════════
+// SHADOWING MASHQI
+// ══════════════════════════════════════════════════
+let shState = { segments:[], idx:0, audio:null, loop:false, speed:.75, playing:false, timer:null };
+
+function openShadowing(){
+  if(!CUR){ toast('Avval test oching'); return; }
+  document.getElementById('vShadow').classList.add('on');
+  document.getElementById('shTitle').textContent = `Test ${CUR.id} · Shadowing`;
+  shState.segments=[];shState.idx=0;shState.loop=false;shState.speed=.75;shState.playing=false;
+  shBuildSegments();
+  renderShBody();
+}
+function closeShadow(){
+  shStop();
+  document.getElementById('vShadow').classList.remove('on');
+}
+function shBuildSegments(){
+  // Split questions text into sentences for shadowing
+  const sentences = [];
+  // Use audio timestamp sections — split by ~15s segments via question groups
+  // Fallback: use question text as hints
+  CUR.q.forEach((q,i)=>{
+    if(q.tx && q.tx.length > 10) sentences.push(q.tx);
+  });
+  // Also add correct answers context
+  shState.segments = sentences.length ? sentences.map(s=>s.trim()).filter(Boolean) :
+    ['Bu testda audio matni mavjud. Audioni tinglang va takrorlang.'];
+}
+
+function renderShBody(){
+  const body = document.getElementById('shBody');
+  const segs = shState.segments;
+  body.innerHTML = `
+  <div style="background:rgba(79,126,247,.06);border:1px solid rgba(79,126,247,.15);border-radius:var(--r2);padding:10px 13px;font-size:.74rem;color:var(--muted2);line-height:1.7;margin-bottom:14px">
+    🔊 <strong style="color:var(--text)">Shadowing qoidasi:</strong> Audio gapiradi → <strong>1–2 soniya kechikib</strong> aynan takrorlang. 
+    Loop rejimida bir bo'lak qayta-qayta aylanadi. Tezlikni 0.75× dan boshlang.
+  </div>
+
+  <div class="sh-ctrl">
+    <button class="sh-play" id="shPlayBtn" onclick="shTogglePlay()">▶</button>
+    <div style="flex:1">
+      <div style="font-size:.72rem;color:var(--muted2);margin-bottom:4px">
+        Bo'lak <span id="shSegIdx">${shState.idx+1}</span> / ${segs.length}
+      </div>
+      <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+        <div id="shMainBar" style="height:100%;background:var(--a);border-radius:2px;width:0%;transition:width .2s"></div>
+      </div>
+    </div>
+    <button class="sh-loop-badge ${shState.loop?'on':''}" id="shLoopBtn" onclick="shToggleLoop()">
+      🔁 Loop ${shState.loop?'ON':'OFF'}
+    </button>
+  </div>
+
+  <div class="sh-speed-row">
+    <span style="font-size:.62rem;color:var(--muted);font-family:var(--mono);align-self:center">Tezlik:</span>
+    ${[.5,.75,1,1.25].map(s=>`<button class="sh-spd ${shState.speed===s?'on':''}" onclick="shSetSpeed(${s},this)">${s}×</button>`).join('')}
+  </div>
+
+  <div style="font-size:.64rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Audio bo'laklari — bosib tinglang:</div>
+  ${segs.map((s,i)=>`
+    <div class="sh-seg ${i===shState.idx?'active':''}" id="shSeg${i}" onclick="shJumpTo(${i})">
+      <div class="sh-seg-txt">${i===shState.idx?`<span class="hl">${s}</span>`:s}</div>
+      <div class="sh-seg-bar"><div class="sh-seg-fill" id="shFill${i}" style="width:0%"></div></div>
+    </div>`).join('')}
+
+  <div style="margin-top:14px;background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);padding:12px;font-size:.76rem;color:var(--muted2);line-height:1.8">
+    💡 <strong style="color:var(--text)">Maslahat:</strong> Birinchi marta faqat <strong>tinglang</strong>, ikkinchi marta <strong>takrorlang</strong>. 
+    Uchinchi marta ovozingizni <strong>audio bilan bir vaqtda</strong> gapiring.
+  </div>`;
+}
+
+function shSetSpeed(s, btn){
+  shState.speed = s;
+  document.querySelectorAll('.sh-spd').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  if(shState.audio) shState.audio.playbackRate = s;
+}
+function shToggleLoop(){
+  shState.loop = !shState.loop;
+  const btn=document.getElementById('shLoopBtn');
+  if(btn){btn.textContent=`🔁 Loop ${shState.loop?'ON':'OFF'}`;btn.classList.toggle('on',shState.loop);}
+}
+function shJumpTo(i){
+  shStop();
+  shState.idx=i;
+  renderShBody();
+}
+function shTogglePlay(){
+  if(shState.playing){shStop();return;}
+  shPlay();
+}
+function shPlay(){
+  // Use the main test audio
+  const audioPath_ = CUR ? `Test ${CUR.id} Section 4.mp3` : null;
+  if(!audioPath_){toast('Audio topilmadi');return;}
+  // We share the existing AUDIO element but at chosen speed
+  shState.playing=true;
+  const playBtn=document.getElementById('shPlayBtn');
+  if(playBtn) playBtn.textContent='⏸';
+  AUDIO.playbackRate=shState.speed;
+  if(AUDIO.paused) AUDIO.play();
+  AP=true;
+
+  // Track progress
+  const onTime=()=>{
+    const pct=AUDIO.duration?Math.round(AUDIO.currentTime/AUDIO.duration*100):0;
+    const bar=document.getElementById('shMainBar');if(bar) bar.style.width=pct+'%';
+  };
+  AUDIO.ontimeupdate=onTime;
+
+  const onEnd=()=>{
+    if(shState.loop){AUDIO.currentTime=0;AUDIO.play();return;}
+    shStop();
+  };
+  AUDIO.onended=onEnd;
+}
+function shStop(){
+  shState.playing=false;
+  AUDIO.pause();AP=false;
+  AUDIO.ontimeupdate=null;
+  AUDIO.onended=null;
+  const btn=document.getElementById('shPlayBtn');if(btn)btn.textContent='▶';
+}
+
+// ══════════════════════════════════════════════════
+// DIKTANT MASHQI
+// ══════════════════════════════════════════════════
+let dkState={sentences:[],idx:0,scores:[],answered:false,totalWords:0,correctWords:0};
+
+function openDiktant(){
+  if(!CUR){toast('Avval test oching');return;}
+  document.getElementById('vDiktant').classList.add('on');
+  document.getElementById('dkTitle').textContent=`Test ${CUR.id} · Diktant`;
+  // Build sentences from correct answers + question text
+  const sents=[];
+  CUR.q.forEach(q=>{
+    const ans=q.a.split('|')[0];
+    if(ans&&ans.length>1) sents.push({hint:q.tx||'', answer:ans.toLowerCase().trim(), display:ans});
+  });
+  dkState.sentences=sents;dkState.idx=0;dkState.scores=[];
+  dkState.answered=false;dkState.totalWords=0;dkState.correctWords=0;
+  renderDkScreen();
+}
+function closeDiktant(){
+  document.getElementById('vDiktant').classList.remove('on');
+}
+
+function renderDkScreen(){
+  const body=document.getElementById('dkBody');
+  const sents=dkState.sentences;
+  if(!sents.length){body.innerHTML='<div class="ai-info">Bu test uchun diktant mavjud emas.</div>';return;}
+
+  if(dkState.idx>=sents.length){renderDkSummary();return;}
+
+  const s=sents[dkState.idx];
+  const pct=Math.round(dkState.idx/sents.length*100);
+  const scored=dkState.scores.filter(Boolean).length;
+
+  body.innerHTML=`
+  <div style="height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:12px">
+    <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--a),var(--a3));border-radius:2px;transition:width .4s"></div>
+  </div>
+  <div style="font-size:.62rem;color:var(--muted);font-family:var(--mono);margin-bottom:12px">${dkState.idx+1} / ${sents.length} · ${scored} ta bajarildi</div>
+
+  <div style="background:rgba(79,126,247,.06);border:1px solid rgba(79,126,247,.15);border-radius:var(--r2);padding:9px 12px;font-size:.72rem;color:var(--muted2);line-height:1.6;margin-bottom:12px">
+    💡 Savol matni: <strong style="color:var(--text)">${s.hint||'Audioni tinglang va javobni yozing'}</strong>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <button onclick="dkPlayHint()" style="background:var(--a);border:none;color:#fff;padding:8px 16px;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      Audioni tinglash
+    </button>
+    <span style="font-size:.62rem;color:var(--muted)">javob: ${s.answer.length} harf</span>
+  </div>
+
+  <div class="dk-sentence" id="dkAnswer" style="${dkState.answered?'':'filter:blur(8px);user-select:none'}">${s.display}</div>
+
+  <textarea class="dk-inp" id="dkInp" placeholder="Eshitganingizni yozing…" rows="2"
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();dkCheck()}"
+    ${dkState.answered?'disabled':''}>${dkState.answered?(dkState.scores[dkState.idx]?.input||''):''}</textarea>
+
+  <div id="dkResultBox" style="margin-top:8px">${dkState.answered?renderDkResult(dkState.idx):''}</div>
+
+  <div class="dk-nav">
+    <button onclick="dkNav(-1)" ${dkState.idx===0?'disabled style="opacity:.4"':''}>← Oldingi</button>
+    ${!dkState.answered
+      ?`<button class="primary" onclick="dkCheck()">✓ Tekshirish</button>`
+      :dkState.idx<sents.length-1
+        ?`<button class="primary" onclick="dkNav(1)">Keyingi →</button>`
+        :`<button class="primary" onclick="renderDkSummary()">✅ Natija</button>`
+    }
+  </div>`;
+
+  if(!dkState.answered) setTimeout(()=>document.getElementById('dkInp')?.focus(),200);
+}
+
+function dkPlayHint(){
+  // Seek audio to approximate position and play 5 seconds
+  if(!CUR) return;
+  const ratio=dkState.idx/Math.max(dkState.sentences.length,1);
+  const seekTo=AUDIO.duration?AUDIO.duration*ratio:0;
+  AUDIO.currentTime=Math.max(0,seekTo-2);
+  AUDIO.playbackRate=1;
+  AUDIO.play();AP=true;
+  const btn=document.getElementById('apPlay');if(btn)btn.textContent='⏸';
+  // Auto-pause after 6 seconds
+  setTimeout(()=>{
+    if(!AUDIO.paused){AUDIO.pause();AP=false;const b=document.getElementById('apPlay');if(b)b.textContent='▶';}
+  },6000);
+}
+
+function dkCheck(){
+  const inp=document.getElementById('dkInp');
+  if(!inp) return;
+  const userInput=inp.value.trim();
+  if(!userInput){toast('Biror narsa yozing');return;}
+  const s=dkState.sentences[dkState.idx];
+  // Word-level comparison
+  const target=s.answer.toLowerCase().split(/\s+/);
+  const given=userInput.toLowerCase().split(/\s+/);
+  let correct=0;
+  const wordResults=target.map((tw,i)=>{
+    const gw=(given[i]||'').replace(/[^a-z]/g,'');
+    const ok=gw===tw.replace(/[^a-z]/g,'');
+    if(ok)correct++;
+    return{target:tw,given:given[i]||'',ok};
+  });
+  const pct=Math.round(correct/Math.max(target.length,1)*100);
+  dkState.scores[dkState.idx]={input:userInput,wordResults,pct,correct,total:target.length};
+  dkState.totalWords+=target.length;dkState.correctWords+=correct;
+  dkState.answered=true;
+  // Unblur answer
+  const ans=document.getElementById('dkAnswer');
+  if(ans) ans.style.filter='';
+  if(inp) inp.disabled=true;
+  const rb=document.getElementById('dkResultBox');
+  if(rb) rb.innerHTML=renderDkResult(dkState.idx);
+  // Update nav
+  const nav=document.querySelector('.dk-nav');
+  if(nav){
+    const btns=nav.querySelectorAll('button');
+    if(btns[1]) btns[1].outerHTML=dkState.idx<dkState.sentences.length-1
+      ?`<button class="primary" onclick="dkNav(1)">Keyingi →</button>`
+      :`<button class="primary" onclick="renderDkSummary()">✅ Natija</button>`;
+  }
+}
+
+function renderDkResult(i){
+  const sc=dkState.scores[i];
+  if(!sc) return '';
+  const cls=sc.pct>=80?'good':'bad';
+  const words=sc.wordResults.map(w=>
+    `<span class="dk-word ${w.ok?'ok':'wrong'}">${w.given||'<span class="miss">['+w.target+']</span>'} </span>`
+  ).join('');
+  return `<div class="dk-result ${cls}">
+    <div class="dk-score-row"><span>Sizning javob:</span><strong style="color:${sc.pct>=80?'var(--green)':'var(--red)'}">${sc.pct}%</strong></div>
+    <div style="margin-bottom:6px">${words}</div>
+    <div style="font-size:.72rem;color:var(--muted)">To'g'ri: <strong style="color:var(--green)">${sc.wordResults.map(w=>`<span style="color:var(--green)">${w.target}</span>`).join(' ')}</strong></div>
+  </div>`;
+}
+
+function dkNav(dir){
+  dkState.idx=Math.max(0,Math.min(dkState.sentences.length-1,dkState.idx+dir));
+  dkState.answered=!!dkState.scores[dkState.idx];
+  renderDkScreen();
+}
+
+function renderDkSummary(){
+  const body=document.getElementById('dkBody');
+  const done=dkState.scores.filter(Boolean).length;
+  const avg=done?Math.round(dkState.scores.filter(Boolean).reduce((a,s)=>a+s.pct,0)/done):0;
+  const wPct=dkState.totalWords?Math.round(dkState.correctWords/dkState.totalWords*100):0;
+  body.innerHTML=`
+  <div style="text-align:center;padding:16px 0 20px">
+    <div style="font-size:2.5rem;margin-bottom:6px">${avg>=80?'🎉':avg>=60?'👍':'📚'}</div>
+    <div style="font-size:.7rem;color:var(--muted2);margin-bottom:16px">Diktant yakunlandi · Test ${CUR?.id||''}</div>
+  </div>
+  <div class="dk-stat">
+    <div class="dk-stat-box"><div class="dk-stat-n" style="color:${avg>=70?'var(--green)':'var(--yellow)'}">${avg}%</div><div class="dk-stat-l">O'rt. ball</div></div>
+    <div class="dk-stat-box"><div class="dk-stat-n" style="color:var(--a)">${done}/${dkState.sentences.length}</div><div class="dk-stat-l">Bajarildi</div></div>
+    <div class="dk-stat-box"><div class="dk-stat-n" style="color:var(--a2)">${wPct}%</div><div class="dk-stat-l">So'z aniqligi</div></div>
+  </div>
+  ${dkState.scores.map((sc,i)=>sc?`
+    <div class="ak-word-row">
+      <div style="flex:1;font-size:.74rem;color:var(--muted2)">${dkState.sentences[i]?.hint?.substring(0,40)||'Savol '+(i+1)}</div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:.62rem;font-family:var(--mono);color:var(--muted)">${dkState.sentences[i]?.display||''}</span>
+        <strong style="font-family:var(--mono);color:${sc.pct>=80?'var(--green)':sc.pct>=60?'var(--yellow)':'var(--red)'}">${sc.pct}%</strong>
+      </div>
+    </div>`:'').join('')}
+  <div style="display:flex;gap:8px;margin-top:16px">
+    <button class="ak-nav-btn" onclick="dkState.idx=0;dkState.scores=[];dkState.answered=false;dkState.totalWords=0;dkState.correctWords=0;renderDkScreen()">🔁 Qayta</button>
+    <button class="ak-nav-btn primary" onclick="closeDiktant()">✅ Yopish</button>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════
+// AKSENT — connect to current test
+// ══════════════════════════════════════════════════
+function openAksentFromTest(){
+  if(!CUR){toast('Avval test oching');return;}
+  // If AI tahlil already done for this test, use those words
+  if(aiData && aiData.tid===CUR.id && aiData.words?.length){
+    akState.testId=CUR.id;
+    akState.words=[...aiData.words];
+    akState.scores={};akState.idx=0;akState.phase='drill';
+    document.getElementById('vAksent').classList.add('on');
+    document.getElementById('akTitle').textContent=`Test ${CUR.id} · ${CUR.ti}`;
+    renderAkDrill();
+  } else {
+    // Load words from Groq for this test
+    openAksent();
+    // Auto-select current test
+    akState.testId=CUR.id;
+    akLoadWords(CUR);
+  }
+}
+
+// ══════════════════════════════════════════════════
+// TELEGRAM WEB APP INTEGRATION
+// ══════════════════════════════════════════════════
+(function initTelegram(){
+  const tg = window.Telegram?.WebApp;
+  if(!tg || !tg.initData) return; // Not inside Telegram
+
+  // Expand to full screen
+  tg.expand();
+  tg.disableVerticalSwipes?.();
+
+  // Apply theme
+  const colorScheme = tg.colorScheme; // 'dark' | 'light'
+  if(colorScheme === 'light') document.body.classList.add('tg-light');
+
+  // Theme color params → map to CSS vars
+  const p = tg.themeParams || {};
+  const root = document.documentElement.style;
+  if(p.bg_color)         root.setProperty('--bg',      p.bg_color);
+  if(p.secondary_bg_color) root.setProperty('--card',   p.secondary_bg_color);
+  if(p.text_color)       root.setProperty('--text',     p.text_color);
+  if(p.hint_color)       root.setProperty('--muted',    p.hint_color);
+  if(p.link_color)       root.setProperty('--a',        p.link_color);
+  if(p.button_color)     root.setProperty('--a',        p.button_color);
+  if(p.button_text_color) root.setProperty('--btn-txt', p.button_text_color);
+
+  // Safe area from Telegram viewport
+  tg.onEvent('viewportChanged', ()=>{
+    const h = tg.viewportStableHeight;
+    if(h) document.documentElement.style.setProperty('--tg-vh', h+'px');
+  });
+
+  // Auto-login: use Telegram user data as session
+  const user = tg.initDataUnsafe?.user;
+  if(user && !SES){
+    const tgSes = {
+      uid: 'tg_'+user.id,
+      n: user.first_name || 'Foydalanuvchi',
+      s: user.last_name  || '',
+      adm: false,
+      tg: true
+    };
+    lsS(K.ses, tgSes);
+    SES = tgSes;
+    document.body.classList.add('tg-autologin');
+    document.getElementById('navUser').textContent = tgSes.n + ' ' + tgSes.s;
+    // Init and open app
+    ['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none');
+    openApp();
+  }
+
+  // Telegram Back Button stack
+  const _backStack = [];
+
+  function tgPushBack(fn, label){
+    _backStack.push(fn);
+    tg.BackButton.show();
+  }
+  function tgPopBack(){
+    const fn = _backStack.pop();
+    if(fn) fn();
+    if(!_backStack.length) tg.BackButton.hide();
+  }
+
+  tg.BackButton.onClick(()=> tgPopBack());
+
+  // Hook into modal openers to register back actions
+  const _origOpenTest = openTest;
+  window.openTest = function(id){
+    _origOpenTest(id);
+    tgPushBack(closeTest, 'Test');
+  };
+
+  const _origOpenAdmin = openAdmin;
+  window.openAdmin = function(){
+    _origOpenAdmin();
+    tgPushBack(closeAdmin, 'Admin');
+  };
+
+  const _origOpenAiModal = openAiModal;
+  window.openAiModal = function(){
+    _origOpenAiModal();
+    tgPushBack(closeAiModal, 'AI Tahlil');
+  };
+
+  const _origOpenAiChat = openAiChat;
+  window.openAiChat = function(ctx){
+    _origOpenAiChat(ctx);
+    tgPushBack(closeAiChat, 'AI Chat');
+  };
+
+  const _origOpenXato = openXatoModal;
+  window.openXatoModal = function(){
+    _origOpenXato();
+    tgPushBack(closeXatoModal, 'Xatolar');
+  };
+
+  const _origOpenProgress = openProgress;
+  window.openProgress = function(){
+    _origOpenProgress();
+    tgPushBack(closeProgress, 'Progress');
+  };
+
+  const _origOpenAksent = openAksent;
+  window.openAksent = function(){
+    _origOpenAksent();
+    tgPushBack(closeAksent, 'Aksent');
+  };
+
+  // Hook closers to also pop back stack
+  function wrapClose(fn){
+    const orig = window[fn];
+    window[fn] = function(){
+      orig();
+      if(_backStack.length){_backStack.pop();}
+      if(!_backStack.length) tg.BackButton.hide();
+    };
+  }
+  ['closeTest','closeAdmin','closeAiModal','closeAiChat','closeXatoModal','closeProgress','closeAksent'].forEach(wrapClose);
+
+  // Main button for check answers (optional UX)
+  // tg.MainButton.setText('Tekshirish').show().onClick(()=> checkAnswers && checkAnswers());
+
+  // HapticFeedback on buttons
+  document.addEventListener('click', e=>{
+    if(e.target.closest('button')){
+      tg.HapticFeedback?.impactOccurred?.('light');
+    }
+  });
+
+  // Tell Telegram app is ready
+  tg.ready();
+
+  console.log('[TG] WebApp initialized, user:', user?.first_name);
+})();
 </script>
 </body>
 </html>
