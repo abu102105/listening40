@@ -508,74 +508,6 @@ input,button,select,textarea{font-family:var(--font)}
 .xa-stat-n{font-size:1.1rem;font-weight:700;font-family:var(--mono)}
 .xa-stat-l{font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
 
-/* ══ PRONUNCIATION CHECKER ══ */
-.pron-modal{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;background:var(--bg)}
-.pron-modal.on{display:flex}
-.pron-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 40px}
-.pron-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:20px 16px;text-align:center;margin-bottom:14px;position:relative}
-.pron-word{font-size:2.4rem;font-weight:800;letter-spacing:-.5px;color:var(--text);margin-bottom:6px;line-height:1.1}
-.pron-ipa{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin-bottom:4px}
-.pron-meaning{font-size:.75rem;color:var(--muted2);background:var(--bg2);border-radius:6px;padding:4px 12px;display:inline-block;margin-bottom:16px}
-.pron-lvl-badge{font-size:.58rem;font-weight:700;font-family:var(--mono);padding:3px 9px;border-radius:5px;position:absolute;top:12px;right:12px}
-.pron-mic-btn{width:72px;height:72px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all .15s;font-size:1.6rem;flex-shrink:0}
-.pron-mic-btn.idle{background:var(--a);box-shadow:0 4px 20px rgba(79,126,247,.4)}
-.pron-mic-btn.listening{background:var(--red);box-shadow:0 0 0 0 rgba(244,63,94,.4);animation:pronPulse 1.2s ease infinite}
-.pron-mic-btn.done{background:var(--card2);border:1px solid var(--border2)}
-@keyframes pronPulse{0%{box-shadow:0 0 0 0 rgba(244,63,94,.5)}70%{box-shadow:0 0 0 18px rgba(244,63,94,0)}100%{box-shadow:0 0 0 0 rgba(244,63,94,0)}}
-.pron-hint{font-size:.7rem;color:var(--muted);font-family:var(--mono);margin-bottom:14px;min-height:18px}
-.pron-score-wrap{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:16px;margin-bottom:14px;display:none}
-.pron-score-wrap.on{display:block;animation:pop .3s ease}
-.pron-arc-svg{display:block;margin:0 auto 8px}
-.pron-heard{font-size:.78rem;color:var(--muted2);font-family:var(--mono);margin-top:6px}
-.pron-heard strong{color:var(--text)}
-.pron-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px;font-family:var(--mono)}
-.pron-btns-row{display:flex;gap:8px}
-.pron-skip{flex:1;padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted2);border-radius:var(--r2);font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer}
-.pron-next{flex:1;padding:11px;border:none;background:var(--a);color:#fff;border-radius:var(--r2);font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer}
-.pron-try{flex:1;padding:11px;border:1px solid rgba(79,126,247,.3);background:rgba(79,126,247,.07);color:var(--a);border-radius:var(--r2);font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer}
-.pron-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px}
-.pron-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 6px;text-align:center}
-.pron-stat-n{font-size:1.2rem;font-weight:800;font-family:var(--mono)}
-.pron-stat-l{font-size:.52rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
-.pron-filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.pron-flt{border:1px solid var(--border);background:transparent;color:var(--muted2);padding:5px 11px;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:var(--font)}
-.pron-flt.on{background:var(--a);border-color:var(--a);color:#fff}
-.pron-no-support{background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.2);border-radius:var(--r2);padding:14px;text-align:center;font-size:.78rem;color:var(--red);line-height:1.7}
-
-/* ══ PRONUNCIATION CHECKER ══ */
-.pron-modal{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;background:var(--bg)}
-.pron-modal.on{display:flex}
-.pron-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px 50px}
-.pron-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:20px 16px;text-align:center;margin-bottom:14px;position:relative}
-.pron-word{font-size:2.4rem;font-weight:800;letter-spacing:-.5px;color:var(--text);margin-bottom:4px;line-height:1.1}
-.pron-ipa{font-family:var(--mono);font-size:.88rem;color:var(--muted);margin-bottom:5px}
-.pron-meaning{font-size:.74rem;color:var(--muted2);background:var(--bg2);border-radius:6px;padding:4px 12px;display:inline-block;margin-bottom:16px}
-.pron-lvl-badge{font-size:.58rem;font-weight:700;font-family:var(--mono);padding:3px 9px;border-radius:5px;position:absolute;top:12px;right:12px}
-.pron-mic-btn{width:72px;height:72px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:all .15s;font-size:1.6rem;flex-shrink:0}
-.pron-mic-btn.idle{background:var(--a);box-shadow:0 4px 20px rgba(79,126,247,.4)}
-.pron-mic-btn.listening{background:var(--red);box-shadow:0 0 0 0 rgba(244,63,94,.4);animation:pronPulse 1.2s ease infinite}
-.pron-mic-btn:disabled{background:var(--border);cursor:not-allowed;box-shadow:none}
-@keyframes pronPulse{0%{box-shadow:0 0 0 0 rgba(244,63,94,.5)}70%{box-shadow:0 0 0 18px rgba(244,63,94,0)}100%{box-shadow:0 0 0 0 rgba(244,63,94,0)}}
-.pron-hint{font-size:.7rem;color:var(--muted);font-family:var(--mono);margin-bottom:0;min-height:18px}
-.pron-score-wrap{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:16px;margin-bottom:14px;display:none;text-align:center}
-.pron-score-wrap.on{display:block;animation:pop .3s ease}
-.pron-arc-svg{display:block;margin:0 auto 8px}
-.pron-heard{font-size:.78rem;color:var(--muted2);font-family:var(--mono);margin-top:4px}
-.pron-heard strong{color:var(--text)}
-.pron-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:6px;font-family:var(--mono)}
-.pron-btns-row{display:flex;gap:8px;margin-bottom:10px}
-.pron-try{flex:1;padding:11px;border:1px solid rgba(79,126,247,.3);background:rgba(79,126,247,.07);color:var(--a);border-radius:var(--r2);font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer}
-.pron-skip{flex:1;padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted2);border-radius:var(--r2);font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer}
-.pron-next{flex:1;padding:11px;border:none;background:var(--a);color:#fff;border-radius:var(--r2);font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer}
-.pron-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.pron-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 6px;text-align:center}
-.pron-stat-n{font-size:1.2rem;font-weight:800;font-family:var(--mono)}
-.pron-stat-l{font-size:.52rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
-.pron-filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.pron-flt{border:1px solid var(--border);background:transparent;color:var(--muted2);padding:5px 11px;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:var(--font)}
-.pron-flt.on{background:var(--a2);border-color:var(--a2);color:#fff}
-.pron-no-support{background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.2);border-radius:var(--r2);padding:14px;text-align:center;font-size:.78rem;color:var(--red);line-height:1.7;margin-bottom:12px}
-
 /* ══ TTS button ══ */
 .tts-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .15s;display:inline-flex;align-items:center}
 .tts-btn:hover{color:var(--a2)}
@@ -729,6 +661,13 @@ input,button,select,textarea{font-family:var(--font)}
       <div class="th-info">
         <div class="th-num" id="tNum">TEST 01</div>
         <div class="th-title" id="tTitle">—</div>
+      </div>
+      <div id="timerBox" style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+        <div id="timerDisp" style="font-size:1.05rem;font-weight:800;font-family:var(--mono);color:var(--text);letter-spacing:.5px">30:00</div>
+        <div style="display:flex;gap:4px">
+          <button id="timerStartBtn" onclick="timerToggle()" style="font-size:.58rem;background:var(--card);border:1px solid var(--border);color:var(--muted2);padding:2px 7px;border-radius:5px;cursor:pointer;font-family:var(--font);transition:all .15s">▶ Start</button>
+          <button onclick="timerReset()" style="font-size:.58rem;background:var(--card);border:1px solid var(--border);color:var(--muted2);padding:2px 7px;border-radius:5px;cursor:pointer;font-family:var(--font)">↺</button>
+        </div>
       </div>
     </div>
     <div class="th-pb-row">
@@ -905,32 +844,6 @@ input,button,select,textarea{font-family:var(--font)}
     <span class="adm-title" id="sdTitle">—</span>
   </div>
   <div class="sd-body" id="sdBody"></div>
-</div>
-
-<!-- PRONUNCIATION CHECKER MODAL -->
-<div id="vPronunCheck" class="pron-modal">
-  <div class="ai-mhdr" style="position:sticky;top:0;z-index:10;background:rgba(6,8,16,.97);backdrop-filter:blur(24px)">
-    <button class="bk" onclick="closePronunCheck()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div class="ai-mhdr-info">
-      <div class="ai-mhdr-badge" style="background:rgba(34,197,160,.12);color:var(--a2);border:1px solid rgba(34,197,160,.25)">🎤 TALAFFUZ TEKSHIRUVI</div>
-      <div class="ai-mhdr-title">Pronunciation Checker</div>
-    </div>
-    <div style="font-size:.68rem;font-family:var(--mono);color:var(--a2);background:rgba(34,197,160,.08);border:1px solid rgba(34,197,160,.2);padding:4px 10px;border-radius:6px" id="pronScoreBox">0/0</div>
-  </div>
-  <div class="pron-body" id="pronCheckBody"></div>
-</div>
-
-<!-- PRONUNCIATION CHECKER MODAL -->
-<div id="vPronunCheck" class="pron-modal">
-  <div class="ai-mhdr" style="position:sticky;top:0;z-index:10;background:rgba(6,8,16,.97);backdrop-filter:blur(24px)">
-    <button class="bk" onclick="closePronunCheck()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div class="ai-mhdr-info">
-      <div class="ai-mhdr-badge" style="background:rgba(34,197,160,.12);color:var(--a2);border:1px solid rgba(34,197,160,.25)">🎤 PRONUNCIATION</div>
-      <div class="ai-mhdr-title">Talaffuz Tekshiruvi</div>
-    </div>
-    <div style="font-size:.68rem;font-family:var(--mono);color:var(--a2);background:rgba(34,197,160,.08);border:1px solid rgba(34,197,160,.2);padding:4px 10px;border-radius:6px" id="pronScoreBox">0/0</div>
-  </div>
-  <div class="pron-body" id="pronCheckBody"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -3110,22 +3023,6 @@ function renderAiHome(){
     📄 <strong style="color:var(--text)">Paragraflar</strong> — matn + o'zbek tarjima<br>
     🔤 <strong style="color:var(--text)">So'z darajalari</strong> — B1/B2/C1/C2 + IPA talaffuz<br>
     🎯 <strong style="color:var(--text)">Pronoun Quiz</strong> — olmoshlarni interaktiv tekshirish
-  </div>
-
-  <div style="margin-top:12px">
-    <div style="font-size:.68rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">③ API siz ishlaydigan mustaqil mashqlar</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button onclick="closeAiModal();openPronunCheck()" style="padding:13px 8px;border:1px solid rgba(34,197,160,.35);background:rgba(34,197,160,.07);color:var(--a2);border-radius:var(--r2);font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .15s">
-        <span style="font-size:1.4rem">🎤</span>
-        <span>Talaffuz<br>Tekshiruvi</span>
-        <span style="font-size:.62rem;opacity:.7;font-weight:500">50 ta B2–C2 so'z</span>
-      </button>
-      <button onclick="openInlinePronounModal()" style="padding:13px 8px;border:1px solid rgba(167,139,250,.35);background:rgba(167,139,250,.07);color:var(--a3);border-radius:var(--r2);font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .15s">
-        <span style="font-size:1.4rem">🎯</span>
-        <span>Pronoun<br>Mashq</span>
-        <span style="font-size:.62rem;opacity:.7;font-weight:500">30 ta olmosh savoli</span>
-      </button>
-    </div>
   </div>`;
 
   const grid = document.getElementById('aiTgrid');
@@ -3166,8 +3063,8 @@ async function aiRun(){
     <div class="ai-prog-steps">
       <div class="ai-step active" id="ps1"><div class="ai-step-ic"><span class="ai-spin"></span></div>Audio fayl yuklanmoqda…</div>
       <div class="ai-step" id="ps2"><div class="ai-step-ic">2</div>Whisper — transkripsiya</div>
-      <div class="ai-step" id="ps3"><div class="ai-step-ic">3</div>Paragraflar + tarjima</div>
-      <div class="ai-step" id="ps4"><div class="ai-step-ic">4</div>So'z darajalari + pronoun quiz</div>
+      <div class="ai-step" id="ps3"><div class="ai-step-ic">3</div>Paragraflar + to'liq tarjima</div>
+      <div class="ai-step" id="ps4"><div class="ai-step-ic">4</div>So'zlar darajalari + pronoun quiz</div>
     </div>
   </div>
   <div id="aiErr" style="display:none;background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.2);border-radius:var(--r2);padding:12px;font-size:.76rem;color:var(--red);line-height:1.7;margin-top:10px"></div>`;
@@ -3221,7 +3118,7 @@ async function aiRun(){
     }catch(e){step(2,false,true);fail('Whisper: '+e.message);return;}
     step(2,true);
 
-    // Step 3 — paragraphs + translation
+    // Step 3 — paragraphs + uzbek translation (full transcript)
     step(3);
     const correctAnswers = testObj.q.map(q=>q.a.split('|')[0]).join(', ');
     const prompt3=`You are an IELTS expert and Uzbek teacher. Analyze this IELTS Section 4 audio transcript.
@@ -3231,53 +3128,34 @@ Correct answers: ${correctAnswers}
 
 Transcript:
 """
-${transcript.substring(0,3500)}
+${transcript}
 """
 
-Return ONLY valid JSON, no markdown:
+Return ONLY valid JSON (no markdown, no extra text):
 {
   "paragraphs": [
     {
       "id": 1,
-      "summary": "short English title for this paragraph (5-7 words)",
-      "english": "full paragraph text in English",
-      "uzbek": "O'zbekcha tarjima — to'liq va aniq",
+      "summary": "short English title (5-7 words)",
+      "english": "FULL paragraph text — include ALL sentences, do not cut short",
+      "uzbek": "To'liq o'zbekcha tarjima — har bir gapni tarjima qiling",
       "hardWords": ["word1","word2","word3"]
-    }
-  ],
-  "words": [
-    {
-      "word": "English word",
-      "level": "B1|B2|C1|C2",
-      "ipa": "IPA transcription without slashes",
-      "pos": "noun|verb|adjective|adverb|phrase",
-      "uzbek": "O'zbekcha tarjima",
-      "example": "example sentence from the transcript"
-    }
-  ],
-  "pronounQuiz": [
-    {
-      "context": "sentence from transcript with the pronoun highlighted like: He said that <em>it</em> was important",
-      "question": "\"it\" nima/kimni anglatadi?",
-      "options": ["A. to'g'ri javob (shu paragrafdan)", "B. noto'g'ri variant", "C. noto'g'ri variant", "D. noto'g'ri variant"],
-      "answer": 0,
-      "explanation": "Tushuntirish: nima uchun shu javob to'g'ri (o'zbekcha)"
     }
   ]
 }
 
 Rules:
-- Split transcript into 4-6 logical paragraphs
-- words: 12-18 most important B1-C2 level words with IPA
-- pronounQuiz: 6-8 questions about pronouns (it, they, this, that, these, which, who, its...)
-- answer field = index of correct option (0-3)`;
+- Split transcript into 4-6 logical paragraphs covering the ENTIRE transcript
+- "english" field must contain the COMPLETE original sentences for that paragraph, nothing omitted
+- "uzbek" must be a full accurate translation of every sentence
+- hardWords: 2-4 difficult words per paragraph (B2/C1/C2 level only)`;
 
-    let parsed;
+    let paragraphsData, wordsQuizData;
     try{
       const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
-        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,temperature:0.2,
+        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:8000,temperature:0.2,
           messages:[{role:'user',content:prompt3}]})
       });
       if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||'HTTP '+r.status);}
@@ -3285,11 +3163,66 @@ Rules:
       let raw=(d.choices?.[0]?.message?.content||'').trim();
       raw=raw.replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
       const m=raw.match(/\{[\s\S]*\}/); if(m) raw=m[0];
-      parsed=JSON.parse(raw);
-    }catch(e){step(3,false,true);step(4,false,true);fail('Tahlil: '+e.message);return;}
-    step(3,true); step(4,true);
+      paragraphsData=JSON.parse(raw);
+    }catch(e){step(3,false,true);step(4,false,true);fail('Paragraf tahlil: '+e.message);return;}
+    step(3,true);
 
-    aiData={tid:aiSelTest,title:testObj.ti,transcript,...parsed};
+    // Step 4 — words + pronoun quiz (separate call for quality)
+    step(4);
+    const transcriptShort=transcript.substring(0,5000);
+    const prompt4=`Analyze this IELTS Section 4 transcript excerpt for vocabulary and pronoun usage.
+
+Topic: "${testObj.ti}"
+Transcript excerpt:
+"""
+${transcriptShort}
+"""
+
+Return ONLY valid JSON (no markdown):
+{
+  "words": [
+    {
+      "word": "English word",
+      "level": "B1|B2|C1|C2",
+      "ipa": "IPA without slashes",
+      "pos": "noun|verb|adjective|adverb|phrase",
+      "uzbek": "O'zbekcha tarjima",
+      "example": "example sentence from transcript"
+    }
+  ],
+  "pronounQuiz": [
+    {
+      "context": "sentence with <em>pronoun</em> highlighted",
+      "question": "\"pronoun\" nima/kimni anglatadi?",
+      "options": ["A. correct answer", "B. wrong", "C. wrong", "D. wrong"],
+      "answer": 0,
+      "explanation": "Tushuntirish o'zbekcha"
+    }
+  ]
+}
+
+Rules:
+- words: 12-18 most important B1-C2 words with IPA
+- pronounQuiz: 6-8 pronoun questions (it, they, this, that, which, who, its, their...)
+- answer = index 0-3 of correct option`;
+
+    try{
+      const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+        body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,temperature:0.2,
+          messages:[{role:'user',content:prompt4}]})
+      });
+      if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||'HTTP '+r.status);}
+      const d=await r.json();
+      let raw=(d.choices?.[0]?.message?.content||'').trim();
+      raw=raw.replace(/^```json\s*/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+      const m=raw.match(/\{[\s\S]*\}/); if(m) raw=m[0];
+      wordsQuizData=JSON.parse(raw);
+    }catch(e){step(4,false,true);fail('So\'z tahlil: '+e.message);return;}
+    step(4,true);
+
+    aiData={tid:aiSelTest,title:testObj.ti,transcript,...paragraphsData,...wordsQuizData};
     quizScore=0;
     setTimeout(()=>renderAiResults(),400);
 
@@ -4145,337 +4078,10 @@ function calcStreak(results){
 // ESC handling for new modals
 document.addEventListener('keydown',e=>{
   if(e.key!=='Escape') return;
-  if(document.getElementById('vPronunCheck')&&document.getElementById('vPronunCheck').classList.contains('on')){closePronunCheck();return;}
   if(document.getElementById('vAiChat').style.display==='flex'){closeAiChat();return;}
   if(document.getElementById('vXato').style.display==='flex'){closeXatoModal();return;}
   if(document.getElementById('vProgress').classList.contains('on')){closeProgress();return;}
 });
-
-// ══════════════════════════════════════════════════
-// PRONUNCIATION CHECKER
-// ══════════════════════════════════════════════════
-const PRON_WORDS_DB = [
-  {word:"ephemeral",ipa:"ɪˈfem.ər.əl",meaning:"qisqa muddatli",level:"C2"},
-  {word:"loquacious",ipa:"ləˈkweɪ.ʃəs",meaning:"ko'p gapiruvchi",level:"C2"},
-  {word:"mellifluous",ipa:"meˈlɪf.lu.əs",meaning:"ohangdor, silliq",level:"C2"},
-  {word:"surreptitious",ipa:"ˌsʌr.əpˈtɪʃ.əs",meaning:"yashirin, sir tutilgan",level:"C2"},
-  {word:"perspicacious",ipa:"ˌpɜː.spɪˈkeɪ.ʃəs",meaning:"ziyrak, o'tkir zehnli",level:"C2"},
-  {word:"obfuscate",ipa:"ˈɒb.fʌ.skeɪt",meaning:"chalkashtirmoq",level:"C2"},
-  {word:"magnanimous",ipa:"mæɡˈnæn.ɪ.məs",meaning:"saxiy, ulug'vor",level:"C2"},
-  {word:"vicissitudes",ipa:"vɪˈsɪs.ɪ.tjuːdz",meaning:"hayot o'zgarishlari",level:"C2"},
-  {word:"supercilious",ipa:"ˌsuː.pəˈsɪl.i.əs",meaning:"manmanlik bilan",level:"C2"},
-  {word:"equanimity",ipa:"ˌek.wəˈnɪm.ɪ.ti",meaning:"xotirjamlik, bardoshlilik",level:"C2"},
-  {word:"perfidious",ipa:"pəˈfɪd.i.əs",meaning:"xiyonatkor, yolg'onchi",level:"C2"},
-  {word:"circumlocution",ipa:"ˌsɜː.kəm.ləˈkjuː.ʃən",meaning:"uzun-uzoq gapirishlik",level:"C2"},
-  {word:"pusillanimous",ipa:"ˌpjuː.sɪˈlæn.ɪ.məs",meaning:"qo'rqoq, dadilsiz",level:"C2"},
-  {word:"exacerbate",ipa:"ɪɡˈzæs.ə.beɪt",meaning:"og'irlashtirib yubormoq",level:"C2"},
-  {word:"ignominious",ipa:"ˌɪɡ.nəˈmɪn.i.əs",meaning:"sharmandalik keltiradigan",level:"C2"},
-  {word:"incongruous",ipa:"ɪnˈkɒŋ.ɡru.əs",meaning:"mos kelmaydigan",level:"C2"},
-  {word:"obsequious",ipa:"əbˈsiː.kwi.əs",meaning:"xushomadgo'y",level:"C2"},
-  {word:"garrulous",ipa:"ˈɡær.ə.ləs",meaning:"og'zi ko'p, chertma",level:"C2"},
-  {word:"fastidious",ipa:"fæˈstɪd.i.əs",meaning:"talabchan, juda nozik",level:"C2"},
-  {word:"sycophantic",ipa:"ˌsɪk.əˈfæn.tɪk",meaning:"xushomadgo'ylik qiladigan",level:"C2"},
-  {word:"ubiquitous",ipa:"juːˈbɪk.wɪ.təs",meaning:"hamma joyda uchraydigan",level:"C1"},
-  {word:"ambiguous",ipa:"æmˈbɪɡ.ju.əs",meaning:"ikki ma'noli, noaniq",level:"C1"},
-  {word:"eloquent",ipa:"ˈel.ə.kwənt",meaning:"notiq, so'zga chechan",level:"C1"},
-  {word:"pragmatic",ipa:"præɡˈmæt.ɪk",meaning:"amaliy, pragmatik",level:"C1"},
-  {word:"sustainable",ipa:"səˈsteɪ.nə.bəl",meaning:"barqaror, rivojlanadigan",level:"C1"},
-  {word:"indigenous",ipa:"ɪnˈdɪdʒ.ɪ.nəs",meaning:"mahalliy, yerli",level:"C1"},
-  {word:"deteriorate",ipa:"dɪˈtɪə.ri.ə.reɪt",meaning:"yomonlashmoq",level:"C1"},
-  {word:"biodiversity",ipa:"ˌbaɪ.əʊ.daɪˈvɜː.sɪ.ti",meaning:"biologik xilma-xillik",level:"C1"},
-  {word:"infrastructure",ipa:"ˈɪn.frə.strʌk.tʃər",meaning:"infratuzilma",level:"C1"},
-  {word:"phenomenon",ipa:"fɪˈnɒm.ɪ.nən",meaning:"hodisa, fenomen",level:"C1"},
-  {word:"collaborate",ipa:"kəˈlæb.ə.reɪt",meaning:"hamkorlik qilmoq",level:"C1"},
-  {word:"hierarchical",ipa:"ˌhaɪ.əˈrɑː.kɪ.kəl",meaning:"ierarxik, darajali",level:"C1"},
-  {word:"bureaucratic",ipa:"ˌbjʊə.rəˈkræt.ɪk",meaning:"byurokratik",level:"C1"},
-  {word:"controversial",ipa:"ˌkɒn.trəˈvɜː.ʃəl",meaning:"bahsli, munozarali",level:"C1"},
-  {word:"nanotechnology",ipa:"ˌnæn.əʊ.tekˈnɒl.ə.dʒi",meaning:"nanotexnologiya",level:"C1"},
-  {word:"ethnography",ipa:"eθˈnɒɡ.rə.fi",meaning:"etnografiya",level:"C1"},
-  {word:"photosynthesis",ipa:"ˌfəʊ.təʊˈsɪn.θɪ.sɪs",meaning:"fotosintez",level:"C1"},
-  {word:"conservation",ipa:"ˌkɒn.səˈveɪ.ʃən",meaning:"muhofaza, saqlash",level:"B2"},
-  {word:"deforestation",ipa:"ˌdiː.fɒr.ɪˈsteɪ.ʃən",meaning:"o'rmonlarni kesish",level:"B2"},
-  {word:"precipitation",ipa:"prɪˌsɪp.ɪˈteɪ.ʃən",meaning:"yog'ingarchilik",level:"B2"},
-  {word:"archaeological",ipa:"ˌɑː.ki.əˈlɒdʒ.ɪ.kəl",meaning:"arxeologik",level:"C1"},
-  {word:"biodegradable",ipa:"ˌbaɪ.əʊ.dɪˈɡreɪ.də.bəl",meaning:"biologik parchalanuvchi",level:"C1"},
-  {word:"geothermal",ipa:"ˌdʒiː.əʊˈθɜː.məl",meaning:"geotermal",level:"C1"},
-  {word:"sceptical",ipa:"ˈskep.tɪ.kəl",meaning:"shubhali, ishoqmaydigan",level:"C1"},
-  {word:"exacerbated",ipa:"ɪɡˈzæs.ə.beɪ.tɪd",meaning:"og'irlashtirilgan",level:"C2"},
-  {word:"sedentary",ipa:"ˈsed.ən.tər.i",meaning:"o'troq, harakatsiz",level:"C1"},
-  {word:"clandestine",ipa:"klænˈdes.tɪn",meaning:"maxfiy, yashirin",level:"C2"},
-  {word:"nonchalant",ipa:"ˈnɒn.ʃə.lɒnt",meaning:"beparvo, loqayd",level:"C2"},
-  {word:"ostentatious",ipa:"ˌɒs.tenˈteɪ.ʃəs",meaning:"ko'z-ko'z qiladigan",level:"C2"},
-  {word:"acrimonious",ipa:"ˌæk.rɪˈməʊ.ni.əs",meaning:"achchiq, o'tkir (bahs)",level:"C2"},
-];
-
-let pronCheckSt = {
-  deck: [], idx: 0, filter: 'all', scores: [], listening: false, rec: null, _flt: null,
-  source: 'static', // 'static' | 'test'
-  testTitle: ''
-};
-
-function openPronunCheck(){
-  const m = document.getElementById('vPronunCheck');
-  m.classList.add('on');
-  // Use current test's words if AI analysis is available
-  let src, srcType='static', testTitle='';
-  if(aiData && aiData.words && aiData.words.length > 0){
-    // Map aiData.words {word,ipa,uzbek,level} → pronCheck format {word,ipa,meaning,level}
-    const testWords = aiData.words
-      .filter(w=>w.word && w.ipa)
-      .map(w=>({word:w.word, ipa:w.ipa, meaning:w.uzbek||w.pos||'', level:w.level||'B2'}));
-    src = testWords;
-    srcType = 'test';
-    testTitle = 'Test '+(aiData.tid||'')+' · '+(aiData.title||'');
-  } else {
-    src = PRON_WORDS_DB;
-  }
-  pronCheckSt = {deck:[...src].sort(()=>Math.random()-.5), idx:0, filter:'all', scores:[],
-    listening:false, rec:null, _flt:null, source:srcType, testTitle, _srcWords:src};
-  renderPronunCheck();
-}
-function closePronunCheck(){
-  _stopPronRec();
-  document.getElementById('vPronunCheck').classList.remove('on');
-}
-
-function _stopPronRec(){
-  clearTimeout(pronCheckSt._autoStop);
-  if(pronCheckSt.rec&&pronCheckSt.rec.state==='recording'){try{pronCheckSt.rec.stop();}catch(e){}}
-  pronCheckSt.rec=null; pronCheckSt.listening=false;
-  const b=document.getElementById('pronMicBtn');
-  if(b&&(b.textContent==='⏹'||b.textContent==='⏳')){b.className='pron-mic-btn idle';b.textContent='🎤';}
-}
-
-function renderPronunCheck(){
-  const body = document.getElementById('pronCheckBody');
-  if(!body) return;
-  const {deck,idx,scores,filter} = pronCheckSt;
-
-  // Re-filter if changed
-  if(pronCheckSt._flt !== filter){
-    pronCheckSt._flt = filter;
-    const baseSrc = pronCheckSt._srcWords || PRON_WORDS_DB;
-    const src = filter==='all' ? baseSrc : baseSrc.filter(w=>w.level===filter);
-    pronCheckSt.deck = [...src].sort(()=>Math.random()-.5);
-    pronCheckSt.idx  = 0;
-    pronCheckSt.scores = [];
-  }
-
-  const total = pronCheckSt.deck.length;
-  const done  = scores.length;
-  const avg   = done ? Math.round(scores.reduce((a,s)=>a+s.score,0)/done) : 0;
-  const perfect = scores.filter(s=>s.score>=90).length;
-
-  document.getElementById('pronScoreBox').textContent = done+'/'+total;
-
-  // Finished
-  if(pronCheckSt.idx >= total && done > 0){
-    body.innerHTML = `
-    <div style="text-align:center;padding:28px 16px">
-      <div style="font-size:3rem;margin-bottom:8px">🎤</div>
-      <div style="font-size:2.4rem;font-weight:800;font-family:var(--mono);background:linear-gradient(135deg,var(--a2),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${avg}%</div>
-      <div style="font-size:.8rem;color:var(--muted2);margin-bottom:20px">o'rtacha aniqlik · ${done} ta so'z</div>
-      <div class="pron-stats-row" style="max-width:320px;margin:0 auto 22px">
-        <div class="pron-stat"><div class="pron-stat-n" style="color:var(--green)">${perfect}</div><div class="pron-stat-l">Mukammal</div></div>
-        <div class="pron-stat"><div class="pron-stat-n" style="color:var(--a)">${done}</div><div class="pron-stat-l">Jami</div></div>
-        <div class="pron-stat"><div class="pron-stat-n" style="color:var(--a3)">${avg}%</div><div class="pron-stat-l">O'rtacha</div></div>
-      </div>
-      <div style="max-width:360px;margin:0 auto 20px">
-        ${scores.slice().reverse().slice(0,15).map(s=>{
-          const col=s.score>=90?'var(--green)':s.score>=65?'var(--yellow)':'var(--red)';
-          return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
-            <span style="font-size:.82rem;font-weight:600;flex:1;text-align:left">${s.word}</span>
-            <span style="font-size:.7rem;font-family:var(--mono);color:var(--muted2);flex:1;text-align:left;font-style:italic">"${s.heard||'—'}"</span>
-            <span style="font-size:.82rem;font-weight:700;font-family:var(--mono);color:${col};min-width:42px;text-align:right">${s.score}%</span>
-          </div>`;
-        }).join('')}
-      </div>
-      <button onclick="pronCheckRestart()" style="width:100%;max-width:280px;padding:13px;background:var(--a2);color:#fff;border:none;border-radius:var(--r2);font-size:.9rem;font-weight:700;cursor:pointer;font-family:var(--font)">🔁 Qaytadan boshlash</button>
-    </div>`;
-    return;
-  }
-
-  const w = pronCheckSt.deck[pronCheckSt.idx] || pronCheckSt.deck[0];
-  const hasKey = !!gGroqKey();
-  const lvlC = {B1:'var(--green)',B2:'var(--a2)',C1:'var(--a)',C2:'var(--a3)'};
-  const lvlBg= {B1:'rgba(34,197,94,.1)',B2:'rgba(34,197,160,.1)',C1:'rgba(79,126,247,.1)',C2:'rgba(167,139,250,.1)'};
-
-  body.innerHTML = `
-  <div class="pron-stats-row">
-    <div class="pron-stat"><div class="pron-stat-n" style="color:var(--a)">${pronCheckSt.idx+1}/${total}</div><div class="pron-stat-l">So'z</div></div>
-    <div class="pron-stat"><div class="pron-stat-n" style="color:${avg>=80?'var(--green)':avg>=55?'var(--yellow)':'var(--muted)'}">${done?avg+'%':'—'}</div><div class="pron-stat-l">O'rtacha</div></div>
-    <div class="pron-stat"><div class="pron-stat-n" style="color:var(--green)">${perfect}</div><div class="pron-stat-l">Mukammal</div></div>
-  </div>
-  <div class="pron-filter-row">
-    ${['all','B2','C1','C2'].map(f=>`<button class="pron-flt ${filter===f?'on':''}" onclick="pronCheckFilter('${f}')">${f==='all'?'Hammasi':f}</button>`).join('')}
-  </div>
-  ${!hasKey?`<div class="pron-no-support" style="background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);color:var(--yellow)">⚠️ Groq API kaliti kerak — <strong onclick="closePronunCheck();openAiModal()" style="cursor:pointer;text-decoration:underline">AI Tahlil</strong> bo'limida kiriting.</div>`:''}
-  <div class="pron-card">
-    <span class="pron-lvl-badge" style="background:${lvlBg[w.level]||lvlBg.C1};color:${lvlC[w.level]||'var(--a)'};border:1px solid ${lvlC[w.level]||'var(--a)'}55">${w.level}</span>
-    <div class="pron-word">${w.word}</div>
-    <div class="pron-ipa">/${w.ipa}/</div>
-    <div class="pron-meaning">🇺🇿 ${w.meaning}</div>
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-      <button onclick="pronTTS2('${w.word.replace(/'/g,"\\'")}','normal')" style="background:var(--bg2);border:1px solid var(--border);color:var(--muted2);padding:7px 15px;border-radius:20px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;gap:5px">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Eshit
-      </button>
-      <button onclick="pronTTS2('${w.word.replace(/'/g,"\\'")}','slow')" style="background:var(--bg2);border:1px solid var(--border);color:var(--muted2);padding:7px 15px;border-radius:20px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:var(--font)">🐢 Sekin</button>
-    </div>
-    <button class="pron-mic-btn idle" id="pronMicBtn" onclick="pronToggleRec2()" ${!hasKey?'disabled':''}>🎤</button>
-    <div class="pron-hint" id="pronHint">${hasKey?'Tugmani bosib so\'zni o\'qing':'Avval API kalitni kiriting'}</div>
-  </div>
-  <div class="pron-score-wrap" id="pronScoreWrap">
-    <svg id="pronArcSvg" class="pron-arc-svg" width="130" height="130" viewBox="0 0 130 130"></svg>
-    <div class="pron-heard">Siz aytdingiz: <strong id="pronHeardTxt">—</strong></div>
-    <div class="pron-lbl" id="pronScoreLbl" style="color:var(--muted)">—</div>
-  </div>
-  <div class="pron-btns-row" id="pronBtnsRow" style="display:none">
-    <button class="pron-try" onclick="pronRetry2()">🔄 Qayta</button>
-    <button class="pron-skip" onclick="pronSkip2()">⏭ O'tkazish</button>
-    <button class="pron-next" onclick="pronNext2()">Keyingi →</button>
-  </div>`;
-}
-
-function pronCheckFilter(f){
-  pronCheckSt.filter = f;
-  pronCheckSt._flt = null;
-  renderPronunCheck();
-}
-
-function pronTTS2(word, speed){
-  if(!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(word);
-  u.lang='en-US'; u.rate = speed==='slow'?0.5:0.88; u.pitch=1;
-  window.speechSynthesis.speak(u);
-}
-
-function pronLev(a,b){
-  const dp=Array.from({length:b.length+1},(_,i)=>Array.from({length:a.length+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=b.length;i++) for(let j=1;j<=a.length;j++)
-    dp[i][j]=b[i-1]===a[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[b.length][a.length];
-}
-function pronScore(heard, target){
-  const h=heard.toLowerCase().trim().replace(/[.,!?]/g,'');
-  const t=target.toLowerCase().trim();
-  if(!h) return 0;
-  if(h===t) return 100;
-  const words=h.split(/\s+/);
-  return Math.max(...words.map(w=>Math.max(0,Math.round((1-pronLev(w,t)/Math.max(w.length,t.length))*100))));
-}
-// ── MediaRecorder + Groq Whisper (Telegram WebApp + barcha brauzerlar) ──
-async function pronToggleRec2(){
-  if(pronCheckSt.listening){ _stopPronRec(); return; }
-  const key = gGroqKey();
-  if(!key){ toast('Groq API kaliti kerak — AI Tahlil bo\'limida kiriting'); return; }
-  let stream;
-  try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
-  catch(e){ toast('Mikrofon ruxsati berilmadi: '+e.message); return; }
-  const btn=document.getElementById('pronMicBtn');
-  const hint=document.getElementById('pronHint');
-  pronCheckSt.listening=true;
-  if(btn){btn.className='pron-mic-btn listening';btn.textContent='⏹';}
-  if(hint) hint.textContent='🔴 Yozilmoqda… so\'zni ayting, keyin ⏹ bosing';
-  const mime=['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4']
-    .find(m=>MediaRecorder.isTypeSupported(m))||'';
-  const mr=new MediaRecorder(stream,mime?{mimeType:mime}:{});
-  pronCheckSt.rec=mr;
-  const chunks=[];
-  mr.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-  mr.onstop=async()=>{
-    stream.getTracks().forEach(t=>t.stop());
-    pronCheckSt.listening=false; pronCheckSt.rec=null;
-    if(btn){btn.className='pron-mic-btn idle';btn.textContent='⏳';}
-    if(hint) hint.textContent='🔄 Whisper tahlil qilmoqda…';
-    const usedMime=mime||'audio/webm';
-    const ext=usedMime.includes('mp4')?'m4a':usedMime.includes('ogg')?'ogg':'webm';
-    const blob=new Blob(chunks,{type:usedMime});
-    const file=new File([blob],'pron.'+ext,{type:usedMime});
-    const w=pronCheckSt.deck[pronCheckSt.idx];
-    try{
-      const fd=new FormData();
-      fd.append('file',file);
-      fd.append('model','whisper-large-v3-turbo');
-      fd.append('response_format','text');
-      fd.append('language','en');
-      fd.append('temperature','0');
-      fd.append('prompt','The speaker pronounces this English word: '+w.word);
-      const r=await fetch('https://api.groq.com/openai/v1/audio/transcriptions',{
-        method:'POST',headers:{'Authorization':'Bearer '+key},body:fd});
-      if(!r.ok){const er=await r.json().catch(()=>({}));throw new Error(er?.error?.message||'HTTP '+r.status);}
-      const transcript=(await r.text()).trim();
-      if(!transcript) throw new Error('Bo\'sh javob');
-      _pronShowScore(pronScore(transcript,w.word),transcript,w);
-    }catch(e){
-      if(hint) hint.textContent='❌ Xato: '+e.message;
-      if(btn){btn.className='pron-mic-btn idle';btn.textContent='🎤';}
-    }
-  };
-  pronCheckSt._autoStop=setTimeout(()=>{if(mr.state==='recording')mr.stop();},6000);
-  mr.start();
-}
-
-function _pronShowScore(score,heard,w){
-  const wrap=document.getElementById('pronScoreWrap');
-  const btns=document.getElementById('pronBtnsRow');
-  const hint=document.getElementById('pronHint');
-  if(!wrap||!btns) return;
-  wrap.classList.add('on');
-  btns.style.display='flex';
-  // Arc
-  const svg=document.getElementById('pronArcSvg');
-  if(svg){
-    const r=54,cx=65,cy=65,circ=2*Math.PI*r;
-    const offset=circ-(score/100)*circ;
-    const col=score>=90?'#22d3a5':score>=65?'#f59e0b':'#f43f5e';
-    const glow=score>=90?'rgba(34,211,165,.35)':score>=65?'rgba(245,158,11,.35)':'rgba(244,63,94,.35)';
-    svg.innerHTML=`
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1a2236" stroke-width="10"/>
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="10"
-        stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${offset.toFixed(2)}" stroke-linecap="round"
-        transform="rotate(-90 ${cx} ${cy})"
-        style="transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 0 8px ${glow})"/>
-      <text x="${cx}" y="${cy-4}" text-anchor="middle" fill="white" font-size="27" font-weight="800" font-family="'IBM Plex Mono',monospace">${score}%</text>
-      <text x="${cx}" y="${cy+15}" text-anchor="middle" fill="${col}" font-size="10" font-family="'IBM Plex Mono',monospace" letter-spacing="1.5">ANIQLIK</text>`;
-  }
-  const heardEl=document.getElementById('pronHeardTxt');
-  const lblEl=document.getElementById('pronScoreLbl');
-  if(heardEl) heardEl.textContent=heard||'(eshitilmadi)';
-  const col=score>=90?'var(--green)':score>=65?'var(--yellow)':'var(--red)';
-  const lbl=score>=90?'🎯 Mukammal!':score>=80?'👍 Yaxshi!':score>=65?'💪 Davom eting':'🔄 Yana urinib ko\'ring';
-  if(lblEl){lblEl.textContent=lbl;lblEl.style.color=col;}
-  if(hint) hint.textContent=`To'g'ri talaffuz: "${w.word}"`;
-  pronCheckSt.scores.push({word:w.word,heard,score});
-  document.getElementById('pronScoreBox').textContent=pronCheckSt.scores.length+'/'+pronCheckSt.deck.length;
-}
-
-function pronRetry2(){
-  if(pronCheckSt.scores.length) pronCheckSt.scores.pop();
-  const wrap=document.getElementById('pronScoreWrap');
-  const btns=document.getElementById('pronBtnsRow');
-  const hint=document.getElementById('pronHint');
-  if(wrap) wrap.classList.remove('on');
-  if(btns) btns.style.display='none';
-  if(hint) hint.textContent='Tugmani bosib so\'zni o\'qing';
-  const b=document.getElementById('pronMicBtn');
-  if(b){b.className='pron-mic-btn idle';b.textContent='🎤';}
-}
-function pronSkip2(){pronCheckSt.idx++;renderPronunCheck();}
-function pronNext2(){pronCheckSt.idx++;renderPronunCheck();}
-function pronCheckRestart(){
-  pronCheckSt.idx=0;pronCheckSt.scores=[];pronCheckSt._flt=null;
-  renderPronunCheck();
-}
-
-function openInlinePronounModal(){
-  // Opens in a new simple full-screen modal from AI home
-  closeAiModal();
-  // Reuse the pronoun practice logic if it exists, else show info
-  if(typeof openPronounPractice==='function') openPronounPractice();
-  else toast('Pronoun mashq yuklanmoqda…');
-}
-
 </script>
 </body>
 </html>
