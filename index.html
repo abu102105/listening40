@@ -3411,13 +3411,14 @@ if(SES?.uid){
 // AI TAHLIL — GROQ  (Paragraf · So'z darajalari · Pronoun)
 // ══════════════════════════════════════════════════════
 const AI_K = 'groq_api_key_v2';
+const _GROQ_DEFAULT = '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';
 let aiSelTest  = null;
 let aiData     = null;
 let aiTab      = 'para';
 let aiWfilter  = 'all';
 let quizScore  = 0;
 
-function gGroqKey(){ return localStorage.getItem(AI_K)||''; }
+function gGroqKey(){ return localStorage.getItem(AI_K)||_GROQ_DEFAULT; }
 function sGroqKey(v){ localStorage.setItem(AI_K, v.trim()); }
 
 /* ── open / close ── */
@@ -3471,24 +3472,12 @@ function renderAiHome(){
   const canGo = !!(key && aiSelTest);
 
   body.innerHTML = `
-  <div class="ai-keybar">
-    <div class="ai-keybar-t">① Groq API Kaliti</div>
-    <div class="ai-keyrow">
-      <input class="ai-kinp" id="aiKinp" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" value="${key}" autocomplete="off">
-      <button class="ai-ksave" onclick="aiSaveKey()">Saqlash</button>
-    </div>
-    <div class="ai-kstatus ${key?'ok':''}" id="aiKstat">${key?'✓ Kalit saqlangan':'Kalit kiritilmagan'}</div>
-    <div style="font-size:.63rem;color:var(--muted);margin-top:5px;font-family:var(--mono)">
-      Bepul: <a href="https://console.groq.com/keys" target="_blank" style="color:var(--a)">console.groq.com/keys</a>
-    </div>
-  </div>
-
-  <div class="ai-pick-t">② Tahlil qilmoqchi bo'lgan testni tanlang</div>
+  <div class="ai-pick-t">Tahlil qilmoqchi bo'lgan testni tanlang</div>
   <div class="ai-tgrid" id="aiTgrid"></div>
 
   <button class="ai-go" onclick="aiRun()" ${canGo?'':'disabled'} style="gap:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-    ${canGo?`Test ${aiSelTest} · tahlil qilish`: !key?'① API kalitni kiriting':'② Test tanlang'}
+    ${canGo?`Test ${aiSelTest} · tahlil qilish`:'Test tanlang'}
   </button>
 
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px;font-size:.72rem;color:var(--muted2);line-height:1.8">
@@ -3508,13 +3497,8 @@ function renderAiHome(){
 }
 
 function aiSaveKey(){
-  const v = document.getElementById('aiKinp').value.trim();
-  if(!v){ toast('API kalitni kiriting'); return; }
-  sGroqKey(v);
-  const s = document.getElementById('aiKstat');
-  if(s){ s.textContent='✓ Saqlandi'; s.className='ai-kstatus ok'; }
-  toast('Groq API kaliti saqlandi ✓');
-  renderAiHome();
+  // Key is embedded — no manual input needed
+  toast('API kaliti allaqachon ulangan ✓');
 }
 
 /* ── RUN ANALYSIS ── */
