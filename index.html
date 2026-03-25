@@ -2710,11 +2710,10 @@ function loginStu(){
   const pw=document.getElementById('lPw').value;
   if(!name||!sur||pw!==gPw()){shk('lPw');document.getElementById('lErrS').classList.add('on');return}
   document.getElementById('lErrS').classList.remove('on');
-  const users=lsG(K.users,[]);
+  const users=DB.users;
   const isNew=!users.find(x=>x.n.toLowerCase()===name.toLowerCase()&&x.s.toLowerCase()===sur.toLowerCase());
   let u=users.find(x=>x.n.toLowerCase()===name.toLowerCase()&&x.s.toLowerCase()===sur.toLowerCase());
   if(!u){u={id:Date.now()+'',n:name,s:sur,g:group,ca:new Date().toISOString()};users.push(u);}
-  lsS(K.users,users);
   SES={uid:u.id,n:u.n,s:u.s,adm:false};lsS(K.ses,SES);
   // ☁ Sync new user to cloud
   if(JB.binId){ jbPush(); }
@@ -2754,13 +2753,16 @@ function openApp(){
   // Admin tugmasini faqat ustoz ko'rsin
   const bnAdm = document.getElementById('bnAdm');
   if(bnAdm) bnAdm.style.display = SES && SES.adm ? '' : 'none';
-  // ☁ Avval local -> cloud, keyin cloud -> local (merge), so'ng render
-  jbSync().then(()=>renderApp()).catch(()=>renderApp());
+  // ☁ Serverdan ma'lumot olib render qil
+  jbPull().then(()=>renderApp()).catch(()=>renderApp());
 }
 function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge();updXatoBadge()}
 
-const RES=()=>lsG(K.res,{});
-const sRES=(r)=>lsS(K.res,r);
+// ════ IN-MEMORY DATABASE (localStorage faqat sessiya uchun) ════
+const DB = { results:{}, users:[], notifs:[], xato:{} };
+
+const RES = () => DB.results;
+const sRES = (r) => { DB.results = r; };
 const RK=(tid)=>SES.uid+'_'+tid;
 
 function calcKpis(){
@@ -3256,14 +3258,13 @@ function checkAnswers(){
   const res=RES();res[RK(CUR.id)]={sc,ans:{...UA},at:new Date().toISOString(),pct};sRES(res);
   // Save wrong answers to xato arxivi
   if(SES&&!SES.adm){
-    const xa=lsG('xa_v1',{});
+    const xa=DB.xato;
     CUR.q.forEach((q,i)=>{
       if(!chkAns(UA[i],q.a,q.t)){
         const key=SES.uid+'_t'+CUR.id+'_q'+q.n;
         xa[key]={uid:SES.uid,tid:CUR.id,ti:CUR.ti,qn:q.n,qt:q.tx,wrong:UA[i]||'',right:q.a.split('|')[0],at:new Date().toISOString()};
       }
     });
-    lsS('xa_v1',xa);
     updXatoBadge();
   }
   addNotif(CUR,sc,tot,pct);
@@ -3291,18 +3292,17 @@ function resetTest(){
 // ════════════════════ NOTIFICATIONS ════════════════════
 function addNotif(test,sc,tot,pct){
   if(!SES||SES.adm)return;
-  const ns=lsG(K.notifs,[]);
-  ns.unshift({id:Date.now()+'',uid:SES.uid,n:SES.n,s:SES.s,tid:test.id,ti:test.ti,sc,tot,pct,time:new Date().toISOString(),read:false});
-  lsS(K.notifs,ns);updNotifBadge();
+  DB.notifs.unshift({id:Date.now()+'',uid:SES.uid,n:SES.n,s:SES.s,tid:test.id,ti:test.ti,sc,tot,pct,time:new Date().toISOString(),read:false});
+  updNotifBadge();
 }
 function updNotifBadge(){
-  const unr=lsG(K.notifs,[]).filter(n=>!n.read).length;
+  const unr=DB.notifs.filter(n=>!n.read).length;
   document.getElementById('ndot').classList.toggle('on',unr>0);
   document.getElementById('bndot').classList.toggle('on',unr>0);
   document.getElementById('bndot').textContent=unr>9?'9+':unr||'';
 }
 function markAllRead(){
-  const ns=lsG(K.notifs,[]);ns.forEach(n=>n.read=true);lsS(K.notifs,ns);renderNotifs();updNotifBadge();toast('Barchasini o\'qildi');
+  DB.notifs.forEach(n=>n.read=true);renderNotifs();updNotifBadge();toast('Barchasini o\'qildi');
 }
 
 // ════════════════════ ADMIN ════════════════════
@@ -3336,7 +3336,7 @@ function loadTgInputs(){
 }
 
 function renderNotifs(){
-  const ns=lsG(K.notifs,[]);
+  const ns=DB.notifs;
   const el=document.getElementById('nlist');el.innerHTML='';
   const unr=ns.filter(n=>!n.read).length;
   document.getElementById('nCnt').textContent=unr>0?'('+unr+')':'';
@@ -3356,14 +3356,14 @@ function renderNotifs(){
   <div class="ni-time">🕐 ${ts}</div>
 </div>`;
     d.onclick=()=>{
-      if(!n.read){n.read=true;const all=lsG(K.notifs,[]);const idx=all.findIndex(x=>x.id===n.id);if(idx>=0){all[idx].read=true;lsS(K.notifs,all)}}
+      if(!n.read){n.read=true;}
       renderNotifs();updNotifBadge();
     };
     el.appendChild(d);
   });
 }
 function renderStudents(){
-  const users=lsG(K.users,[]);const res=RES();const el=document.getElementById('stuList');el.innerHTML='';
+  const users=DB.users;const res=RES();const el=document.getElementById('stuList');el.innerHTML='';
   if(!users.length){el.innerHTML='<div class="n-empty">Hali o\'quvchilar yo\'q</div>';return}
   users.forEach(u=>{
     let done=0,cor=0,tq=0;
@@ -3371,7 +3371,7 @@ function renderStudents(){
     const pct=tq>0?Math.round(cor/tq*100):0;
     const avg=done>0?(cor/done).toFixed(1):'—';
     const band=bandCalc(cor,tq,done);
-    const last=lsG(K.notifs,[]).find(n=>n.uid===u.id);
+    const last=DB.notifs.find(n=>n.uid===u.id);
     const d=document.createElement('div');d.className='stu-card';
     d.innerHTML=`<div class="sc-top"><span class="sc-name">${u.n} ${u.s}</span><span class="sc-date">${last?new Date(last.time).toLocaleDateString('uz-UZ',{day:'2-digit',month:'2-digit'}):''}</span></div>
 <div class="sc-bar-r"><div class="sc-bar-bg"><div class="sc-bar-f" style="width:${pct}%"></div></div><span class="sc-pct">${pct}%</span></div>
@@ -3380,7 +3380,7 @@ function renderStudents(){
   });
 }
 function renderAdmStats(){
-  const users=lsG(K.users,[]);const res=RES();
+  const users=DB.users;const res=RES();
   let td=0,tc=0,tq=0;
   users.forEach(u=>{T.forEach(t=>{const r=res[u.id+'_'+t.id];tq+=t.q.length;if(r){td++;tc+=r.sc}})});
   document.getElementById('asT').textContent=users.length;
@@ -3432,7 +3432,7 @@ function chgAdmPw(){
 }
 function resetAll(){
   if(!confirm('Barcha o\'quvchi natijalari va bildirishnomalar o\'chiriladimi?'))return;
-  sRES({});lsS(K.notifs,[]);renderAdmin();toast('Barcha natijalar o\'chirildi');
+  DB.results={};DB.notifs=[];DB.xato={};DB.users=[];jbPush();renderAdmin();toast('Barcha natijalar o\'chirildi');
 }
 
 // ════════════════════ TOAST ════════════════════
@@ -4326,7 +4326,7 @@ function closeXatoModal(){ document.getElementById('vXato').style.display='none'
 
 function updXatoBadge(){
   if(!SES||SES.adm) return;
-  const xa=lsG('xa_v1',{});
+  const xa=DB.xato;
   const mine=Object.values(xa).filter(x=>x.uid===SES.uid);
   const dot=document.getElementById('xaDot');
   if(dot){ dot.style.display=mine.length?'block':'none'; }
@@ -4335,7 +4335,7 @@ function updXatoBadge(){
 function renderXato(){
   if(!SES||SES.adm) return;
   const body=document.getElementById('xatoBody');
-  const xa=lsG('xa_v1',{});
+  const xa=DB.xato;
   const items=Object.entries(xa)
     .filter(([,v])=>v.uid===SES.uid)
     .sort((a,b)=>new Date(b[1].at)-new Date(a[1].at));
@@ -4427,9 +4427,8 @@ function xaAskAi(idx, v){
 
 function xatoClearConfirm(){
   if(!confirm('Barcha xatolarni o\'chirish?')) return;
-  const xa=lsG('xa_v1',{});
+  const xa=DB.xato;
   Object.keys(xa).forEach(k=>{ if(xa[k].uid===SES?.uid) delete xa[k]; });
-  lsS('xa_v1',xa);
   updXatoBadge();
   renderXato();
   toast('Xatolar tozalandi');
@@ -5844,11 +5843,7 @@ async function jbFetch(){
 async function jbPush(){
   if(!JB.binId) return false;
   try {
-    const users = lsG(K.users, []);
-    const res   = lsG(K.res, {});
-    const xa    = lsG('xa_v1', {});
-    const notifs = lsG(K.notifs, []);
-    const payload = { results: res, users: users, xato: xa, notifs: notifs, updatedAt: new Date().toISOString() };
+    const payload = { results: DB.results, users: DB.users, xato: DB.xato, notifs: DB.notifs, updatedAt: new Date().toISOString() };
     const r = await fetch(`${JB.BASE}/${JB.binId}`, {
       method: 'PUT',
       headers: {
@@ -5867,72 +5862,27 @@ async function jbPull(){
   const data = await jbFetch();
   if(!data) return false;
 
-  // RESULTS: ikki tomondagi hamma natijalarni birlashtir, hech biri yo'qolmasin
-  // Agar bir xil kalit bo'lsa — qaysi biri yangi bo'lsa shu qoladi
-  if(data.results && typeof data.results === 'object'){
-    const local = lsG(K.res, {});
-    const merged = { ...data.results }; // cloud dan boshla
-    Object.keys(local).forEach(k => {
-      if(!merged[k]) {
-        // Localda bor, cloudda yo'q — qo'shib qo'y
-        merged[k] = local[k];
-      } else {
-        // Ikkalasida ham bor — qaysi biri yangi bo'lsa shu qoladi
-        const cloudTime = new Date(merged[k].at || 0).getTime();
-        const localTime = new Date(local[k].at || 0).getTime();
-        if(localTime > cloudTime) merged[k] = local[k]; // local yangi
-      }
-    });
-    lsS(K.res, merged);
-    // Birlashtirgan natijani cloudga ham yoz
-    return { pullOk: true, results: merged };
-  }
-
-  // USERS: ikki tomondagi userlani birlashtir
-  if(Array.isArray(data.users)){
-    const localU = lsG(K.users, []);
-    const mergedU = [...data.users];
-    localU.forEach(lu => {
-      if(!mergedU.find(u => u.id === lu.id)) mergedU.push(lu);
-    });
-    lsS(K.users, mergedU);
-  }
-
-  // XATO: ikki tomon birlashtir
-  if(data.xato && typeof data.xato === 'object'){
-    const localX = lsG('xa_v1', {});
-    lsS('xa_v1', { ...data.xato, ...localX }); // localX yangi bo'lishi mumkin
-  }
-
-  // NOTIFICATIONS: birlashtir, dublikat bo'lmasin
+  // Serverdan kelgan ma'lumotni to'g'ridan DB ga yoz
+  if(data.results && typeof data.results === 'object') DB.results = data.results;
+  if(Array.isArray(data.users)) DB.users = data.users;
+  if(data.xato && typeof data.xato === 'object') DB.xato = data.xato;
   if(Array.isArray(data.notifs)){
-    const localN = lsG(K.notifs, []);
-    const mergedN = [...data.notifs];
-    localN.forEach(ln => {
-      if(!mergedN.find(n => n.id === ln.id)) mergedN.push(ln);
-    });
-    mergedN.sort((a,b)=>new Date(b.time)-new Date(a.time));
-    lsS(K.notifs, mergedN);
+    DB.notifs = data.notifs;
+    DB.notifs.sort((a,b)=>new Date(b.time)-new Date(a.time));
   }
   return true;
 }
 
-// Full sync button handler
-// Tartib: 1) Local -> Cloud (yo'qolmasin), 2) Cloud -> Local (boshqalar), 3) Merged -> Cloud
+// Full sync - clouddan o'qi, DB ni yangilab render qil
 async function jbSync(){
   if(!JB.binId){ toast('Bin ID yoq'); return; }
   jbStatus('Sync qilinmoqda…');
   try {
-    // 1. Avval local ni cloudga yoz (yo'qolmasin)
-    await jbPush();
-    // 2. Clouddan tortib merge qil
-    await jbPull();
-    // 3. Merge natijani cloudga yoz
-    const pushed = await jbPush();
-    if(pushed){
+    const ok = await jbPull();
+    if(ok){
       jbStatus('✓ Sync muvaffaqiyatli');
       toast('☁ Cloud sync ✓');
-      if(typeof renderAdmin !== 'undefined' && SES?.adm) renderAdmin();
+      if(SES?.adm) renderAdmin(); else renderApp();
     } else {
       jbStatus('✗ Sync xato', false);
     }
@@ -5946,10 +5896,6 @@ async function jbSync(){
   window.addEventListener('DOMContentLoaded', ()=>{
     const bi = document.getElementById('jbBinId');
     if(bi && JB.binId) bi.value = JB.binId;
-    // Auto pull on load if configured
-    if(JB.binId){
-      jbPull().then(ok => { if(ok) renderApp && renderApp(); });
-    }
   });
 })();
 
