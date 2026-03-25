@@ -2715,7 +2715,7 @@ function loginAdm(){
   SES={uid:'admin',n:'Ustoz',s:'',adm:true};lsS(K.ses,SES);
   document.getElementById('vLogin').classList.remove('on');
   // ☁ Admin uchun cloud dan so'nggi natijalarni olish
-  jbPull().then(()=>showAdmin());
+  jbPull().then(()=>showAdmin()).catch(()=>showAdmin());
 }
 function logout(){
   AUDIO.pause();AUDIO.src='';SES=null;lsS(K.ses,null);
@@ -2731,8 +2731,8 @@ function openApp(){
   document.getElementById('vLogin').classList.remove('on');
   document.getElementById('vApp').classList.add('on');
   document.getElementById('navUser').textContent=SES.n+' '+SES.s;
-  // ☁ Cloud dan so'nggi ma'lumotlarni olish
-  jbPull().then(()=>renderApp());
+  // ☁ Avval local -> cloud, keyin cloud -> local (merge), so'ng render
+  jbSync().then(()=>renderApp()).catch(()=>renderApp());
 }
 function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge();updXatoBadge()}
 
@@ -5837,14 +5837,29 @@ async function jbPush(){
 async function jbPull(){
   const data = await jbFetch();
   if(!data) return false;
-  // Cloud wins — serverdan kelgan ma'lumot asosiy
+
+  // RESULTS: ikki tomondagi hamma natijalarni birlashtir, hech biri yo'qolmasin
+  // Agar bir xil kalit bo'lsa — qaysi biri yangi bo'lsa shu qoladi
   if(data.results && typeof data.results === 'object'){
     const local = lsG(K.res, {});
-    // Faqat localda bor yangi natijalarni qo'shib chiqamiz
-    const merged = { ...local, ...data.results }; // cloud wins
+    const merged = { ...data.results }; // cloud dan boshla
+    Object.keys(local).forEach(k => {
+      if(!merged[k]) {
+        // Localda bor, cloudda yo'q — qo'shib qo'y
+        merged[k] = local[k];
+      } else {
+        // Ikkalasida ham bor — qaysi biri yangi bo'lsa shu qoladi
+        const cloudTime = new Date(merged[k].at || 0).getTime();
+        const localTime = new Date(local[k].at || 0).getTime();
+        if(localTime > cloudTime) merged[k] = local[k]; // local yangi
+      }
+    });
     lsS(K.res, merged);
+    // Birlashtirgan natijani cloudga ham yoz
+    return { pullOk: true, results: merged };
   }
-  // Users — cloud asosiy, localda yangi bo'lsa qo'shamiz
+
+  // USERS: ikki tomondagi userlani birlashtir
   if(Array.isArray(data.users)){
     const localU = lsG(K.users, []);
     const mergedU = [...data.users];
@@ -5853,12 +5868,14 @@ async function jbPull(){
     });
     lsS(K.users, mergedU);
   }
-  // Xato arxivi — cloud wins
+
+  // XATO: ikki tomon birlashtir
   if(data.xato && typeof data.xato === 'object'){
     const localX = lsG('xa_v1', {});
-    lsS('xa_v1', { ...localX, ...data.xato }); // cloud wins
+    lsS('xa_v1', { ...data.xato, ...localX }); // localX yangi bo'lishi mumkin
   }
-  // Notifications
+
+  // NOTIFICATIONS: birlashtir, dublikat bo'lmasin
   if(Array.isArray(data.notifs)){
     const localN = lsG(K.notifs, []);
     const mergedN = [...data.notifs];
@@ -5872,19 +5889,21 @@ async function jbPull(){
 }
 
 // Full sync button handler
+// Tartib: 1) Local -> Cloud (yo'qolmasin), 2) Cloud -> Local (boshqalar), 3) Merged -> Cloud
 async function jbSync(){
-  if(!JB.binId){
-    toast('Avval Bin yarating');
-    return;
-  }
+  if(!JB.binId){ toast('Bin ID yoq'); return; }
   jbStatus('Sync qilinmoqda…');
   try {
-    const pulled = await jbPull();
+    // 1. Avval local ni cloudga yoz (yo'qolmasin)
+    await jbPush();
+    // 2. Clouddan tortib merge qil
+    await jbPull();
+    // 3. Merge natijani cloudga yoz
     const pushed = await jbPush();
-    if(pulled && pushed){
+    if(pushed){
       jbStatus('✓ Sync muvaffaqiyatli');
       toast('☁ Cloud sync ✓');
-      renderAdmin();
+      if(typeof renderAdmin !== 'undefined' && SES?.adm) renderAdmin();
     } else {
       jbStatus('✗ Sync xato', false);
     }
