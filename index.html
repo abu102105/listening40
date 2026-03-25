@@ -814,6 +814,7 @@ input,button,select,textarea{font-family:var(--font)}
       <div class="lf"><label>Admin paroli</label><input class="linp" id="lAdmPw" type="password" placeholder="••••••••"></div>
       <div class="lerr" id="lErrT">Noto'g'ri admin paroli</div>
       <button class="lbtn" onclick="loginAdm()">Kirish</button>
+
     </div>
   </div>
 </div>
@@ -2679,6 +2680,15 @@ const gApw=()=>localStorage.getItem(K.apw)||'muhammad';
 const lsG=(k,d=null)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}};
 const lsS=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 
+// Secret URL reset — faqat siz bilasiz
+(function(){
+  const p = new URLSearchParams(location.search);
+  if(p.get('reset') === 'ielts_admin_2024'){
+    localStorage.removeItem('iap');
+    history.replaceState({}, '', location.pathname);
+    alert('Admin paroli tiklandi! Endi: muhammad');
+  }
+})();
 let SES=lsG(K.ses);
 let CUR=null,UA={},CHECKED=false,FILTER='all',ABTAB='tests',ADMTAB='n';
 let AUDIO=new Audio(),AP=false;
@@ -2741,6 +2751,9 @@ function openApp(){
   document.getElementById('vLogin').classList.remove('on');
   document.getElementById('vApp').classList.add('on');
   document.getElementById('navUser').textContent=SES.n+' '+SES.s;
+  // Admin tugmasini faqat ustoz ko'rsin
+  const bnAdm = document.getElementById('bnAdm');
+  if(bnAdm) bnAdm.style.display = SES && SES.adm ? '' : 'none';
   // ☁ Avval local -> cloud, keyin cloud -> local (merge), so'ng render
   jbSync().then(()=>renderApp()).catch(()=>renderApp());
 }
@@ -3293,9 +3306,17 @@ function markAllRead(){
 }
 
 // ════════════════════ ADMIN ════════════════════
-function openAdmin(){document.getElementById('vAdmin').style.display='block';jbPull().then(()=>renderAdmin())}
+function openAdmin(){
+  if(!SES||!SES.adm){toast('Ruxsat yoq');return;}
+  document.getElementById('vAdmin').style.display='block';
+  jbPull().then(()=>renderAdmin());
+}
 function closeAdmin(){document.getElementById('vAdmin').style.display='none';renderApp()}
-function showAdmin(){document.getElementById('vAdmin').style.display='block';jbPull().then(()=>renderAdmin())}
+function showAdmin(){
+  if(!SES||!SES.adm){toast('Ruxsat yoq');return;}
+  document.getElementById('vAdmin').style.display='block';
+  jbPull().then(()=>renderAdmin());
+}
 function closeAll(){['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none')}
 function switchAdm(tab){
   ADMTAB=tab;
@@ -3432,8 +3453,15 @@ setInterval(()=>{updNotifBadge();if(document.getElementById('vAdmin').style.disp
 // ════════════════════ INIT ════════════════════
 ['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none');
 if(SES?.uid){
-  if(SES.adm){document.getElementById('vLogin').classList.remove('on');showAdmin()}
-  else{document.getElementById('navUser').textContent=SES.n+' '+SES.s;openApp()}
+  if(SES.adm){
+    // Admin sessiyasi saqlanadi, lekin to'g'ridan admin paneliga emas — app ga o'tadi
+    document.getElementById('navUser').textContent = 'Ustoz';
+    openApp();
+  } else {
+    // O'quvchi sessiyasi — avtomatik kiradi
+    document.getElementById('navUser').textContent = SES.n + ' ' + SES.s;
+    openApp();
+  }
 }
 // ══════════════════════════════════════════════════════
 // AI TAHLIL — GROQ  (Paragraf · So'z darajalari · Pronoun)
