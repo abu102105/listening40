@@ -1098,6 +1098,18 @@ input,button,select,textarea{font-family:var(--font)}
       <div class="stu-list" id="stuList"></div>
     </div>
     <div id="admSz" style="display:none">
+      <!-- JSONBin.io Section -->
+      <div class="asec" style="border:1.5px solid rgba(79,126,247,.35)">
+        <div class="asec-t" style="color:var(--a)">☁️ JSONBin.io — Cloud Saqlash</div>
+        <div style="font-size:.68rem;color:var(--muted2);margin-bottom:10px;line-height:1.6">API key shart emas. Bin ID bo'sh qoldiring — avtomatik yaratiladi.</div>
+        <div class="af"><label>Bin ID (bo'sh qoldiring — avtomatik yaratiladi)</label><input class="ainp" id="jbBinId" type="text" placeholder="masalan: abc123def456"></div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="abtn abtn-p" style="flex:1" onclick="jbSaveSettings()">Yaratish & Ulash</button>
+          <button class="abtn" style="flex:1;background:rgba(79,126,247,.08);border:1px solid rgba(79,126,247,.2);color:var(--a)" onclick="jbSync()">☁ Sync</button>
+        </div>
+        <div id="jbStatus" style="margin-top:9px;font-size:.72rem;font-family:var(--mono);display:none"></div>
+      </div>
+
       <div class="asec" style="border:1.5px solid rgba(0,201,167,.3)">
         <div class="asec-t">Telegram Bildirishnoma</div>
         <div class="af"><label>Bot Token</label><input class="ainp" id="tgToken" type="text" placeholder="1234567890:AAFxxxxxx..."></div>
@@ -2684,6 +2696,8 @@ function loginStu(){
   if(!u){u={id:Date.now()+'',n:name,s:sur,g:group,ca:new Date().toISOString()};users.push(u);}
   lsS(K.users,users);
   SES={uid:u.id,n:u.n,s:u.s,adm:false};lsS(K.ses,SES);
+  // ☁ Sync new user to cloud
+  if(JB.binId){ jbPush(); }
   const dt=new Date().toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
   const loginMsg=isNew?`🆕 Yangi ro'yxatdan o'tish`:`🔄 Tizimga kirish`;
   const groupLine=group?`
@@ -2700,7 +2714,8 @@ function loginAdm(){
   document.getElementById('lErrT').classList.remove('on');
   SES={uid:'admin',n:'Ustoz',s:'',adm:true};lsS(K.ses,SES);
   document.getElementById('vLogin').classList.remove('on');
-  showAdmin();
+  // ☁ Admin uchun cloud dan so'nggi natijalarni olish
+  jbPull().then(()=>showAdmin());
 }
 function logout(){
   AUDIO.pause();AUDIO.src='';SES=null;lsS(K.ses,null);
@@ -2716,7 +2731,8 @@ function openApp(){
   document.getElementById('vLogin').classList.remove('on');
   document.getElementById('vApp').classList.add('on');
   document.getElementById('navUser').textContent=SES.n+' '+SES.s;
-  renderApp();
+  // ☁ Cloud dan so'nggi ma'lumotlarni olish
+  jbPull().then(()=>renderApp());
 }
 function renderApp(){calcKpis();renderGrid();renderSGrid();updNotifBadge();updXatoBadge()}
 
@@ -3228,6 +3244,8 @@ function checkAnswers(){
     updXatoBadge();
   }
   addNotif(CUR,sc,tot,pct);
+  // ☁ Cloud sync — non-blocking
+  if(JB.binId){ jbPush(); }
   if(SES&&!SES.adm){
     const band=bandCalc(sc,tot,1);
     const dt=new Date().toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -3265,9 +3283,9 @@ function markAllRead(){
 }
 
 // ════════════════════ ADMIN ════════════════════
-function openAdmin(){document.getElementById('vAdmin').style.display='block';renderAdmin()}
+function openAdmin(){document.getElementById('vAdmin').style.display='block';jbPull().then(()=>renderAdmin())}
 function closeAdmin(){document.getElementById('vAdmin').style.display='none';renderApp()}
-function showAdmin(){document.getElementById('vAdmin').style.display='block';renderAdmin()}
+function showAdmin(){document.getElementById('vAdmin').style.display='block';jbPull().then(()=>renderAdmin())}
 function closeAll(){['vTest','vAdmin','vStuDetail'].forEach(id=>document.getElementById(id).style.display='none')}
 function switchAdm(tab){
   ADMTAB=tab;
@@ -3411,14 +3429,13 @@ if(SES?.uid){
 // AI TAHLIL — GROQ  (Paragraf · So'z darajalari · Pronoun)
 // ══════════════════════════════════════════════════════
 const AI_K = 'groq_api_key_v2';
-const _GROQ_DEFAULT = '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';
 let aiSelTest  = null;
 let aiData     = null;
 let aiTab      = 'para';
 let aiWfilter  = 'all';
 let quizScore  = 0;
 
-function gGroqKey(){ return localStorage.getItem(AI_K)||_GROQ_DEFAULT; }
+function gGroqKey(){ return localStorage.getItem(AI_K)||''; }
 function sGroqKey(v){ localStorage.setItem(AI_K, v.trim()); }
 
 /* ── open / close ── */
@@ -3472,12 +3489,24 @@ function renderAiHome(){
   const canGo = !!(key && aiSelTest);
 
   body.innerHTML = `
-  <div class="ai-pick-t">Tahlil qilmoqchi bo'lgan testni tanlang</div>
+  <div class="ai-keybar">
+    <div class="ai-keybar-t">① Groq API Kaliti</div>
+    <div class="ai-keyrow">
+      <input class="ai-kinp" id="aiKinp" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" value="${key}" autocomplete="off">
+      <button class="ai-ksave" onclick="aiSaveKey()">Saqlash</button>
+    </div>
+    <div class="ai-kstatus ${key?'ok':''}" id="aiKstat">${key?'✓ Kalit saqlangan':'Kalit kiritilmagan'}</div>
+    <div style="font-size:.63rem;color:var(--muted);margin-top:5px;font-family:var(--mono)">
+      Bepul: <a href="https://console.groq.com/keys" target="_blank" style="color:var(--a)">console.groq.com/keys</a>
+    </div>
+  </div>
+
+  <div class="ai-pick-t">② Tahlil qilmoqchi bo'lgan testni tanlang</div>
   <div class="ai-tgrid" id="aiTgrid"></div>
 
   <button class="ai-go" onclick="aiRun()" ${canGo?'':'disabled'} style="gap:8px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-    ${canGo?`Test ${aiSelTest} · tahlil qilish`:'Test tanlang'}
+    ${canGo?`Test ${aiSelTest} · tahlil qilish`: !key?'① API kalitni kiriting':'② Test tanlang'}
   </button>
 
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px;font-size:.72rem;color:var(--muted2);line-height:1.8">
@@ -3497,8 +3526,13 @@ function renderAiHome(){
 }
 
 function aiSaveKey(){
-  // Key is embedded — no manual input needed
-  toast('API kaliti allaqachon ulangan ✓');
+  const v = document.getElementById('aiKinp').value.trim();
+  if(!v){ toast('API kalitni kiriting'); return; }
+  sGroqKey(v);
+  const s = document.getElementById('aiKstat');
+  if(s){ s.textContent='✓ Saqlandi'; s.className='ai-kstatus ok'; }
+  toast('Groq API kaliti saqlandi ✓');
+  renderAiHome();
 }
 
 /* ── RUN ANALYSIS ── */
@@ -5700,6 +5734,176 @@ function openAksentFromTest(){
     akLoadWords(CUR);
   }
 }
+
+// ══════════════════════════════════════════════════
+// JSONBIN.IO BACKEND
+// ══════════════════════════════════════════════════
+const JB = {
+  BASE: 'https://api.jsonbin.io/v3/b',
+  BIN_ID: '69c37568b7ec241ddc9e8db2',
+  MASTER_KEY: '$2a$10$RJsHBL3sKsQt1VAk7p4cS.LqI44Bc95PmwHieyuXgEZ3ZlZtrZLAq',
+  get binId(){ return localStorage.getItem('jb_binid') || this.BIN_ID },
+  set binId(v){ localStorage.setItem('jb_binid', v) }
+};
+
+// Show status message in admin panel
+function jbStatus(msg, ok=true){
+  const el = document.getElementById('jbStatus');
+  if(!el) return;
+  el.style.display = 'block';
+  el.style.color = ok ? 'var(--a2)' : 'var(--red)';
+  el.textContent = msg;
+  setTimeout(()=>{ el.style.display='none'; }, 5000);
+}
+
+// Save settings and create/verify bin
+async function jbSaveSettings(){
+  const bid = document.getElementById('jbBinId').value.trim() || JB.BIN_ID;
+
+  jbStatus('Tekshirilmoqda…');
+  try {
+    if(bid){
+      // Verify existing bin
+      const r = await fetch(`${JB.BASE}/${bid}/latest`, {
+        headers: { 'X-Master-Key': JB.MASTER_KEY }
+      });
+      if(!r.ok) throw new Error(`Bin topilmadi (${r.status})`);
+      JB.binId = bid;
+      document.getElementById('jbBinId').value = bid;
+      jbStatus('✓ Bin ulandi: ' + bid);
+      toast('JSONBin.io ulandi ✓');
+    } else {
+      // Create new bin
+      const r = await fetch(JB.BASE, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JB.MASTER_KEY,
+          'X-Bin-Private': 'false'
+        },
+        body: JSON.stringify({ results: {}, users: [], xato: {}, createdAt: new Date().toISOString() })
+      });
+      if(!r.ok) throw new Error(`Bin yaratilmadi (${r.status})`);
+      const d = await r.json();
+      JB.binId = d.metadata?.id || '';
+      if(!JB.binId) throw new Error('ID qaytmadi: ' + JSON.stringify(d).substring(0,80));
+      document.getElementById('jbBinId').value = JB.binId;
+      jbStatus('✓ Bin yaratildi: ' + JB.binId);
+      toast('JSONBin.io Bin yaratildi ✓');
+    }
+    await jbPush();
+  } catch(e) {
+    jbStatus('✗ ' + e.message, false);
+    toast('Xato: ' + e.message);
+  }
+}
+
+// Load bin data from cloud
+async function jbFetch(){
+  if(!JB.binId) return null;
+  try {
+    const r = await fetch(`${JB.BASE}/${JB.binId}/latest`, {
+      headers: { 'X-Master-Key': JB.MASTER_KEY }
+    });
+    if(!r.ok) return null;
+    const d = await r.json();
+    return d.record || d; // JSONBin wraps data in {record: ...}
+  } catch(e) { console.warn('jbFetch:', e); return null; }
+}
+
+// Push all local data to cloud
+async function jbPush(){
+  if(!JB.binId) return false;
+  try {
+    const users = lsG(K.users, []);
+    const res   = lsG(K.res, {});
+    const xa    = lsG('xa_v1', {});
+    const notifs = lsG(K.notifs, []);
+    const payload = { results: res, users: users, xato: xa, notifs: notifs, updatedAt: new Date().toISOString() };
+    const r = await fetch(`${JB.BASE}/${JB.binId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JB.MASTER_KEY
+      },
+      body: JSON.stringify(payload)
+    });
+    if(!r.ok){ console.warn('jbPush failed:', r.status); return false; }
+    return true;
+  } catch(e){ console.warn('jbPush error:', e); return false; }
+}
+
+// Pull cloud data → merge into localStorage
+async function jbPull(){
+  const data = await jbFetch();
+  if(!data) return false;
+  // Cloud wins — serverdan kelgan ma'lumot asosiy
+  if(data.results && typeof data.results === 'object'){
+    const local = lsG(K.res, {});
+    // Faqat localda bor yangi natijalarni qo'shib chiqamiz
+    const merged = { ...local, ...data.results }; // cloud wins
+    lsS(K.res, merged);
+  }
+  // Users — cloud asosiy, localda yangi bo'lsa qo'shamiz
+  if(Array.isArray(data.users)){
+    const localU = lsG(K.users, []);
+    const mergedU = [...data.users];
+    localU.forEach(lu => {
+      if(!mergedU.find(u => u.id === lu.id)) mergedU.push(lu);
+    });
+    lsS(K.users, mergedU);
+  }
+  // Xato arxivi — cloud wins
+  if(data.xato && typeof data.xato === 'object'){
+    const localX = lsG('xa_v1', {});
+    lsS('xa_v1', { ...localX, ...data.xato }); // cloud wins
+  }
+  // Notifications
+  if(Array.isArray(data.notifs)){
+    const localN = lsG(K.notifs, []);
+    const mergedN = [...data.notifs];
+    localN.forEach(ln => {
+      if(!mergedN.find(n => n.id === ln.id)) mergedN.push(ln);
+    });
+    mergedN.sort((a,b)=>new Date(b.time)-new Date(a.time));
+    lsS(K.notifs, mergedN);
+  }
+  return true;
+}
+
+// Full sync button handler
+async function jbSync(){
+  if(!JB.binId){
+    toast('Avval Bin yarating');
+    return;
+  }
+  jbStatus('Sync qilinmoqda…');
+  try {
+    const pulled = await jbPull();
+    const pushed = await jbPush();
+    if(pulled && pushed){
+      jbStatus('✓ Sync muvaffaqiyatli');
+      toast('☁ Cloud sync ✓');
+      renderAdmin();
+    } else {
+      jbStatus('✗ Sync xato', false);
+    }
+  } catch(e){
+    jbStatus('✗ ' + e.message, false);
+  }
+}
+
+// Called on page load — populate settings inputs & auto-pull
+(function jbInit(){
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const bi = document.getElementById('jbBinId');
+    if(bi && JB.binId) bi.value = JB.binId;
+    // Auto pull on load if configured
+    if(JB.binId){
+      jbPull().then(ok => { if(ok) renderApp && renderApp(); });
+    }
+  });
+})();
 
 // ══════════════════════════════════════════════════
 // TELEGRAM WEB APP INTEGRATION
