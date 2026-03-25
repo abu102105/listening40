@@ -2664,6 +2664,16 @@ q:[
 
 // ════════════════════ CONSTANTS & STATE ════════════════════
 const K={users:'iu',res:'ir',notifs:'in',pw:'ip',apw:'iap',ses:'is'};
+// ══════════════════════════════════════════════════
+// JSONBIN.IO BACKEND
+// ══════════════════════════════════════════════════
+const JB = {
+  BASE: 'https://api.jsonbin.io/v3/b',
+  BIN_ID: '69c37568b7ec241ddc9e8db2',
+  MASTER_KEY: '$2a$10$RJsHBL3sKsQt1VAk7p4cS.LqI44Bc95PmwHieyuXgEZ3ZlZtrZLAq',
+  get binId(){ return localStorage.getItem('jb_binid') || this.BIN_ID },
+  set binId(v){ localStorage.setItem('jb_binid', v) }
+};
 const gPw=()=>localStorage.getItem(K.pw)||'ielts2024';
 const gApw=()=>localStorage.getItem(K.apw)||'muhammad';
 const lsG=(k,d=null)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}};
@@ -5735,16 +5745,7 @@ function openAksentFromTest(){
   }
 }
 
-// ══════════════════════════════════════════════════
-// JSONBIN.IO BACKEND
-// ══════════════════════════════════════════════════
-const JB = {
-  BASE: 'https://api.jsonbin.io/v3/b',
-  BIN_ID: '69c37568b7ec241ddc9e8db2',
-  MASTER_KEY: '$2a$10$RJsHBL3sKsQt1VAk7p4cS.LqI44Bc95PmwHieyuXgEZ3ZlZtrZLAq',
-  get binId(){ return localStorage.getItem('jb_binid') || this.BIN_ID },
-  set binId(v){ localStorage.setItem('jb_binid', v) }
-};
+
 
 // Show status message in admin panel
 function jbStatus(msg, ok=true){
